@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectResources">
+    <resource url="http://javafx.com/fxml" location="$PROJECT_DIR$" />
+    <resource url="http://javafx.com/javafx/8.0.65" location="$PROJECT_DIR$" />
+    <resource url="https://raw.githubusercontent.com/javafxports/openjdk-jfx/master/resources/javafx.xsd" location="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23 (2)" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

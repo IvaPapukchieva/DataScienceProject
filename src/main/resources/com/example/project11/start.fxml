@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="container" prefHeight="480.0" prefWidth="320.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.StartController">
+    <children>
+        <VBox alignment="BASELINE_LEFT" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <padding>
+                <Insets bottom="20" />
+            </padding>
+            <Label text="Visualize Data" textFill="#f2f2f2">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+            <StackPane>
+                <children>
+                    <ImageView fx:id="statisticsImage" fitHeight="150" fitWidth="150" onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent" onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../images/statisticsicon.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </StackPane>
+            <Label text="Seperate Questions" textFill="#f2f2f2">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
+            <StackPane>
+                <children>
+                    <ImageView fx:id="questionsImage" fitHeight="150" fitWidth="150" onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent" onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../../images/toolbox.png" />
+                        </image>
+                    </ImageView>
+                </children>
+            </StackPane>
+        </VBox>
+
+        <Label layoutX="221.0" layoutY="672.0" text="Project 1-1 - Group 10" textAlignment="RIGHT" textFill="#bcbcbc" AnchorPane.bottomAnchor="4" AnchorPane.rightAnchor="8">
+         <font>
+            <Font size="9.0" />
+         </font></Label>
+    </children>
+</AnchorPane>

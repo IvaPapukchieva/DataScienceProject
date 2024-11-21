@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- Updated: Bottom container is now an AnchorPane -->
+
+<AnchorPane fx:id="container" prefWidth="200.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SelectionsController">
+
+    <padding>
+        <Insets />
+    </padding>
+    <children>
+
+
+
+        <VBox alignment="BASELINE_LEFT" layoutX="20.0" layoutY="20.0" spacing="5.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <fx:define>
+                <ToggleGroup fx:id="dataSets" />
+            </fx:define>
+
+            <Label text="Data Set:" textFill="#f2f2f2" />
+            <RadioButton onAction="#handleDataSetsToggle" text="Graduate Grades" textFill="#f2f2f2" toggleGroup="${dataSets}" />
+            <RadioButton onAction="#handleDataSetsToggle" text="Undergraduate Grades" textFill="#f2f2f2" toggleGroup="${dataSets}" />
+
+            <HBox prefWidth="256.0" spacing="5.0">
+                <ToggleButton fx:id="ngButton" onAction="#createDropDown" text="Deal With NGs?" visible="false" />
+                <ComboBox fx:id="ngSelect" layoutX="50.0" layoutY="100.0" prefHeight="25.0" prefWidth="104.0" visible="false" />
+            </HBox>
+
+            <Label text="Filters:" textFill="#f2f2f2" />
+            <ComboBox fx:id="addFilter" onAction="#handleAddFilter" prefWidth="150.0" promptText="+ Add Filter" />
+
+         <ScrollPane fx:id="filtersScrollPane" prefHeight="67.0" prefWidth="200.0" visible="false">
+            <content>
+               <VBox fx:id="filtersContainer" prefHeight="66.0" prefWidth="100.0" />
+            </content>
+         </ScrollPane>
+        </VBox>
+        <AnchorPane layoutX="20.0" layoutY="357.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="5">
+            <ImageView fx:id="backButtonImage" disable="true" fitHeight="32.0" fitWidth="205.0"
+                       onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent"
+                       onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../../images/back.png" />
+                </image>
+            </ImageView>
+            <Button fx:id="submit" onAction="#submitButton" text="Submit" textAlignment="CENTER" />
+        </AnchorPane>
+
+    </children>
+</AnchorPane>
