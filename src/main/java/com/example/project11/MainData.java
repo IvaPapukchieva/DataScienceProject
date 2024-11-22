@@ -1,6 +1,8 @@
 package com.example.project11;
+import java.util.Arrays;
 
 import com.example.project11.ProjectInfo.loaders.*;
+import com.example.project11.ProjectInfo.Filters.*;
 import com.example.project11.ProjectInfo.STEP1.*;
 import com.example.project11.ProjectInfo.STEP2.*;
 import com.example.project11.ProjectInfo.STEP3.*;
@@ -38,8 +40,8 @@ public class MainData {
 
 //     FilterByStudentID filterByStudentID=new FilterByStudentID();
 //     System.out.println(Arrays.toString(filterByStudentID.getStudentGradesById(4)));
-//     FilterByID.FilterByStudentIDGraduatingGradesLoader filetr=new FilterByID.FilterByStudentIDGraduatingGradesLoader();
-//     System.out.println(Arrays.toString(filetr.getStudentGradesById(4)));
+
+
 //     FilterByID.FilterByStudentICurrentGradesLoader ko=new FilterByID.FilterByStudentICurrentGradesLoader();
 //     System.out.println(Arrays.toString(ko.getStudentGradesById(210333)));
 //
@@ -47,6 +49,8 @@ public class MainData {
 //     System.out.println(Arrays.toString(ho.getStudentGradesById(210333)));
 //     System.out.println(Arrays.deepToString(bootstrappingLoader));
 
+     FilterByProperty filter=new FilterByProperty("Neuro-Synaptic Interface Level","full",bootstrappingLoader);
+     System.out.println(Arrays.deepToString(filter.getStudentsGradesById()));
 /**
  * Finds the easiest classes based on the grade distribution of students.
  * This class analyzes the grades of students and identifies which classes have the highest average grades
@@ -80,9 +84,9 @@ public class MainData {
 //     findCumLaudeLoaderGraduate.FindCumLaudeStudents();
 
 
-FilterByProperty propertyFilter = new FilterByProperty();
 
-System.out.println(propertyFilter.getFilteredData("Neuro-Synaptic Interface Level","medium"));
+
+
 
 /**
  * Identifies the best and worst students based on their GPA.

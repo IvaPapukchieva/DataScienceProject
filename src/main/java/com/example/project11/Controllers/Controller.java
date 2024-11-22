@@ -1,5 +1,6 @@
 package com.example.project11.Controllers;
 
+
 import com.example.project11.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,6 +35,10 @@ public abstract class Controller {
             FXMLLoader gradesFilterLoader = new FXMLLoader(Main.class.getResource("gradesFilter.fxml"));
             scenes.put("By Grade", new Scene(gradesFilterLoader.load(), 380, 250));
             controllers.put("By Grade", gradesFilterLoader.getController());
+
+            FXMLLoader newSceneLoader = new FXMLLoader(Main.class.getResource("separateQuestions.fxml"));  // Create a new FXML file
+            scenes.put("separateQuestions", new Scene(newSceneLoader.load(), 320, 480));  // Adjust size accordingly
+            controllers.put("separateQuestions", newSceneLoader.getController());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,9 +77,14 @@ public abstract class Controller {
             if (((ImageView) mouseEvent.getSource()).getId().equals("statisticsImage")) {
                 changeScene(mouseEvent, "selections");
             }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("questionsImage")) {
+                changeScene(mouseEvent, "separateQuestions");
+            }
+
             if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage")) {
                 changeScene(mouseEvent, "start");
             }
+
 
         }
     }

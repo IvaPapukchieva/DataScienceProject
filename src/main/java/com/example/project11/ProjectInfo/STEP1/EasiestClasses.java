@@ -1,5 +1,7 @@
 package com.example.project11.ProjectInfo.STEP1;
 
+
+
 public class EasiestClasses {
 
 
@@ -11,15 +13,16 @@ public class EasiestClasses {
 
 
     // Main method to calculate and return the three easiest classes
-    public String[] findEasiestClasses(double [][] allStudents) {
+    public double[] findEasiestClasses(double [][] allStudents) {
         try {
 
             double[] averageCourse = calculateCourseAverages(allStudents);
             return findTopThreeEasiestCourses(averageCourse);
+
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new String[]{"Error calculating easiest classes"};
-        }
+
+        } return null;
     }
 
 
@@ -40,8 +43,8 @@ public class EasiestClasses {
     }
 
     // Method to find the top 3 easiest courses based on average scores
-    public String[] findTopThreeEasiestCourses(double[] averageCourse) {
-        String[] EasiestClasses = new String[3];
+    public double[] findTopThreeEasiestCourses(double[] averageCourse) {
+        double[] EasiestClasses = new double[3];
         int firstIndex = -1, secondIndex = -1, thirdIndex = -1;
         double first = -1.0, second = -1.0, third = -1.0;
 
@@ -64,9 +67,9 @@ public class EasiestClasses {
             }
         }
 
-        EasiestClasses[0] = "The first easiest course: " + (firstIndex + 1) + " with an average of " + String.format("%.2f", first);
-        EasiestClasses[1] = "The second easiest course: " + (secondIndex + 1) + " with an average of " + String.format("%.2f", second);
-        EasiestClasses[2] = "The third easiest course: " + (thirdIndex + 1) + " with an average of " + String.format("%.2f", third);
+        EasiestClasses[0] =  first;
+        EasiestClasses[1] =  second;
+        EasiestClasses[2] =  third;
         return EasiestClasses;
     }
 }

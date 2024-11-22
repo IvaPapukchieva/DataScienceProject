@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class StudentInfoLoader {
+public class StudentInfoLoader extends CurrentGradeLoader  {
 
   public String[][] infoInStrings;
   private String fileName;
