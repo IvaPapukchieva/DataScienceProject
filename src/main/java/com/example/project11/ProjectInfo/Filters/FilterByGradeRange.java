@@ -1,6 +1,8 @@
 package com.example.project11.ProjectInfo.Filters;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FilterByGradeRange {
 
@@ -24,6 +26,32 @@ public class FilterByGradeRange {
             }
         }
         return filteredStudents;
+
+    }
+    public Map<String, Integer> calculateGradeRangeDistribution() {
+        String name;
+        double[][] gradeRange = getStudentsByGradeRange();
+
+        Map<String, Integer> gradeCounts = new HashMap<>();
+
+
+        gradeCounts.put("In the range", 0);
+        gradeCounts.put("Out of the range", 0);
+
+        for (double[] studentGrades : gradeRange) {
+            for (double grade : studentGrades) {
+                String range = getGradeRange(grade);
+                gradeCounts.put(range, gradeCounts.get(range) + 1);
+            }
+        }
+        return gradeCounts;
+    }
+
+    private String getGradeRange(double grade) {
+        if (grade != -1) return "In the range";
+        return "Out of the range";
+
+
 
     }
 }

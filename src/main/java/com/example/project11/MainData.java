@@ -11,6 +11,7 @@ import com.example.project11.ProjectInfo.STEP3.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainData {
  public static void main(String[] args) throws FileNotFoundException {
@@ -49,8 +50,8 @@ public class MainData {
 //     System.out.println(Arrays.toString(ho.getStudentGradesById(210333)));
 //     System.out.println(Arrays.deepToString(bootstrappingLoader));
 
-     FilterByProperty filter=new FilterByProperty("Neuro-Synaptic Interface Level","full",bootstrappingLoader);
-     System.out.println(Arrays.deepToString(filter.getStudentsGradesById()));
+//     FilterByProperty filter=new FilterByProperty("Neuro-Synaptic Interface Level","full",bootstrappingLoader);
+//     System.out.println(Arrays.deepToString(filter.getStudentsGradesById()));
 /**
  * Finds the easiest classes based on the grade distribution of students.
  * This class analyzes the grades of students and identifies which classes have the highest average grades
@@ -105,7 +106,18 @@ public class MainData {
 //
 //     System.out.println(Arrays.toString(findSimilarClassesLoaderNoNG.calculateSimilarClasses(loaderNoNG)));
 
+//     FilterBySpecificCourse filter123 = new FilterBySpecificCourse(3, meanLoader);
+//     Map<String, Integer> gradeDistribution = filter123.calculateCourseGradeDistribution();
+//     System.out.println(gradeDistribution);
 
+
+//     FilterBySpecificGrade filter = new FilterBySpecificGrade(5, meanLoader);
+//     Map<String, Integer> gradeDistribution = filter.calculateStudentsGradeDistribution();
+//     System.out.println(gradeDistribution);
+
+     FilterByGradeRange filter = new FilterByGradeRange(4, 7, meanLoader);
+     Map<String, Integer> gradeDistribution=filter.calculateGradeRangeDistribution();
+     System.out.println(gradeDistribution);
 
 
 }}
