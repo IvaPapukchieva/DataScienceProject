@@ -10,12 +10,12 @@ import java.util.HashMap;
 public class CumLaude {
     private double[] GPA;
     private double CumLaude;
-    private double MagnaCumLaude;
     private double SummaCumLaude;
     private double[][] allStudents;
     private HashMap<String, HashMap<Integer, Double>> honorsMap; // Map to store honor categories and students
 
-    public CumLaude(double[][] allStudents) {
+    public CumLaude(double[][] allStudents) {    private double MagnaCumLaude;
+
         this.GPA = new double[allStudents.length];
         this.allStudents = new double[allStudents.length][allStudents[0].length];
         this.allStudents = allStudents;
