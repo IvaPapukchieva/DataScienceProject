@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SelectionsController extends Controller implements Initializable {
@@ -29,10 +30,12 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
-    private ArrayList<Filter> filters;
+    private ArrayList<Filter<Object>> filters;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        filters = new ArrayList<>();
+
         ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs");
         addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property", "By Student ID");
 
@@ -47,7 +50,7 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     public void submitButton() {
-        System.out.println(dataSets.getSelectedToggle());
+        System.out.println(filters.toString());
     }
 
     public void handleDataSetsToggle() {
@@ -95,7 +98,25 @@ public class SelectionsController extends Controller implements Initializable {
         controller.setDataCallback(nodes -> {
             String labelText = createLabelTextForFilter(nodes, selectedFilter);
             createFilterItem(labelText);
+            extractData(nodes, selectedFilter);
         });
+    }
+
+    private void extractData(Node[] nodes, String type) {
+        List<Object> list = new ArrayList<>();
+
+        for(Node node : nodes) {
+            if (node instanceof Slider slider) {
+                list.add(slider.getValue());
+            } else if (node instanceof TextField textField) {
+                list.add(textField.getText());
+            } else if (node instanceof ComboBox comboBox) {
+                list.add(comboBox.getValue());
+            } else if (node instanceof RadioButton radioButton) {
+                list.add(radioButton.getText());
+            }
+        }
+        filters.add(new Filter<Object>(type, list));
     }
 
     private String createLabelTextForFilter(Node[] nodes, String selectedFilter) {
@@ -155,14 +176,17 @@ public class SelectionsController extends Controller implements Initializable {
     private Button createRemoveButton(HBox filterItem) {
         Button removeButton = new Button("✖");
         removeButton.setOnAction(event -> {
+            filters.remove(filtersContainer.getChildren().indexOf(filterItem));
             filtersContainer.getChildren().remove(filterItem);
             if(filtersContainer.getChildren().isEmpty()) {
                 filtersScrollPane.setVisible(false);
+
 
                 VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
                 int currentIndex = parent.getChildren().indexOf(addFilter);
                 parent.getChildren().remove(addFilter);
                 parent.getChildren().add(currentIndex - 1, addFilter);
+
             }
         });
         return removeButton;
