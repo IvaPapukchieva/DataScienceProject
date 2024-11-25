@@ -1,4 +1,6 @@
+package com.example.project11.ProjectInfo.STEP3.GradePredictorStep3;
 
+import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -175,7 +177,7 @@ class Prediction{
             int bootstrapIterations = 75; // Number of bootstrap iterations
         
             for (int i = 0; i < bootstrapIterations; i++) {
-                WeightedBootstrapping brootstrapping = new WeightedBootstrapping(course, allStudents2);
+                WeightedBootstrapping2 brootstrapping = new WeightedBootstrapping2(course, allStudents2);
                 bootStrapping = brootstrapping.readAllStudents();
         
                 double totalVariance = getTotalVariance();
@@ -260,7 +262,7 @@ class Prediction{
             double[] varianceReduction = new double[7];
         
             for (int i = 0; i < bootstrapIterations; i++) {
-                WeightedBootstrapping brootstrapping = new WeightedBootstrapping(course , allStudents2);
+                WeightedBootstrapping2 brootstrapping = new WeightedBootstrapping2(course , allStudents2);
                 bootStrapping = brootstrapping.readAllStudents();
         
                 double totalVariance = getTotalVariance();

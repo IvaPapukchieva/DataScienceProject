@@ -1,11 +1,9 @@
+package com.example.project11.ProjectInfo.STEP3.GradePredictorStep3;
 
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
 
-public class WeightedBootstrapping {
+public class WeightedBootstrapping2 {
 
     private String fileName;
     private int numRows;
@@ -13,7 +11,7 @@ public class WeightedBootstrapping {
     private double[][] allStudents;
     private int course ; 
 
-    public WeightedBootstrapping( int course , double[][] allStudents) {
+    public WeightedBootstrapping2( int course , double[][] allStudents) {
         this.fileName = "C:\\Users\\marco\\Documents\\Project 1-1\\CODE\\STEP3 2\\Step3\\CurrentGrades.csv";
         this.numRows = 1329;
         this.numCols = 33;
