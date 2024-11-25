@@ -1,26 +1,31 @@
 package com.example.project11.ProjectInfo.STEP1;
 
+import java.util.HashMap;
+
 /** This program calculates the average of every course and depending on that it finds the first 3 lowest
  * averages which will represent the first 3 hardest classes
 */
 
 public class HardestClasses {
 
+    private HashMap<Integer, Double> hardestClassesMap; // Map to store course indices and their average scores
 
     // Constructor to set up file details
     public HardestClasses() {
+        this.hardestClassesMap = new HashMap<>();
 
     }
 
 
-    public String[] findHardestClasses(double [][] allStudents) {
+    public HashMap<Integer, Double>  findHardestClasses(double [][] allStudents) {
         try {
             double[] averageCourse = calculateCourseAverages(allStudents);
-            return findTopThreeHardestCourses(averageCourse);
+            findTopThreeHardestCourses(averageCourse);
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new String[]{"Error calculating easiest classes"};
+            return new String[]{"Error calculating hardest classes"};
         }
+        return hardestClassesMap;
     }
 
 
@@ -48,13 +53,11 @@ public class HardestClasses {
 }
 
     // method to find which are the first 3 hardest courses
-    public  String[] findTopThreeHardestCourses(double[] averageCourse){
-        String [] HardestClasses = new String[3];
+    public  void findTopThreeHardestCourses(double[] averageCourse){
 
-        int i;
         int firstIndex = -1, secondIndex = -1, thirdIndex = -1;
         double first =100000, second =100000, third =100000;
-        for(i=0;i<averageCourse.length;i++){
+        for(int i=0;i<averageCourse.length;i++){
 
             if(averageCourse[i] < first)
             {
@@ -79,9 +82,19 @@ public class HardestClasses {
                 thirdIndex = i;
             }
     }
-        HardestClasses[0] = "The first hardest course: " + (firstIndex + 1) + " with an average of " + String.format("%.2f", first);
-        HardestClasses[1] = "The second hardest course: " + (secondIndex + 1) + " with an average of " + String.format("%.2f", second);
-        HardestClasses[2] = "The third hardest course: " + (thirdIndex + 1) + " with an average of " + String.format("%.2f", third);
-return HardestClasses;
+        // Store the results in the HashMap
+        hardestClassesMap.put(firstIndex, first);
+        hardestClassesMap.put(secondIndex, second);
+        hardestClassesMap.put(thirdIndex, third);
+
+        // Print the map for verification
+        printHardestClasses();
+
         }
+    private void printHardestClasses() {
+        System.out.println("Top 3 Hardest Classes:");
+        for (Integer courseIndex : hardestClassesMap.keySet()) {
+            System.out.println("Course Index: " + (courseIndex + 1) + ", Average Score: " + String.format("%.2f", hardestClassesMap.get(courseIndex)));
+        }
+    }
     }
