@@ -8,7 +8,7 @@ public class EasiestClasses {
 
     // Constructor to set up file details
     public EasiestClasses() {
-        this.easiestClassesMap = new HashMap<>(); // Initialize the HashMap
+        this.easiestClassesMap = new HashMap<>();
     }
 
     // Main method to calculate and store the three easiest classes
