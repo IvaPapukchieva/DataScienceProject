@@ -1,8 +1,10 @@
 package com.example.project11.Controllers;
 
+
+import com.example.project11.Controllers.FilterControllers.*;
+import com.example.project11.FilterProcessing.Filter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SelectionsController extends Controller implements Initializable {
@@ -26,11 +29,12 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
+    private ArrayList<Filter> filters;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs");
-        addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By NG", "By Student");
+        addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property", "By Student ID");
 
         // Center the submit button
         centerButtonInAnchorPane();
@@ -38,7 +42,7 @@ public class SelectionsController extends Controller implements Initializable {
 
     private void centerButtonInAnchorPane() {
         AnchorPane anchorPane = (AnchorPane) submit.getParent();
-        AnchorPane.setLeftAnchor(submit, (anchorPane.getPrefWidth() - submit.getWidth()) / 2);
+        AnchorPane.setLeftAnchor(submit,  (anchorPane.getPrefWidth() - submit.getWidth()) / 2);
         AnchorPane.setTopAnchor(submit, (anchorPane.getPrefHeight() - submit.getHeight()) / 2);
     }
 
@@ -47,8 +51,6 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     public void handleDataSetsToggle() {
-        addFilter.getSelectionModel().clearSelection();
-
         Toggle selectedToggle = dataSets.getSelectedToggle();
         if (selectedToggle != null) {
             RadioButton radioButton = (RadioButton) selectedToggle;
@@ -62,49 +64,73 @@ public class SelectionsController extends Controller implements Initializable {
             }
         }
     }
-
+// START OF HANDLING RETRIEVAL OF USER INPUT OF FILTER OPTIONS
     public void handleAddFilter() {
-        String selectedFilter = (String) addFilter.getSelectionModel().getSelectedItem();
+        String selectedFilter = addFilter.getSelectionModel().getSelectedItem();
         if (selectedFilter == null) return;
 
-        if (selectedFilter.equals("By Grade")) {
-            handleByGradeFilter();
-        }
-
+        handleFilter(selectedFilter);
         openSmallWindow(selectedFilter);
     }
 
-    private void handleByGradeFilter() {
-        GradesFilterController gradesFilterController = (GradesFilterController) getController("By Grade");
-        gradesFilterController.setDataCallback(nodes -> {
-            String labelText = createLabelTextForFilter(nodes);
+    private void handleFilter(String selectedFilter) {
+        Controller controller = null;
+        switch (selectedFilter) {
+            case "By Grade":
+                controller = (ByGradesFilterController) getController(selectedFilter);
+                break;
+            case "By Course":
+                controller = (ByCourseFilterController) getController(selectedFilter);
+                break;
+            case "By GPA":
+                controller = (ByGPAFilterController) getController(selectedFilter);
+                break;
+            case "By Property":
+                controller = (ByPropertyFilterController) getController(selectedFilter);
+                break;
+            case "By Student ID":
+                controller = (ByStudentIdFilterController) getController(selectedFilter);
+                break;
+        }
+        controller.setDataCallback(nodes -> {
+            String labelText = createLabelTextForFilter(nodes, selectedFilter);
             createFilterItem(labelText);
         });
     }
 
-    private String createLabelTextForFilter(Node[] nodes) {
+    private String createLabelTextForFilter(Node[] nodes, String selectedFilter) {
         String labelText = "";
         if (nodes.length == 1) {
             Node node = nodes[0];
-            if (node instanceof Slider) {
-                Slider slider = (Slider) node;
-                labelText = "Filter By Grade: " + slider.getValue();
-            } else if (node instanceof TextField) {
-                TextField textField = (TextField) node;
-                labelText = getTextFieldFilterText(textField);
+            if (node instanceof Slider slider) labelText = "Filter "+ selectedFilter + ": " + slider.getValue();
+            else if (node instanceof TextField textField) labelText = getTextFieldFilterText(textField, selectedFilter);
+        }
+        if (nodes.length == 2) {
+            if (nodes[0] instanceof ComboBox comboBox) {
+                RadioButton radioButton = (RadioButton) nodes[1];
+                labelText = "Filter " + selectedFilter + ": " + radioButton.getText() + " [" + comboBox.getValue() + "]";
+            } else if (nodes[0] instanceof Slider slider1) {
+                Slider slider2 = (Slider) nodes[1];
+                labelText = "Filter " + selectedFilter + "s: " + String.format("%.2f", slider1.getValue()) + " - " + String.format("%.2f", slider2.getValue());
+            } else if (nodes[0] instanceof TextField min) {
+                TextField max = (TextField) nodes[1];
+                labelText = "Filter " + selectedFilter + "s: " + min.getText() + " - " + max.getText();
             }
-        } else if (nodes.length == 2) {
-            Slider slider1 = (Slider) nodes[0];
-            Slider slider2 = (Slider) nodes[1];
-            labelText = "Filter By Grades: " + slider1.getValue() + " - " + slider2.getValue();
+        }
+        if(nodes.length == 3) {
+            if (nodes[0] instanceof TextField min) {
+                TextField max = (TextField) nodes[1];
+                RadioButton radioButton = (RadioButton) nodes[2];
+                labelText = "Filter " + selectedFilter + ": " + radioButton.getText() + " [" + min.getText() + " - " + max.getText() + "]";
+            }
         }
         return labelText;
     }
 
-    private String getTextFieldFilterText(TextField textField) {
+    private String getTextFieldFilterText(TextField textField, String selectedFilter) {
         String text = textField.getText().trim();
         if (text.matches("(\\d+\\s*,\\s*)*\\d+")) {
-            return "Filter By Specific Grades: " + text;
+            return "Filter By Specific " + selectedFilter.substring(3) +"s: " + text;
         } else {
             return "Invalid Input: Please enter numbers separated by commas.";
         }
@@ -128,8 +154,17 @@ public class SelectionsController extends Controller implements Initializable {
 
     private Button createRemoveButton(HBox filterItem) {
         Button removeButton = new Button("✖");
-        removeButton.setOnAction(event -> filtersContainer.getChildren().remove(filterItem));
-        //removeButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Allow button to expand
+        removeButton.setOnAction(event -> {
+            filtersContainer.getChildren().remove(filterItem);
+            if(filtersContainer.getChildren().isEmpty()) {
+                filtersScrollPane.setVisible(false);
+
+                VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
+                int currentIndex = parent.getChildren().indexOf(addFilter);
+                parent.getChildren().remove(addFilter);
+                parent.getChildren().add(currentIndex - 1, addFilter);
+            }
+        });
         return removeButton;
     }
 
@@ -137,7 +172,7 @@ public class SelectionsController extends Controller implements Initializable {
     private void checkForFirstFilter() {
         if (filtersContainer.getChildren().isEmpty()) {
             filtersScrollPane.setVisible(true);
-            VBox parent = (VBox) container.getChildren().get(0); // Assuming first child is the parent VBox
+            VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
             int currentIndex = parent.getChildren().indexOf(addFilter);
             parent.getChildren().remove(addFilter);
             parent.getChildren().add(currentIndex + 1, addFilter);
@@ -150,10 +185,12 @@ public class SelectionsController extends Controller implements Initializable {
             stage.setTitle("Filter Options");
             stage.setScene(getScene(scene));
             stage.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+// END OF HANDLING FILTER STUFF
 
     public void createDropDown() {
         ngSelect.setVisible(!ngSelect.isVisible());

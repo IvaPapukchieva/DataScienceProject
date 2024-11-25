@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<AnchorPane prefHeight="250.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.FilterControllers.ByPropertyFilterController">
+    <children>
+
+        <fx:define>
+            <ToggleGroup fx:id="toggleGroup" />
+        </fx:define>
+
+
+        <Label layoutX="150.0" layoutY="5.0" text="Filter Options" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Label>
+
+        <RadioButton layoutX="12.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" selected="true" text="Neuro-Synaptic Interface Level" toggleGroup="${toggleGroup}" />
+        <RadioButton layoutX="12.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" text="Plasma Conductivity Quotient" toggleGroup="${toggleGroup}" />
+        <RadioButton layoutX="12.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" text="Chrono-Adaptation Rate" toggleGroup="${toggleGroup}" />
+        <RadioButton layoutX="12.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" text="Telepathic Synchronisation Index" toggleGroup="${toggleGroup}" />
+        <RadioButton layoutX="12.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" text="Aetheric Resonance Capacity" toggleGroup="${toggleGroup}" />
+
+
+        <TextField fx:id="textFieldMin" layoutX="15.0" layoutY="175.0" prefHeight="25.0" prefWidth="170.0" promptText="Enter Minimum" visible="false" />
+        <TextField fx:id="textFieldMax" layoutX="200.0" layoutY="175.0" prefHeight="25.0" prefWidth="170.0" promptText="Enter Maximum" visible="false" />
+
+        <Label fx:id="minLabel" layoutX="15.0" layoutY="150.0" text="Select Min" visible="false" />
+        <Label fx:id="maxLabel" layoutX="200.0" layoutY="150.0" text="Select Max" visible="false" />
+
+        <Label fx:id="subCategoryLabel" layoutX="15.0" layoutY="150.0" text="Select Subcategory" />
+
+        <ComboBox fx:id="subCategoryComboBox" layoutX="15.0" layoutY="175.0" prefHeight="25.0" prefWidth="180.0" promptText="Choose Subcategory">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="nothing" />
+                    <String fx:value="low" />
+                    <String fx:value="medium" />
+                    <String fx:value="high"/>
+                    <String fx:value="full"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <Button fx:id="addButton" layoutX="171.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleAddFilter" text="Add" />
+    </children>
+</AnchorPane>

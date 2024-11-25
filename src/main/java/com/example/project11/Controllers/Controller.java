@@ -1,22 +1,25 @@
 package com.example.project11.Controllers;
 
-
+import com.example.project11.DataCallback;
 import com.example.project11.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
 public abstract class Controller {
 
     private static final HashMap<String, Scene> scenes = new HashMap<>();
     private static final HashMap<String, Object> controllers = new HashMap<>();
+    private DataCallback dataCallback;
 
 
     public static void cacheScenes() {
@@ -32,13 +35,29 @@ public abstract class Controller {
             controllers.put("selections", selectionsLoader.getController());
 
             //cache "gradesFilter" scene and Controller
-            FXMLLoader gradesFilterLoader = new FXMLLoader(Main.class.getResource("gradesFilter.fxml"));
+            FXMLLoader gradesFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByGradesFilter.fxml"));
             scenes.put("By Grade", new Scene(gradesFilterLoader.load(), 380, 250));
             controllers.put("By Grade", gradesFilterLoader.getController());
 
-            FXMLLoader newSceneLoader = new FXMLLoader(Main.class.getResource("separateQuestions.fxml"));  // Create a new FXML file
-            scenes.put("separateQuestions", new Scene(newSceneLoader.load(), 320, 480));  // Adjust size accordingly
-            controllers.put("separateQuestions", newSceneLoader.getController());
+            //cache "courseFilter" scene and Controller
+            FXMLLoader courseFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByCourseFilter.fxml"));
+            scenes.put("By Course", new Scene(courseFilterLoader.load(), 380, 250));
+            controllers.put("By Course", courseFilterLoader.getController());
+
+            //cache "courseFilter" scene and Controller
+            FXMLLoader gpaFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByGPAFilter.fxml"));
+            scenes.put("By GPA", new Scene(gpaFilterLoader.load(), 380, 250));
+            controllers.put("By GPA", gpaFilterLoader.getController());
+
+            //cache "propertyFilter" scene and Controller
+            FXMLLoader propertyFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByPropertyFilter.fxml"));
+            scenes.put("By Property", new Scene(propertyFilterLoader.load(), 380, 250));
+            controllers.put("By Property", propertyFilterLoader.getController());
+
+            //cache "propertyFilter" scene and Controller
+            FXMLLoader studentIdFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByStudentIdFilter.fxml"));
+            scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
+            controllers.put("By Student ID", studentIdFilterLoader.getController());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,14 +96,9 @@ public abstract class Controller {
             if (((ImageView) mouseEvent.getSource()).getId().equals("statisticsImage")) {
                 changeScene(mouseEvent, "selections");
             }
-            if (((ImageView) mouseEvent.getSource()).getId().equals("questionsImage")) {
-                changeScene(mouseEvent, "separateQuestions");
-            }
-
             if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage")) {
                 changeScene(mouseEvent, "start");
             }
-
 
         }
     }
@@ -99,5 +113,13 @@ public abstract class Controller {
         Stage stage = (Stage) ((javafx.scene.Node) mouseEvent.getSource()).getScene().getWindow();
         // set the new scene on the stage
         stage.setScene(scene);
+    }
+    public void setDataCallback(DataCallback dataCallback) {
+        this.dataCallback = dataCallback;
+    }
+
+
+    public DataCallback getDataCallback() {
+        return this.dataCallback;
     }
 }
