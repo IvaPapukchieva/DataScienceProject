@@ -1,6 +1,7 @@
 package com.example.project11.ProjectInfo.STEP2;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**Counted how many grades are each of the grades starting from 6.0 and if a course has more 6’s than any
@@ -9,16 +10,18 @@ import java.util.Scanner;
  * grades over the number of courses multiplied by 100 */
 
 public class GraduatePassingGradePredictionThreshold {
+    // Creating a hash map
+    private HashMap<Integer, Double> coursePassingMap;
 
     public GraduatePassingGradePredictionThreshold(String fName) {
         try {
         	// Adapt this when you want to read and display a different file
             File file=new File(fName);
-            
+
+            coursePassingMap = new HashMap<>();
+
             // This code uses two Scanners, one which scans the file line per line
             Scanner fileScanner = new Scanner(file);
-
-            
 
             int linesDone = 0;
             double[][] allStudents = new double[19353][33];
@@ -49,69 +52,57 @@ public class GraduatePassingGradePredictionThreshold {
 				linesDone++;
             	lineScanner.close();
             }
-		
-			
-            double[] passing = pass(allStudents);
-			for(int i=0;i<33;i++){
-                int p=i+1;
-             //   System.out.println("The passing percentage the courses " + p + "is: " + passing[i] + "%");
 
+            // Calculate passing percentages
+            double[] passingPercentages = calculatePassingPercentages(allStudents);
+
+            for (int i = 0; i < passingPercentages.length; i++) {
+                coursePassingMap.put(i + 1, passingPercentages[i]); // Course numbers start at 1
             }
-
-            double sum=0;
-            for(int i=0;i<33;i++){
-                sum=sum+passing[i];
-            }
-            double avg = sum/33;
-           // System.out.println("The passing percentage for all courses is: " + avg + "%");
-
 
             fileScanner.close();
-
-		
 
         } catch (Exception ex) {
             ex.printStackTrace();
 		}
-
-		
-
-		
-
-
     }
+    // a method for calculating a passing percentage
+    private double[] calculatePassingPercentages(double[][] matrix) {
+        int numRows = matrix.length;
+        int numCols = matrix[0].length;
+        double[] passing = new double[numCols];
 
-public double[] pass(double[][] matrix){
-    int numRows = matrix.length;
-    int numCols = matrix[0].length;
-    double[] passing = new double[numCols];
-    int i, j; 
-    double sum=0, avg;
-    
-    // Iterate over each column
-    for (j = 0; j < numCols; j++) {
-       int count6 = 0, count7=0, count8=0, count9=0,count10 =0;
+        for (int col = 0; col < numCols; col++) {
+            int count6 = 0, count7 = 0, count8 = 0, count9 = 0, count10 = 0;
 
-        for (i = 0; i < numRows; i++) {
-            if(matrix[i][j]==6.0)
-            //assuming that 6.0 is the passing grade, counting how many passing grades are
-            count6++;
-            if(matrix[i][j]==7.0)
-            count7++;
-            if(matrix[i][j]==8.0)
-            count8++;
-            if(matrix[i][j]==9.0)
-            count9++;
-            if(matrix[i][j]==10.0)
-            count10++;
+            for (int row = 0; row < numRows; row++) {
+                if (matrix[row][col] == 6.0) count6++;
+                if (matrix[row][col] == 7.0) count7++;
+                if (matrix[row][col] == 8.0) count8++;
+                if (matrix[row][col] == 9.0) count9++;
+                if (matrix[row][col] == 10.0) count10++;
+            }
+
+            int totalGrades = count6 + count7 + count8 + count9 + count10;
+
+            if (totalGrades > 0) {
+                if (count6 > count7 && count6 > count8 && count6 > count9 && count6 > count10) {
+                    // Majority grades are 6.0
+                    passing[col] = ((double) count6 / totalGrades) * 100;
+                } else {
+                    // Calculate total grades as a percentage of all rows
+                    passing[col] = ((double) totalGrades / numRows) * 100;
+                }
+            } else {
+                passing[col] = 0.0; // No grades found in this course
+            }
         }
-        int total = count6+count7+count8+count9+count10;
-        if(count6>count7 && count6>count8 && count6>count9 && count6>count10)
-            //there must be a lot of 5s
-            passing[j]= ((double) count6/total)*100;
-            else
-            passing[j]= ((double) total/numRows)*100;
-    }
+
         return passing;
+    }
+
+    // a getter for the hash map
+    public HashMap<Integer, Double> getCoursePassingMap() {
+        return coursePassingMap;
     }
 }
