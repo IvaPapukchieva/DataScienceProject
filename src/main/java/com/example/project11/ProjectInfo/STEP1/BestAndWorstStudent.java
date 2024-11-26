@@ -19,6 +19,7 @@ public class BestAndWorstStudent {
 
 	/**
 	 * Finds the best and worst students and returns a Map containing their IDs and GPAs.
+	 *
 	 * @return A Map with keys "bestStudent" and "worstStudent", each mapping to a Map of student ID and GPA.
 	 */
 	public Map<String, Map<Integer, Double>> findBestAndWorstStudent() {
@@ -74,3 +75,4 @@ public class BestAndWorstStudent {
 			System.out.println("Student " + studentID + " -> GPA: " + String.format("%.2f", studentGPA.get(studentID)));
 		}
 	}
+}
