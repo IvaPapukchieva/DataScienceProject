@@ -35,7 +35,7 @@ public class MainData {
      double[][] meanLoader = currentGradeLoaderNG.readAllStudents();
      double[][] loaderNG= currentGradeLoader.readAllStudents();
      double[][] graduateLoader= graduatingGradesLoader.readAllStudents();
-     ArrayList<ArrayList<Double>> loaderNoNG=currentGradeLoaderRemoveNG.readAllStudents();
+     double[][] loaderNoNG=currentGradeLoaderRemoveNG.readAllStudents();
      double[][] bootstrappingLoader= weightedBootstrapping.readAllStudents();
 
 
@@ -114,10 +114,5 @@ public class MainData {
 //     FilterBySpecificGrade filter = new FilterBySpecificGrade(5, meanLoader);
 //     Map<String, Integer> gradeDistribution = filter.calculateStudentsGradeDistribution();
 //     System.out.println(gradeDistribution);
-
-     FilterByGradeRange filter = new FilterByGradeRange(4, 7, meanLoader);
-     Map<String, Integer> gradeDistribution=filter.calculateGradeRangeDistribution();
-     System.out.println(gradeDistribution);
-
 
 }}

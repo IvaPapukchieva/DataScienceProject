@@ -80,3 +80,4 @@ public class EasiestClasses {
             System.out.println("Course Index: " + courseIndex + ", Average Score: " + easiestClassesMap.get(courseIndex));
         }
     }
+}

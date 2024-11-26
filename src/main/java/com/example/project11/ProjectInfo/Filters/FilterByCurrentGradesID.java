@@ -13,7 +13,8 @@ import java.util.stream.IntStream;
 public class FilterByCurrentGradesID  extends CurrentGradeLoader {
 
 private int id;
-private int []ID;
+private int[] ID;
+
     public FilterByCurrentGradesID(int id, double [][] allStudents ) throws FileNotFoundException {
         super();
         this.id = id;
@@ -28,8 +29,9 @@ private int []ID;
                     .findFirst()
                     .orElse(new double[0]);
         }
+
         public double[][] getStudentsGradesById(int[] ID) {
-        this.ID = ID;
+            this.ID = ID;
             double[][] results = new double[ID.length][33];
 
             for (int j = 0; j < ID.length; j++) {
@@ -40,7 +42,8 @@ private int []ID;
                         .mapToObj(i -> allStudents[i])
                         .findFirst()
                         .orElse(new double[0]);
-            }return results;
+            }
+            return results;
 
 
         }

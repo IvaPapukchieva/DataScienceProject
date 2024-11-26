@@ -23,7 +23,7 @@ public class HardestClasses {
             findTopThreeHardestCourses(averageCourse);
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new String[]{"Error calculating hardest classes"};
+            return null;
         }
         return hardestClassesMap;
     }

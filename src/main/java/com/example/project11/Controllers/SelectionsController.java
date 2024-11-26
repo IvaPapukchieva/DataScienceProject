@@ -3,6 +3,7 @@ package com.example.project11.Controllers;
 
 import com.example.project11.Controllers.FilterControllers.*;
 import com.example.project11.FilterProcessing.Filter;
+import com.example.project11.FilterProcessing.FilterData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -14,9 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,7 +33,7 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
-    private ArrayList<Filter<Object>> filters;
+    private ArrayList<Filter> filters;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,6 +42,7 @@ public class SelectionsController extends Controller implements Initializable {
         ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs");
         addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property", "By Student ID");
 
+        ngButton.setSelected(true);
         // Center the submit button
         centerButtonInAnchorPane();
     }
@@ -49,8 +53,22 @@ public class SelectionsController extends Controller implements Initializable {
         AnchorPane.setTopAnchor(submit, (anchorPane.getPrefHeight() - submit.getHeight()) / 2);
     }
 
-    public void submitButton() {
+    public void submitButton() throws FileNotFoundException {
         System.out.println(filters.toString());
+        if(dataSets.getSelectedToggle() == null) return;
+        RadioButton radioButton = (RadioButton) dataSets.getSelectedToggle();
+        FilterData filterData = null;
+        if(radioButton.getText().equals("Graduate Grades")) {filterData = new FilterData(filters, "graduatingGradesLoader");}
+        else if(radioButton.getText().equals("Undergraduate Grades") && !ngButton.isSelected()) {filterData = new FilterData(filters, "currentGradeLoader");}
+        else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Weighted Randomization")) {filterData = new FilterData(filters, "weightedBootstrappingLoader");}
+        else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Replace With Average")) {filterData = new FilterData(filters, "currentGradeLoaderNG");}
+        else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Remove NGs")) {filterData = new FilterData(filters, "currentGradeLoaderRemoveNG");}
+
+        double[][] filteredData = filterData.applyFilters();
+        System.out.println(Arrays.deepToString(filteredData));
+
+        System.out.println("Reached end of method");
+
     }
 
     public void handleDataSetsToggle() {
@@ -77,24 +95,14 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     private void handleFilter(String selectedFilter) {
-        Controller controller = null;
-        switch (selectedFilter) {
-            case "By Grade":
-                controller = (ByGradesFilterController) getController(selectedFilter);
-                break;
-            case "By Course":
-                controller = (ByCourseFilterController) getController(selectedFilter);
-                break;
-            case "By GPA":
-                controller = (ByGPAFilterController) getController(selectedFilter);
-                break;
-            case "By Property":
-                controller = (ByPropertyFilterController) getController(selectedFilter);
-                break;
-            case "By Student ID":
-                controller = (ByStudentIdFilterController) getController(selectedFilter);
-                break;
-        }
+        Controller controller = switch (selectedFilter) {
+            case "By Grade" -> (ByGradesFilterController) getController(selectedFilter);
+            case "By Course" -> (ByCourseFilterController) getController(selectedFilter);
+            case "By GPA" -> (ByGPAFilterController) getController(selectedFilter);
+            case "By Property" -> (ByPropertyFilterController) getController(selectedFilter);
+            case "By Student ID" -> (ByStudentIdFilterController) getController(selectedFilter);
+            default -> null;
+        };
         controller.setDataCallback(nodes -> {
             String labelText = createLabelTextForFilter(nodes, selectedFilter);
             createFilterItem(labelText);
@@ -116,7 +124,7 @@ public class SelectionsController extends Controller implements Initializable {
                 list.add(radioButton.getText());
             }
         }
-        filters.add(new Filter<Object>(type, list));
+        filters.add(new Filter(type, list));
     }
 
     private String createLabelTextForFilter(Node[] nodes, String selectedFilter) {

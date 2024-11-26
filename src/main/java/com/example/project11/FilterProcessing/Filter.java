@@ -1,7 +1,8 @@
 package com.example.project11.FilterProcessing;
 import java.util.List;
+import java.util.function.Function;
 
-public class Filter<O> {
+public class Filter {
     private final String type; // e.g., "By Grade", "By GPA"
     private final List<Object> values; // The values for the filter
 
@@ -17,6 +18,8 @@ public class Filter<O> {
     public List<Object> getValues() {
         return values;
     }
+
+
 
     @Override
     public String toString() {

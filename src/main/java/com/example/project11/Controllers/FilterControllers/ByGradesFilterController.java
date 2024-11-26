@@ -11,7 +11,7 @@ public class ByGradesFilterController extends AbstractFilterController {
     @Override
     public void sendDataToFirstWindow() {
         DataCallback dataCallback = super.getDataCallback();
-        if (dataCallback != null) return;
+        if (dataCallback == null) return;
         Toggle selected = getSelectedToggle();
         if(selected != null) {
             RadioButton radioButton = (RadioButton) selected;

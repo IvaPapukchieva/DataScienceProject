@@ -2,8 +2,9 @@ package com.example.project11.ProjectInfo.loaders;
 
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
-public class WeightedBootstrapping {
+public class WeightedBootstrapping implements Loader {
 
     private String fileName;
     private int numRows;
