@@ -18,4 +18,6 @@ module com.example.project11 {
     opens com.example.project11.Controllers to javafx.fxml;
     opens com.example.project11.Controllers.FilterControllers to javafx.fxml;
     exports com.example.project11.Controllers.FilterControllers to javafx.fxml;
+    exports com.example.project11.Controllers.Charts;
+    opens com.example.project11.Controllers.Charts to javafx.fxml;
 }

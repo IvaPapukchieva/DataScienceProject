@@ -1,4 +1,4 @@
-package com.example.project11.Charts;
+package com.example.project11.Controllers.Charts;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;

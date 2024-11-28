@@ -7,7 +7,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.project11.Charts.AreaChartControllerBubbleChart.fxml">
+            fx:controller="com.example.project11.Controllers.Charts.AreaChartControllerBubbleChart.fxml">
    <children>
       <AreaChart fx:id="areaChart" layoutX="50.0">
         <xAxis>
