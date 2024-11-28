@@ -1,9 +1,11 @@
 package com.example.project11.Controllers;
 
 
+import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.Controllers.FilterControllers.*;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
+import com.example.project11.ProjectInfo.GradeDistributionCalculator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -66,6 +68,7 @@ public class SelectionsController extends Controller implements Initializable {
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Remove NGs")) {filterData = new FilterData(filters, "currentGradeLoaderRemoveNG");}
 
         double[][] filteredData = filterData.applyFilters();
+
         System.out.println(Arrays.deepToString(filteredData));
 
         System.out.println("Reached end of method");

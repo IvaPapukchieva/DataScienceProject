@@ -1,16 +1,19 @@
 package com.example.project11.Controllers;
 
+import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.DataCallback;
 import com.example.project11.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.RadioButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -59,6 +62,10 @@ public abstract class Controller {
             scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
             controllers.put("By Student ID", studentIdFilterLoader.getController());
 
+            FXMLLoader chartWindowLoader= new FXMLLoader(Main.class.getResource("Filters/Charts/ChartSelection.fxml"));
+            scenes.put("Chart Window", new Scene(chartWindowLoader.load(), 380, 250));
+            controllers.put("Chart Window", chartWindowLoader.getController());
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -100,7 +107,12 @@ public abstract class Controller {
                 changeScene(mouseEvent, "start");
             }
 
+//        } else if(mouseEvent.getSource() instanceof Button){
+//            if (((Button) mouseEvent.getSource()).getId().equals("submit")) {
+//                changeScene(mouseEvent, "Chart Window");
+//            }
         }
+
     }
 
     public void changeScene(MouseEvent mouseEvent, String sceneName) throws IOException {
