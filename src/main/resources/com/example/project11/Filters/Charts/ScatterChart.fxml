@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.project11.Charts.ScatterChartController">
+
+    <ScatterChart fx:id="scatterChart" alternativeColumnFillVisible="true"
+                  alternativeRowFillVisible="false" prefHeight="400"
+                  prefWidth="600" stylesheets="@css/chart-style.css" title="Data Points">
+        <xAxis>
+            <CategoryAxis label="X-Axis" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="Y-Axis" />
+        </yAxis>
+    </ScatterChart>
+
+</AnchorPane>
