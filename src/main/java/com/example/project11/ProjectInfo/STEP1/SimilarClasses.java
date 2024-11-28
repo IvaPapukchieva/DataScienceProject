@@ -3,14 +3,17 @@ package com.example.project11.ProjectInfo.STEP1;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class SimilarClasses {
 
     private ArrayList<ArrayList<Double>> allClasses;
+    private HashMap<String, Double> correlationMap;
 
     public SimilarClasses(ArrayList<ArrayList<Double>> allClasses){
                 this.allClasses = allClasses;
+        this.correlationMap = new HashMap<>();
 
     }
 
@@ -18,7 +21,9 @@ public class SimilarClasses {
         
             double[][] matrix = correlationMatrix(allClasses);
 
-            return matrix;
+        populateCorrelationMap(matrix);
+
+        return matrix;
 
 
     }
@@ -60,6 +65,27 @@ public class SimilarClasses {
             sum += allClasses.get(index).get(i);
         }
         return sum / allClasses.get(index).size();
+    }
+
+    // Method to populate the correlation map
+    private void populateCorrelationMap(double[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                String key = "Class " + (i + 1) + " & Class " + (j + 1);
+                correlationMap.put(key, matrix[i][j]);
+            }
+        }
+
+        // Print the correlation map for verification
+        printCorrelationMap();
+    }
+
+    // Method to print the correlation map
+    private void printCorrelationMap() {
+        System.out.println("Correlation Map:");
+        for (String key : correlationMap.keySet()) {
+            System.out.println(key + " -> " + correlationMap.get(key));
+        }
     }
 
 

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CurrentGradeLoaderRemoveNG {
+public class CurrentGradeLoaderRemoveNG implements Loader {
 
 		private int numRows;
 		private int	numCols;
@@ -17,14 +17,10 @@ public class CurrentGradeLoaderRemoveNG {
 			this.numRows = 1329;
 			this.numCols = 33;
 			this.allStudents = new double[numRows][numCols];
-
-
-
-
 		}
 
 
-			public ArrayList<ArrayList<Double>> readAllStudents() throws FileNotFoundException {
+			public double[][] readAllStudents() throws FileNotFoundException {
         	// Adapt this when you want to read and display a different file.
             File file=new File(fileName);
             
@@ -84,7 +80,7 @@ public class CurrentGradeLoaderRemoveNG {
 
             fileScanner.close();
 
-				return allClasses;
+				return allClasses.toArray(new double[allClasses.size()][allClasses.get(0).size()]);
 
         }
 	public int[]setStudentID() throws FileNotFoundException {

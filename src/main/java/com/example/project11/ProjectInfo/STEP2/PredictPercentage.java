@@ -1,6 +1,7 @@
 package com.example.project11.ProjectInfo.STEP2;//package CODE;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**The program counted how many grades are 6.0 and above (assuming 6.0 is the passing grade) and calculated the 
@@ -8,9 +9,13 @@ import java.util.Scanner;
 
 public class PredictPercentage {
 
+    private HashMap<Integer, Double> coursePassingMap;
+
     public PredictPercentage(String fileName) {
+
         try {
         	// Adapt this when you want to read and display a different file.
+            coursePassingMap = new HashMap<>();
 
             File file=new File(fileName);
             
@@ -67,55 +72,45 @@ public class PredictPercentage {
 				count = 0;
 			}
 
-            double[] passing = pass(allStudents);
-            for(int i=0;i<33;i++){
-                int p=i+1;
+            double[] passingPercentages = calculatePassingPercentages(allStudents);
+            for (int i = 0; i < passingPercentages.length; i++) {
+                coursePassingMap.put(i + 1, passingPercentages[i]); // Map course number to percentage
             }
             //System.out.println("Passing percentage for course " + p + " is: " + passing[i] + "%");}
 
             fileScanner.close();
 
-		
-
         } catch (Exception ex) {
             ex.printStackTrace();
 		}
 
-		
-
-		
-
-
-    } 
-
-
-    public double[] pass(double[][] matrix){
+    }
+    private double[] calculatePassingPercentages(double[][] matrix) {
         int numRows = matrix.length;
         int numCols = matrix[0].length;
         double[] passing = new double[numCols];
-        int i, j; 
-        
-        // Iterate over each column
-        for (j = 0; j < numCols; j++) {
-           int k = 0;
-            int p=0;
 
-            for (i = 0; i < numRows; i++) {
-                if(matrix[i][j]!=0.0)
-                //counting how many grades are
-                p++;
-                if(matrix[i][j]>=6.0)
-                //assuming that 6.0 is the passing grade, counting how many passing grades are
-                k++;
-            }
-            if(p>0){
-                //caslculating the passing percentage
-                passing[j]= ( (double)k/p) *100;}
-                else{
-                passing[j] = 0;}
+        for (int col = 0; col < numCols; col++) {
+            int totalGrades = 0;
+            int passingGrades = 0;
 
+            for (int row = 0; row < numRows; row++) {
+                if (matrix[row][col] != 0.0) {
+                    totalGrades++;
+                    if (matrix[row][col] >= 6.0) {
+                        passingGrades++;
+                    }
+                }
             }
-            return passing;
-        
-}
+
+            passing[col] = (totalGrades > 0) ? ((double) passingGrades / totalGrades) * 100 : 0.0;
+        }
+
+        return passing;
+    }
+
+    // Getter for the HashMap to be used in a GUI
+    public HashMap<Integer, Double> getCoursePassingMap() {
+        return coursePassingMap;
+    }
 }

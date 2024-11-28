@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="250.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.FilterControllers.ByGPAFilterController">
+
+    <children>
+        <Label layoutX="150.0" layoutY="5.0" text="Filter Option" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Label>
+        <Slider fx:id="sliderRange1" layoutX="14.0" layoutY="40.0" majorTickUnit="1" max="10" minorTickCount="1" prefHeight="37.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" />
+        <Slider fx:id="sliderRange2" layoutX="15.0" layoutY="99.0" majorTickUnit="1" max="10" minorTickCount="1" prefHeight="37.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="false" />
+
+
+
+        <Label fx:id="selectMinLabel" layoutX="14.0" layoutY="22.0" text="Select Min" />
+        <Label fx:id="selectMaxLabel" layoutX="14.0" layoutY="77.0" text="Select Max" />
+
+        <Button fx:id="addButton" layoutX="171.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleAddFilter" text="Add" />
+
+
+
+
+    </children>
+
+</AnchorPane>

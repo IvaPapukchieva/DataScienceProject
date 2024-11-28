@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="250.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.FilterControllers.ByStudentIdFilterController">
+    <children>
+
+        <fx:define>
+            <ToggleGroup fx:id="toggleGroup" />
+        </fx:define>
+
+
+        <Label layoutX="150.0" layoutY="5.0" text="Filter Options" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font></Label>
+
+        <RadioButton layoutX="12.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" selected="true" text="Pick Range" toggleGroup="${toggleGroup}" />
+        <RadioButton layoutX="12.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleToggleGroupSelection" text="Enter Multiple Indices" toggleGroup="${toggleGroup}" />
+
+
+        <TextField fx:id="textFieldMin" layoutX="15.0" layoutY="100.0" prefHeight="25.0" prefWidth="170.0" promptText="Enter Minimum" />
+        <TextField fx:id="textFieldMax" layoutX="200.0" layoutY="100.0" prefHeight="25.0" prefWidth="170.0" promptText="Enter Maximum" />
+
+        <Label fx:id="minLabel" layoutX="15.0" layoutY="75.0" text="Select Min" />
+        <Label fx:id="maxLabel" layoutX="200.0" layoutY="75.0" text="Select Max" />
+
+        <Label fx:id="indicesLabel" layoutX="15.0" layoutY="75.0" text="Enter Indices" visible="false" />
+        <TextField fx:id="textFieldIndices" layoutX="15.0" layoutY="100.0" prefHeight="25.0" prefWidth="355.0" promptText="Enter Indices Seperated By Commas" visible="false" />
+
+
+        <Button fx:id="addButton" layoutX="171.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleAddFilter" text="Add" />
+    </children>
+</AnchorPane>

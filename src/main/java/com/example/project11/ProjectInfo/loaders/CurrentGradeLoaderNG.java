@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class CurrentGradeLoaderNG {
+public class CurrentGradeLoaderNG implements Loader {
 
 private int numRows;
 	private int	numCols;

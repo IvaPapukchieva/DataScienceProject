@@ -1,48 +1,45 @@
-package com.example.project11.ProjectInfo.loaders;
+package com.example.project11.ProjectInfo.STEP3.GradePredictorStep3;
 
 
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 
-public class WeightedBootstrapping implements Loader {
+public class WeightedBootstrapping2 {
 
     private String fileName;
     private int numRows;
     private int numCols;
-   public double[][] allStudents;
-   public int [] StudentID;
-    private int course ;
+    private double[][] allStudents;
+    private int course ; 
 
-
-    public WeightedBootstrapping( ) throws FileNotFoundException {
-        CurrentGradeLoader currentGradeLoader = new CurrentGradeLoader();
-       this.allStudents = currentGradeLoader.readAllStudents();
+    public WeightedBootstrapping2( int course , double[][] allStudents) {
+        this.fileName = "C:\\Users\\marco\\Documents\\Project 1-1\\CODE\\STEP3 2\\Step3\\CurrentGrades.csv";
         this.numRows = 1329;
         this.numCols = 33;
-        this.course = course ;
-        this.allStudents = readAllStudents();
-        this.StudentID = currentGradeLoader.setStudentID();
+        this.course = course ; 
+        this.allStudents = allStudents ; 
+
 
 
     }
 
     public double[][] readAllStudents() throws FileNotFoundException {
-
+        
 
         double[][] allCoursesCount = new double[33][11];
 
+        
+        double [] ranges = reps(allStudents, course ) ;
 
-        for (int j = 0; j < allStudents[0].length; j++) {
-            for (int i = 0; i < allStudents.length; i++) {
+
+        int sum = 0  ; 
+        for (int i = 0; i < ranges.length; i++) {
+            sum += ranges[i];
+
+        }
 
 
-                double [] ranges = reps(allStudents, j ) ;
-                int sum = 0  ;
-                for (int c = 0; c < ranges.length; c++) {
-                    sum += ranges[c];
-
-                }
-
+        for (int i = 0; i < allStudents.length; i++) {
+            for (int j = 0; j < allStudents[0].length; j++) {
                 int random = (int) (Math.random() * sum);
                 if (allStudents[i][j] == -1.0) {
                     if (random < ranges[2] && random >= 0) {
@@ -81,13 +78,17 @@ public class WeightedBootstrapping implements Loader {
 
 
         }
+
+        for( int i = 0 ; i<10 ; i++){
+            
+        }
         return allStudents;
 
     }
 
 
-
-
+  
+    
 
     public double[] reps(double[][] allStudents, int classc) {
 
@@ -148,8 +149,4 @@ public class WeightedBootstrapping implements Loader {
         }
         return course;
     }
-
-
-
-    }
-
+}

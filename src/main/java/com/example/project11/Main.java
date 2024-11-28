@@ -1,6 +1,7 @@
 package com.example.project11;
 
 import com.example.project11.Controllers.Controller;
+import com.example.project11.ProjectInfo.loaders.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -27,15 +28,5 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();
-
-
-
     }
-
-
-
-
-
-
-
 }

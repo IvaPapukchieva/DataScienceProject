@@ -2,17 +2,17 @@ package com.example.project11.ProjectInfo.STEP2;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**The program determined that students with 3 or fewer “No Grade” (NG) values are nearing graduation, 
  * resulting in identifying 237 students by saving their indices. */
 
 public class GraduatingSoon {
-
+	private HashMap<Integer, double[]> studentDataMap;
 	public GraduatingSoon(String fName){
 		try {
-			// Adapt this when you want to read and display a different file.
-
+			studentDataMap = new HashMap<>();
 			File file = new File(fName);
 
 			// This code uses two Scanners, one which scans the file line per line
@@ -43,6 +43,7 @@ public class GraduatingSoon {
 						// System.out.print("(s)" + s + " ");
 					}
 				}
+				studentDataMap.put(linesDone, allStudents[linesDone]);
 				// increments the columns of the data
 				linesDone++;
 				lineScanner.close();
@@ -74,8 +75,15 @@ public class GraduatingSoon {
 					soonToGradStudents.add(i);
 				}
 			}
+
+		HashMap<Integer, double[]> filteredMap = new HashMap<>();
+		for (Object studentIndex : soonToGradStudents) {
+			filteredMap.put((Integer) studentIndex, studentDataMap.get(studentIndex));
+		}
+
 			return soonToGradStudents.toString();
 //			System.out.println(soonToGraduate);
 //			System.out.println(soonToGradStudents.toString());
 	}
+
 }
