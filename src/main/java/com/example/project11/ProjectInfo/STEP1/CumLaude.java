@@ -12,7 +12,7 @@ public class CumLaude {
     private double CumLaude;
     private double SummaCumLaude;
     private double MagnaCumLaude;
-    private double[][] allStudents;
+    protected double[][] allStudents;
     private HashMap<String, HashMap<Integer, Double>> honorsMap; // Map to store honor categories and students
 
     public CumLaude(double[][] allStudents) {
