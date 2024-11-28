@@ -7,11 +7,11 @@ import java.util.ArrayList;
  * with the highest and lowest GPAs and prints their information */
 
 public class CumLaude {
-    private  double[] GPA;
+   public  double[] GPA;
     private double CumLaude;
     private double MagnaCumLaude;
     private double SummaCumLaude;
-    private double[][] allStudents;
+public double[][] allStudents;
 
 
     public CumLaude(double[][] allStudents) {
