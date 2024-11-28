@@ -1,6 +1,8 @@
 package com.example.project11.FilterProcessing;
 
+import com.example.project11.ProjectInfo.Filters.FilterByCourse;
 import com.example.project11.ProjectInfo.Filters.FilterByGrade;
+import com.example.project11.ProjectInfo.Filters.FilterByProperty;
 import com.example.project11.ProjectInfo.loaders.*;
 
 import java.io.FileNotFoundException;
@@ -24,23 +26,34 @@ public class FilterData {
             switch (filter.getType()) {
                 case "By Grade":
                     FilterByGrade filterByGrade = new FilterByGrade(result);
-                    if(filter.getValues().size() == 1) {
-                        result = filterByGrade.filterStudents((int) (double) inputs.getFirst());
-                    } else if(filter.getValues().size() == 2) {
-                        result = filterByGrade.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
-                    } else if(filter.getValues().size() > 2) {
-                        result = filterByGrade.filterStudents((Arrays.stream(inputs.toArray())
-                                .mapToInt(o -> (int) o) // Cast each Object to Integer and unbox
-                                .toArray()));
+                    switch (filter.getSubType()) {
+                        case "Number" -> result = filterByGrade.filterStudents((int) (double) inputs.getFirst());
+                        case "Range" -> result = filterByGrade.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Multiple" -> result = filterByGrade.filterStudents((int[]) inputs.getFirst());
                     }
+                    break;
                 case "By Course":
-
+                    FilterByCourse filterByCourse = new FilterByCourse(result);
+                    switch (filter.getSubType()) {
+                        case "Number" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst());
+                        //case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Multiple" -> result = filterByCourse.filterStudents((int[]) inputs.getFirst());
+                    }
+                    break;
                 case "By GPA":
 
+                    break;
                 case "By Property":
-
+                    FilterByProperty filterByProperty = new FilterByProperty((String) filter.getValues().getLast(), (String) filter.getValues().getFirst(), result);
+                    switch (filter.getSubType()) {
+                        case "Categorical" -> result = filterByProperty.filterStudents();
+                        case "Numerical" -> result = filterByProperty.filterStudents();
+                    }
+                    result = filterByProperty.filterStudents();
+                    break;
                 case "By Student ID":
 
+                    break;
             }
         }
 
