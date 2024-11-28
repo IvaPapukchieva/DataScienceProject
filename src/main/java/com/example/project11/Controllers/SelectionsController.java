@@ -34,6 +34,7 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
     private ArrayList<Filter> filters;
+    private String selectedSubType;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,6 +91,7 @@ public class SelectionsController extends Controller implements Initializable {
         String selectedFilter = addFilter.getSelectionModel().getSelectedItem();
         if (selectedFilter == null) return;
 
+
         handleFilter(selectedFilter);
         openSmallWindow(selectedFilter);
     }
@@ -106,41 +108,66 @@ public class SelectionsController extends Controller implements Initializable {
         controller.setDataCallback(nodes -> {
             String labelText = createLabelTextForFilter(nodes, selectedFilter);
             createFilterItem(labelText);
-            extractData(nodes, selectedFilter);
+            extractData(nodes, selectedFilter, selectedSubType);
         });
     }
 
-    private void extractData(Node[] nodes, String type) {
+    private void extractData(Node[] nodes, String type, String subType) {
         List<Object> list = new ArrayList<>();
 
         for(Node node : nodes) {
             if (node instanceof Slider slider) {
                 list.add(slider.getValue());
             } else if (node instanceof TextField textField) {
-                list.add(textField.getText());
+                int[] extractedInts = extractIntegersFromString(textField.getText());
+                list.add(extractedInts);
             } else if (node instanceof ComboBox comboBox) {
                 list.add(comboBox.getValue());
             } else if (node instanceof RadioButton radioButton) {
                 list.add(radioButton.getText());
             }
         }
-        filters.add(new Filter(type, list));
+        filters.add(new Filter(type,subType,list));
     }
+
+    private int[] extractIntegersFromString(String string) {
+        String[] parts = string.split(",");
+
+        int[] numbers = new int[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            numbers[i] = Integer.parseInt(parts[i].trim());
+        }
+
+        return numbers;
+    }
+
+
 
     private String createLabelTextForFilter(Node[] nodes, String selectedFilter) {
         String labelText = "";
         if (nodes.length == 1) {
             Node node = nodes[0];
-            if (node instanceof Slider slider) labelText = "Filter "+ selectedFilter + ": " + slider.getValue();
-            else if (node instanceof TextField textField) labelText = getTextFieldFilterText(textField, selectedFilter);
+            if (node instanceof Slider slider)  {
+                labelText = "Filter "+ selectedFilter + ": " + slider.getValue();
+                selectedSubType = "Number";
+            }
+
+            else if (node instanceof TextField textField) {
+                labelText = getTextFieldFilterText(textField, selectedFilter);
+                selectedSubType = "Multiple";
+            }
         }
         if (nodes.length == 2) {
             if (nodes[0] instanceof ComboBox comboBox) {
                 RadioButton radioButton = (RadioButton) nodes[1];
                 labelText = "Filter " + selectedFilter + ": " + radioButton.getText() + " [" + comboBox.getValue() + "]";
+                selectedSubType = "Categorical";
+
             } else if (nodes[0] instanceof Slider slider1) {
                 Slider slider2 = (Slider) nodes[1];
                 labelText = "Filter " + selectedFilter + "s: " + String.format("%.2f", slider1.getValue()) + " - " + String.format("%.2f", slider2.getValue());
+                selectedSubType = "Range";
             } else if (nodes[0] instanceof TextField min) {
                 TextField max = (TextField) nodes[1];
                 labelText = "Filter " + selectedFilter + "s: " + min.getText() + " - " + max.getText();
@@ -151,6 +178,7 @@ public class SelectionsController extends Controller implements Initializable {
                 TextField max = (TextField) nodes[1];
                 RadioButton radioButton = (RadioButton) nodes[2];
                 labelText = "Filter " + selectedFilter + ": " + radioButton.getText() + " [" + min.getText() + " - " + max.getText() + "]";
+                selectedSubType = "Numerical";
             }
         }
         return labelText;
