@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project11.Controllers.Charts.LineChartController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <LineChart fx:id="lineChart" prefWidth="340" prefHeight="360"
+               stylesheets="css/chart-style.css">
+        <xAxis>
+            <CategoryAxis fx:id="xAxis" label="Grades"/>
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="Count"/>
+        </yAxis>
+    </LineChart>
+</AnchorPane>
