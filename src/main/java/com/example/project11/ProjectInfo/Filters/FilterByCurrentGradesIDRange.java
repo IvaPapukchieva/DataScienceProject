@@ -1,7 +1,6 @@
 package com.example.project11.ProjectInfo.Filters;
 
 import com.example.project11.ProjectInfo.loaders.CurrentGradeLoader;
-import com.example.project11.ProjectInfo.loaders.GraduatingGradesLoader;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -9,12 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class FilterByGraduatingGradesIDRange extends GraduatingGradesLoader {
+public class FilterByCurrentGradesIDRange extends CurrentGradeLoader {
     private int lowerBound;
     private int upperBound;
     private double[][] allStudents;
 
-    public FilterByGraduatingGradesIDRange(int lowerBound, int upperBound, double[][] allStudents) throws FileNotFoundException {
+    public FilterByCurrentGradesIDRange(int lowerBound, int upperBound, double[][] allStudents) throws FileNotFoundException {
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.allStudents = allStudents;
@@ -34,4 +33,9 @@ public class FilterByGraduatingGradesIDRange extends GraduatingGradesLoader {
 
         return results;
     }
+
+
+
+
+
 }

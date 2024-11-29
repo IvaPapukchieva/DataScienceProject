@@ -16,7 +16,7 @@ public class FilterByCourse {
 
     }
 
-    public double[][] getAllStudentsFilterCourse(int[] courses) {
+    public double[][] filterStudents(int[] courses) {
         double[][] filteredStudents = new double[allStudents.length][courses.length];
         for (int i = 0; i < allStudents.length; i++) {
             for (int j = 0 ; j < courses.length; j++) {
@@ -27,12 +27,12 @@ public class FilterByCourse {
         return filteredStudents;
     }
 
-    public double [] getSpecificCourse(int course) {
+    public double[][] filterStudents(int course) {
 //        this can be 1D
         double[] filteredStudents = new double[allStudents.length];
         for (int i = 0; i < allStudents.length; i++) {
             filteredStudents[i] = allStudents[i][course];
         }
-        return filteredStudents;
+        return new double[][]{filteredStudents};
     }
 }

@@ -12,12 +12,11 @@ public class FilterByProperty extends StudentInfoLoader {
 
     private List<Integer> StudentIDByProperty;
     private String Category;
-    private  String SubCategory;
-    private  double[][] allStudents;
+    private String SubCategory;
+    private double[][] allStudents;
 
 
     public FilterByProperty(String Category, String SubCategory, double[][] allStudents) throws FileNotFoundException {
-
         this.allStudents = allStudents;
         this.Category = Category;
         this.SubCategory = SubCategory;
@@ -43,79 +42,27 @@ public class FilterByProperty extends StudentInfoLoader {
             index = 5;
         }
 
-
         int finalIndex = index;
         return Arrays.stream(infoInStrings)
                 .filter(row -> SubCategory.equals(row[finalIndex]))
                 .map(row->Integer.parseInt(row[0]))
                 .toList();
-
-
-
     }
 
-    public double[][] getStudentsGradesById() {
+    public double[][] filterStudents() {
         double[][] results = new double[StudentIDByProperty.size()][33];
 
         for (int j = 0; j < StudentIDByProperty.size(); j++) {
             int id = StudentIDByProperty.get(j);
 
             results[j] = IntStream.range(0, StudentIDByProperty.size())
-                    .filter(i -> StudentID[i] ==id)
+                    .filter(i -> StudentID[i] == id)
                     .mapToObj(i -> allStudents[i])
                     .findFirst()
                     .orElse(new double[0]);
         }
         return results;
     }
-
-        public Map<String, Integer> calculateCourseGradeDistribution() {
-
-            double [][] StudentResults=getStudentsGradesById();
-            Map<String, Integer> gradeCounts = new HashMap<>();
-
-            gradeCounts.put("0", 0);
-            gradeCounts.put("1", 0);
-            gradeCounts.put("2", 0);
-            gradeCounts.put("3", 0);
-            gradeCounts.put("4", 0);
-            gradeCounts.put("5", 0);
-            gradeCounts.put("6", 0);
-            gradeCounts.put("7", 0);
-            gradeCounts.put("8", 0);
-            gradeCounts.put("9", 0);
-            gradeCounts.put("10", 0);
-
-            for (double[] studentGrades :  StudentResults) {
-                for (double grade : studentGrades) {
-                    String range = getGradeRange(grade);
-                    gradeCounts.put(range, gradeCounts.get(range) + 1);
-                }
-            }
-
-            return gradeCounts;
-        }
-
-
-        private String getGradeRange(double grade) {
-            if (grade == 10) return "10";
-            if (grade >= 9) return "9";
-            if (grade >= 8) return "8";
-            if (grade >= 7) return "7";
-            if (grade >= 6) return "6";
-            if (grade >= 5) return "5";
-            if (grade >= 4) return "4";
-            if (grade >= 3) return "3";
-            if (grade >= 2) return "2";
-            if (grade >= 1) return "1";
-            return "0";
-
-
-        }
-
-
-
-
 }
 
 
