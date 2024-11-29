@@ -10,7 +10,8 @@ import java.util.Scanner;
  * grades over the number of courses multiplied by 100 */
 
 public class GraduatePassingGradePredictionThreshold {
-    // Creating a hash map
+
+    private double[][] allStudents;
     private HashMap<Integer, Double> coursePassingMap;
 
     public GraduatePassingGradePredictionThreshold(String fName) {
@@ -29,7 +30,7 @@ public class GraduatePassingGradePredictionThreshold {
             while (fileScanner.hasNextLine() && linesDone < 19353) {
 
             	String line = fileScanner.nextLine();
-            	
+
             	// and one that scans the line entry per entry using the commas as delimiters
             	Scanner lineScanner = new Scanner(line);
                 lineScanner.useDelimiter(",");
@@ -101,8 +102,9 @@ public class GraduatePassingGradePredictionThreshold {
         return passing;
     }
 
-    // a getter for the hash map
+
     public HashMap<Integer, Double> getCoursePassingMap() {
+
         return coursePassingMap;
     }
 }

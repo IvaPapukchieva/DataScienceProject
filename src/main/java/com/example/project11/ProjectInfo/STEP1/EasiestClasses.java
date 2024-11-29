@@ -1,32 +1,35 @@
 package com.example.project11.ProjectInfo.STEP1;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class EasiestClasses {
 
-    private HashMap<Integer, Double> easiestClassesMap; // Map to store course indices and their average scores
+    private Map<String,Double> courseAvargeMap;
 
-    // Constructor to set up file details
     public EasiestClasses() {
-        this.easiestClassesMap = new HashMap<>();
+
+        this.courseAvargeMap = new HashMap<>();
     }
 
-    // Main method to calculate and store the three easiest classes
-    public HashMap<Integer, Double> findEasiestClasses(double[][] allStudents) {
+    public Map<String, Double> findEasiestClasses(double[][] allStudents) {
         try {
-            // Calculate average scores for each course
+
             double[] averageCourse = calculateCourseAverages(allStudents);
 
-            // Identify the top three easiest courses
+            for (int i = 0; i < averageCourse.length; i++) {
+                String courseName = "Course " + (i + 1);
+                courseAvargeMap.put(courseName, averageCourse[i]);
+            }
+
+
             findTopThreeEasiestCourses(averageCourse);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return easiestClassesMap; // Return the map with the easiest classes
+        return courseAvargeMap;
     }
-
-    // Method to calculate the average score for each course
     public double[] calculateCourseAverages(double[][] matrix) {
         int numRows = matrix.length;
         int numCols = matrix[0].length;
@@ -42,7 +45,6 @@ public class EasiestClasses {
         return averageCourse;
     }
 
-    // Method to find the top 3 easiest courses based on average scores and store them in the HashMap
     public void findTopThreeEasiestCourses(double[] averageCourse) {
         int firstIndex = -1, secondIndex = -1, thirdIndex = -1;
         double first = -1.0, second = -1.0, third = -1.0;
@@ -66,18 +68,7 @@ public class EasiestClasses {
             }
         }
 
-        // Store the results in the HashMap
-        easiestClassesMap.put(firstIndex, first);
-        easiestClassesMap.put(secondIndex, second);
-        easiestClassesMap.put(thirdIndex, third);
-
     }
 
-    // Method to print the easiest classes stored in the HashMap
-    private void printEasiestClasses() {
-        System.out.println("Top 3 Easiest Classes:");
-        for (Integer courseIndex : easiestClassesMap.keySet()) {
-            System.out.println("Course Index: " + courseIndex + ", Average Score: " + easiestClassesMap.get(courseIndex));
-        }
-    }
+
 }

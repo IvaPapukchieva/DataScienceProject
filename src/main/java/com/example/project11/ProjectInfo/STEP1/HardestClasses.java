@@ -1,6 +1,7 @@
 package com.example.project11.ProjectInfo.STEP1;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /** This program calculates the average of every course and depending on that it finds the first 3 lowest
  * averages which will represent the first 3 hardest classes
@@ -8,7 +9,7 @@ import java.util.HashMap;
 
 public class HardestClasses {
 
-    private HashMap<Integer, Double> hardestClassesMap; // Map to store course indices and their average scores
+    private Map<String, Double> hardestClassesMap;
 
     // Constructor to set up file details
     public HardestClasses() {
@@ -17,16 +18,16 @@ public class HardestClasses {
     }
 
 
-    public HashMap<Integer, Double>  findHardestClasses(double [][] allStudents) {
-        try {
-            double[] averageCourse = calculateCourseAverages(allStudents);
-            findTopThreeHardestCourses(averageCourse);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return hardestClassesMap;
-    }
+//    public HashMap<Integer, Double>  findHardestClasses(double [][] allStudents) {
+//        try {
+//            double[] averageCourse = calculateCourseAverages(allStudents);
+//            findTopThreeHardestCourses(averageCourse);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        return hardestClassesMap;
+//    }
 
 
     //method to calculate and make an array of the courses's averages
@@ -34,7 +35,7 @@ public class HardestClasses {
         int numRows = matrix.length;
         int numCols = matrix[0].length;
         double[] averageCourse = new double[numCols];
-        int i, j; 
+        int i, j;
         double avg, sum;
 
         // Iterate over each column
@@ -45,14 +46,12 @@ public class HardestClasses {
                 sum = sum + matrix[i][j];
             }
                 avg = (double) sum/numRows;
-            
+
                 averageCourse[j] = avg;
             }
             return averageCourse;
-        
-}
 
-    // method to find which are the first 3 hardest courses
+}
     public  void findTopThreeHardestCourses(double[] averageCourse){
 
         int firstIndex = -1, secondIndex = -1, thirdIndex = -1;
@@ -63,38 +62,27 @@ public class HardestClasses {
             {
             third = second;
             thirdIndex = secondIndex;
-            second = first; 
+            second = first;
             secondIndex = firstIndex;
-            first = averageCourse[i]; 
+            first = averageCourse[i];
             firstIndex = i;
             }
-            
+
             else if (averageCourse[i] < second)
-            { 
-            third = second; 
+            {
+            third = second;
             thirdIndex = secondIndex;
-            second = averageCourse[i]; 
+            second = averageCourse[i];
             secondIndex = i;
-            } 
+            }
             else if (averageCourse[i] < third)
             {
                 third = averageCourse[i];
                 thirdIndex = i;
             }
     }
-        // Store the results in the HashMap
-        hardestClassesMap.put(firstIndex, first);
-        hardestClassesMap.put(secondIndex, second);
-        hardestClassesMap.put(thirdIndex, third);
 
-        // Print the map for verification
-        printHardestClasses();
 
-        }
-    private void printHardestClasses() {
-        System.out.println("Top 3 Hardest Classes:");
-        for (Integer courseIndex : hardestClassesMap.keySet()) {
-            System.out.println("Course Index: " + (courseIndex + 1) + ", Average Score: " + String.format("%.2f", hardestClassesMap.get(courseIndex)));
-        }
     }
+
     }

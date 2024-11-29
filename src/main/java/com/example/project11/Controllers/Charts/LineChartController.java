@@ -15,14 +15,14 @@ public class LineChartController {
     private LineChart<String, Number> lineChart;
 
 
-    public void setChartData(Map<String, Integer> gradeDistribution) {
+    public void setChartData(Map<String, Double> gradeDistribution) {
         lineChart.getData().clear();
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Grade Distribution"); // Optional: Set a name for the series
 
         List<String> colorList = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
+        for (Map.Entry<String, Double> entry : gradeDistribution.entrySet()) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
             series.getData().add(data);
 

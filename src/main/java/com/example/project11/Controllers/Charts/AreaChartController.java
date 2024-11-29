@@ -24,7 +24,7 @@ public class AreaChartController {
             "#89CFF0"
     };
 
-    public void setChartData(Map<String, Integer> gradeDistribution) {
+    public void setChartData(Map<String, Double> gradeDistribution) {
 
         areaChart.getData().clear();
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -33,7 +33,7 @@ public class AreaChartController {
         List<String> colorList = new ArrayList<>();
         int index = 0;
 
-        for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
+        for (Map.Entry<String, Double> entry : gradeDistribution.entrySet()) {
             // Use the key for x-value, and the value for y-value
             double xValue = Integer.parseInt(entry.getKey());
             double yValue = entry.getValue();

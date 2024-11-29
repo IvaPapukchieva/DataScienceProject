@@ -64,7 +64,6 @@
                 </children>
             </HBox>
 
-            <!-- Third Row of 2 Images -->
             <HBox spacing="10.0" alignment="CENTER">
                 <children>
                     <StackPane>
