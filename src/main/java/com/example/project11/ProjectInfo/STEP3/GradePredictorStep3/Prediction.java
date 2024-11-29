@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Scanner ;
 import java.util.Locale.Category; 
 
+// what this part of the code does , is that it predicts the grades using variance reduction
+// , taking in the list of parameter for each specific property and finding the one with heighest variance reduction
+
 class Prediction{
     public static double[][] bootStrapping ;
     public static int course ; 
@@ -396,7 +399,7 @@ class Prediction{
          
       
         public static String[] checker(){
-            String[] result = new String[2];
+        String[] result = new String[2];
                 for(int i = 1 ; i<infoInStrings.length ; i++){
                     if( StudentID.equals(infoInStrings[i][0])){
                         if( allStudents2[i-1][course] != -1.0){
@@ -453,7 +456,10 @@ class Prediction{
 
         }
         public static double getGrade2(int index){
-            ArrayList<Double> ArrList = new ArrayList<>(); 
+
+        // give a prediction of the grade based on the distribution
+       // of the grades that belong to that specific selected parameter
+        ArrayList<Double> ArrList = new ArrayList<>();
             double[] counter= new double[11];
 
             for( int i = 1 ; i <infoInStrings.length ; i++){

@@ -2,7 +2,7 @@ package com.example.project11.ProjectInfo.STEP3.GradePredictorStep3;
 
 
 import java.io.FileNotFoundException;
-
+//this file creates a bootstrap array of values so that we can get more precise results
 public class WeightedBootstrapping2 {
 
     private String fileName;
