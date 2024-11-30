@@ -38,6 +38,10 @@ public abstract class Controller {
             scenes.put("selections", new Scene(selectionsLoader.load(), 320, 480));
             controllers.put("selections", selectionsLoader.getController());
 
+            FXMLLoader seperatequestions = new FXMLLoader(Main.class.getResource("SeperateQuestions.fxml"));
+            scenes.put("SeperateQuestions", new Scene(selectionsLoader.load(), 320, 480));
+            controllers.put("selections", selectionsLoader.getController());
+
             //cache "gradesFilter" scene and Controller
             FXMLLoader gradesFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByGradesFilter.fxml"));
             scenes.put("By Grade", new Scene(gradesFilterLoader.load(), 380, 250));
@@ -109,6 +113,10 @@ public abstract class Controller {
             if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage")) {
                 changeScene(mouseEvent, "start");
             }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("toolboxImage")) {
+                changeScene(mouseEvent, "selections");
+            }
+
 
 //           else if (mouseEvent.getSource() instanceof Button) {
 //                if (((Button) mouseEvent.getSource()).getId().equals("submit"))
