@@ -1,104 +1,220 @@
-    package com.example.project11.Controllers;
+package com.example.project11.Controllers;
 
-    import javafx.fxml.FXML;
-    import javafx.fxml.Initializable;
-    import javafx.scene.control.Button;
-    import javafx.scene.control.Label;
-    import javafx.scene.control.MenuItem;
-    import javafx.scene.control.Slider;
-    import javafx.scene.layout.VBox;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
-    import javafx.event.ActionEvent ;
+import javafx.event.ActionEvent;
+import javafx.util.Duration;
 
-    import java.net.URL;
-    import java.util.ArrayList;
-    import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
-    public class SeparateQuestions extends Controller implements Initializable {
-        // Track selected phases (if needed)
-        public ArrayList<String> sequence = new ArrayList<>();
-        {
-            sequence.add(" ");
-            sequence.add(" ");
-            sequence.add(" ");
-        }
+public class SeparateQuestions extends Controller implements Initializable {
+    // Track selected phases (if needed)
+    public ArrayList<String> sequence = new ArrayList<>();
 
-        public double currentsliderValue ;
+    {
+        sequence.add(" ");
+        sequence.add(" ");
+        sequence.add(" ");
+        sequence.add(" ");
+    }
 
-        @FXML
-        private Slider mySlider; // Connect this to your Slider in FXML
-        @FXML
-        private Button button;
+    public double currentsliderValue;
 
-        @FXML
-        private VBox childComboBox; // VBox for dynamically added ComboBoxes
-        @FXML
-        private MenuItem step1MenuItem;
-        @FXML
-        private MenuItem step2MenuItem;
-        @FXML
-        private MenuItem step3MenuItem;
-        @FXML
-        private MenuItem step4MenuItem;
+    @FXML
+    private Slider mySlider; // Connect this to your Slider in FXML
+    @FXML
+    private Button button;
 
+    @FXML
+    private ToggleButton graduatingGradesButton;
 
-        @Override
-        public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    private ToggleButton currentGradesButton;
 
+    @FXML
+    private ToggleButton bootstrappedGradesButton;
+
+    private ToggleGroup toggleGroup;
 
 
-        }
+    @FXML
+    private VBox childComboBox; // VBox for dynamically added ComboBoxes
+    @FXML
+    private MenuItem step1MenuItem;
+    @FXML
+    private MenuItem step2MenuItem;
+    @FXML
+    private MenuItem step3MenuItem;
+    @FXML
+    private MenuItem step4MenuItem;
+    @FXML
+    private Pagination pagination;
+    @FXML
 
-        @FXML
-        private void handleMenuSelection(ActionEvent event) {
+    private final ArrayList<VBox> pages = new ArrayList<>(); // List to hold page content
+    @FXML
 
-            if(!sequence.isEmpty()){
+    private  Button createButton ;
 
-                MenuItem selectedMenuItem = (MenuItem) event.getSource();
-                String subsection = selectedMenuItem.getText();
-                String property = getParentMenuText(selectedMenuItem);
-                String selectedFunction = "Property: " + property + ", Subsection: " + subsection;
-                System.out.println("Selected Function: " + selectedFunction);
-                sequence.set(0, (property));
-                sequence.set(1, (selectedFunction));
+    @FXML
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        toggleGroup = new ToggleGroup();
+        graduatingGradesButton.setToggleGroup(toggleGroup);
+        currentGradesButton.setToggleGroup(toggleGroup);
+        bootstrappedGradesButton.setToggleGroup(toggleGroup);
+
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            resetButtonStyles();
+            if (newValue != null) {
+                ToggleButton selectedButton = (ToggleButton) newValue;
+                selectedButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
             }
-            else{
-                MenuItem selectedMenuItem = (MenuItem) event.getSource();
-                String subsection = selectedMenuItem.getText();
-                String property = getParentMenuText(selectedMenuItem);
-                String selectedFunction = "Property: " + property + ", Subsection: " + subsection;
-                System.out.println("Selected Function: " + selectedFunction);
-                sequence.add(0, (property));
-                sequence.add(1, (selectedFunction));
+        });
+
+        // Set default styles
+        resetButtonStyles();
 
 
-
-            }
-            System.out.println(sequence);
-
-        }
-
-        @FXML
-        private void getSliderValue(ActionEvent event) {
-
-                double sliderValue = mySlider.getValue();
-                if (sequence.size() < 3) {
-                    sequence.add(String.valueOf(sliderValue));
-                } else {
-                    sequence.set(2, String.valueOf(sliderValue));
-                }
-                System.out.println(sequence);
-            }
+        addNewPage();
+        pagination.setPageCount(pages.size());
+        pagination.setPageFactory(this::createPageContent) ;
 
 
-
-
-        private String getParentMenuText(MenuItem menuItem) {
-            if (menuItem.getParentMenu() != null) {
-                return menuItem.getParentMenu().getText(); // Direct parent is the Menu (Property)
-            }
-            return "Unknown";
-        }
 
 
     }
+    private boolean isfilled(ArrayList<String> arrayList){
+        for( int i = 0  ; i<=4; i++){
+            if(arrayList.get(i).equals(" ")|| Objects.equals(arrayList.get(3), " ")){
+                return false ;
+            }
+            else{
+                return true ;
+            }
+        }
+        return true ;
+    }
+    private void addNewPage() {
+        VBox pageBox = new VBox(10); // 10px spacing
+        pageBox.setStyle("-fx-padding: 20; -fx-alignment: center;");
+
+        Button createButton = new Button("Create Graph");
+        createButton.setVisible(false); // Initially hidden
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (isfilled(sequence)) {
+                createButton.setVisible(true);
+                sequence.clear();
+            } else {
+                createButton.setVisible(false);
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+
+        createButton.setOnAction(event -> {
+            int currentPage = pagination.getCurrentPageIndex();
+            addNewPage(); // Add a new page
+            pagination.setPageCount(pages.size()); // Update the total page count
+            pagination.setCurrentPageIndex(currentPage); // Stay on the current page
+        });
+
+        // Add the button to the page
+        pageBox.getChildren().add(createButton);
+
+        // Store the page
+        pages.add(pageBox);
+    }
+
+    // Method to add a new page with a graph or button
+
+
+   // Page factory to display content for the current page
+    private VBox createPageContent(int pageIndex) {
+        if (pageIndex >= 0 && pageIndex < pages.size()) {
+            return pages.get(pageIndex); // Return the corresponding page content
+        }
+        return new VBox(); // Return empty content if index is invalid
+    }
+
+
+    @FXML
+    private void handleMenuSelection(ActionEvent event) {
+
+        if (!sequence.isEmpty()) {
+
+            MenuItem selectedMenuItem = (MenuItem) event.getSource();
+            String subsection = selectedMenuItem.getText();
+            String property = getParentMenuText(selectedMenuItem);
+            String selectedFunction = "Property: " + property + ", Subsection: " + subsection;
+            System.out.println("Selected Function: " + selectedFunction);
+            sequence.set(0, (property));
+            sequence.set(1, (selectedFunction));
+        } else {
+            MenuItem selectedMenuItem = (MenuItem) event.getSource();
+            String subsection = selectedMenuItem.getText();
+            String property = getParentMenuText(selectedMenuItem);
+            String selectedFunction = "Property: " + property + ", Subsection: " + subsection;
+            System.out.println("Selected Function: " + selectedFunction);
+            sequence.add(0, (property));
+            sequence.add(1, (selectedFunction));
+
+
+        }
+        System.out.println(sequence);
+
+    }
+
+    @FXML
+    private void getSliderValue(ActionEvent event) {
+
+        double sliderValue = mySlider.getValue();
+        if (sequence.size() < 3) {
+            sequence.add(String.valueOf(sliderValue));
+        } else {
+            sequence.set(2, String.valueOf(sliderValue));
+        }
+        System.out.println(sequence);
+    }
+
+
+    private void resetButtonStyles() {
+        graduatingGradesButton.setStyle("-fx-background-color: #cccccc; -fx-text-fill: black;");
+        currentGradesButton.setStyle("-fx-background-color: #cccccc; -fx-text-fill: black;");
+        bootstrappedGradesButton.setStyle("-fx-background-color: #cccccc; -fx-text-fill: black;");
+    }
+
+    @FXML
+    private void handleToggleButtonAction(ActionEvent event) {
+        // Additional logic if needed when a button is pressed
+        ToggleButton pressedButton = (ToggleButton) event.getSource();
+        if (sequence.get(3) == null) {
+            System.out.println(pressedButton.getText() + " button pressed!");
+            sequence.add(3, pressedButton.getText());
+
+        } else {
+            System.out.println(pressedButton.getText() + " button pressed!");
+            sequence.set(3, pressedButton.getText());
+        }
+    }
+
+
+
+    private String getParentMenuText(MenuItem menuItem) {
+        if (menuItem.getParentMenu() != null) {
+            return menuItem.getParentMenu().getText(); // Direct parent is the Menu (Property)
+        }
+        return "Unknown";
+    }
+
+
+}
