@@ -38,10 +38,6 @@ public abstract class Controller {
             scenes.put("selections", new Scene(selectionsLoader.load(), 320, 480));
             controllers.put("selections", selectionsLoader.getController());
 
-            FXMLLoader seperatequestions = new FXMLLoader(Main.class.getResource("SeperateQuestions.fxml"));
-            scenes.put("SeperateQuestions", new Scene(selectionsLoader.load(), 320, 480));
-            controllers.put("selections", selectionsLoader.getController());
-
             //cache "gradesFilter" scene and Controller
             FXMLLoader gradesFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByGradesFilter.fxml"));
             scenes.put("By Grade", new Scene(gradesFilterLoader.load(), 380, 250));
@@ -66,6 +62,11 @@ public abstract class Controller {
             FXMLLoader studentIdFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByStudentIdFilter.fxml"));
             scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
             controllers.put("By Student ID", studentIdFilterLoader.getController());
+
+            FXMLLoader chartWindowFilterLoader = new FXMLLoader(Main.class.getResource("Chart/ChartSelection.fxml"));
+            scenes.put("Chart Window", new Scene( chartWindowFilterLoader.load(), 380, 250));
+            controllers.put("Chart Window",  chartWindowFilterLoader.getController());
+
 
 
 
@@ -116,14 +117,7 @@ public abstract class Controller {
                 changeScene(mouseEvent, "start");
 
             }
-            if (((ImageView) mouseEvent.getSource()).getId().equals("toolboxImage")) {
-                changeScene(mouseEvent, "selections");
-            }
-            if (((ImageView) mouseEvent.getSource()).getId().equals("submit")) {
-                System.out.println("hiiiii");
 
-
-            }
 
         }
     }

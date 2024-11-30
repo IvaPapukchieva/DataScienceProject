@@ -41,6 +41,7 @@ public class FilterData {
                         case "Multiple" -> result = filterByCourse.filterStudents((int[]) inputs.getFirst());
                     }
                     break;
+
                 case "By GPA":
                     FilterByGPA filterByGPA = new FilterByGPA(result);
                     result = filterByGPA.filterStudents((double) inputs.getFirst(), (double) inputs.getLast());
