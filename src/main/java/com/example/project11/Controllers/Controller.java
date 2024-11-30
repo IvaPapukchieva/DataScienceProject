@@ -67,6 +67,8 @@ public abstract class Controller {
             scenes.put("Chart Window", new Scene(chartWindowLoader.load(), 380, 250));
             controllers.put("Chart Window", chartWindowLoader.getController());
 
+
+
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
