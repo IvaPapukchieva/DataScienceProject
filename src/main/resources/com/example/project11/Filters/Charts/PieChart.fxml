@@ -9,6 +9,7 @@
 <?import javafx.scene.chart.PieChart?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+            style="-fx-background-color: #28323D;"
             fx:controller="com.example.project11.Controllers.Charts.PieChartController"
 
              >

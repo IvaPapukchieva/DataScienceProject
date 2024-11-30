@@ -8,11 +8,11 @@ import java.util.HashMap;
  * with the highest and lowest GPAs, storing results in a HashMap. */
 
 public class CumLaude {
-    public double[] GPA;
+    private double[] GPA;
     private double CumLaude;
     private double SummaCumLaude;
     private double MagnaCumLaude;
-    public double[][] allStudents;
+    protected double[][] allStudents;
     private HashMap<String, HashMap<Integer, Double>> honorsMap; // Map to store honor categories and students
 
     public CumLaude(double[][] allStudents) {

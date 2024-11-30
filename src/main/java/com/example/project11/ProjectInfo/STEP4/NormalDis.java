@@ -1,7 +1,7 @@
 package com.example.project11.ProjectInfo.STEP4;
 
 public class NormalDis {
-
+    //  gets the output of the normal distribution of the grades for each particular parameter of the properties
     private double gradesArray[] ; 
     private double distribution[] = new double[11] ; 
 

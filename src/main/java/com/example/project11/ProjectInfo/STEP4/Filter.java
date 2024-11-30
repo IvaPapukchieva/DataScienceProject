@@ -5,7 +5,7 @@ import java.util.Locale.Category;
 
 
 class Filter extends prediction {
-
+    // gets an array that is filtered by the specific parameter
     private ArrayList<Double> specificArrGrades = new ArrayList<>()   ;
     private int CategoryNum;
     private String Name;

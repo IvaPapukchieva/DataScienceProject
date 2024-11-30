@@ -663,7 +663,7 @@ public static String[] categroy2class(double [][]allStudents,String[][] InfoArr,
 	// Stores all info from StudentInfo.csv into a 2d array
 	public static String[][] studentInfo() throws Exception{
 		// Adapt this when you want to read and display a different file.
-		String fileName = "C:\\Users\\marco\\Documents\\Project 1-1\\CODE\\StudentInfo.csv";
+		String fileName = "C:\\Users\\marco\\Documents\\ken_group10_2024\\src\\main\\resources\\csv\\StudentInfo.csv";
 		File file=new File(fileName);
 		
 		// This code uses two Scanners, one which scans the file line per line
@@ -704,7 +704,7 @@ public static String[] categroy2class(double [][]allStudents,String[][] InfoArr,
 	public static double[][] monteCarlo(boolean simulating) throws Exception {
 		// Adapt this when you want to read and display a different file.
 		if(simulating == true) {
-			String fileName = "C:\\Users\\marco\\Documents\\Project 1-1\\CODE\\CurrentGrades.csv";
+			String fileName = "C:\\Users\\marco\\Documents\\ken_group10_2024\\src\\main\\resources\\csv\\CurrentGrades.csv";
 			File file=new File(fileName);
 			
 			// This code uses two Scanners, one which scans the file line per line

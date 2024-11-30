@@ -47,7 +47,8 @@
                     <Image url="@../../../images/back.png" />
                 </image>
             </ImageView>
-            <Button fx:id="submit" onAction="#submitButton" text="Submit" textAlignment="CENTER" />
+            <Button fx:id="submit" onAction="#submitButton" text="Submit" textAlignment="CENTER"
+                    onMouseClicked="#mouseClickedComponent"/>
         </AnchorPane>
 
     </children>

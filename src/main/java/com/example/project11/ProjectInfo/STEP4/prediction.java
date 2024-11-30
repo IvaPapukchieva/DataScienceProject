@@ -28,7 +28,7 @@ public class prediction {
         this.STUDENTID = Name ; 
 
     }
-    public double[][] getPrediction() throws Exception{
+    public double getPrediction() throws Exception{
             infoInStrings = studentInfo();
             course = 0 ; 
             FileScanner AllStudents = new FileScanner();
@@ -74,21 +74,18 @@ public class prediction {
         double[][] Step4bootstrapp = new double[bootstrapArray.length][bootstrapArray[0].length]; 
 
 
-        for( int i = 0 ; i<bootstrapArray[0].length ;i++){
-            course = i ; 
-            int index = 0 ; 
-            double[][] smallestArray = process(); 
-            double[][] ratioArr  = getRatio(smallestArray)  ; 
 
-            for( int  j = 0  ; j<bootstrapArray.length; j++){
+            double[][] smallestArray = process();
+            double[][] ratioArr  = getRatio(smallestArray)  ;
+
                 double[][] Vals = new double[5][2];
-            
 
-                Vals[0] = (getWeightedGrade(Category1, null, ratioArr, 1, true, infoInStrings[j][0]));
-                Vals[1] = (getWeightedGrade(null, Category2, ratioArr, 2, false, infoInStrings[j][0]));
-                Vals[2] = (getWeightedGrade(Category3, null, ratioArr, 3, true, infoInStrings[j][0]));
-                Vals[3] = (getWeightedGrade(Category4, null, ratioArr, 4, true, infoInStrings[j][0]));
-                Vals[4] = (getWeightedGrade(Category5, null, ratioArr, 5, true, infoInStrings[j][0]));
+
+                Vals[0] = (getWeightedGrade(Category1, null, ratioArr, 1, true, STUDENTID));
+                Vals[1] = (getWeightedGrade(null, Category2, ratioArr, 2, false, STUDENTID));
+                Vals[2] = (getWeightedGrade(Category3, null, ratioArr, 3, true, STUDENTID));
+                Vals[3] = (getWeightedGrade(Category4, null, ratioArr, 4, true, STUDENTID));
+                Vals[4] = (getWeightedGrade(Category5, null, ratioArr, 5, true, STUDENTID));
                 System.out.println(Arrays.deepToString(Vals));
 
 
@@ -102,20 +99,16 @@ public class prediction {
                 }
                 System.out.println(average/5);
                 if((average/5)>10){
-                    Step4bootstrapp[j][i] = 10 ; 
+                    return 10 ;
                 }
                 else{
-                    Step4bootstrapp[j][i] = (average/5) ;
-
+                    return (average/5);
                 }
-                index = j ; 
+
                  
 
-            }
-            System.out.println(Arrays.toString(Step4bootstrapp[index]));
-        }
-        return Step4bootstrapp;
-           
+
+
 
         
 

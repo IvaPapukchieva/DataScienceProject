@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 public abstract class Controller {
-
+    private Stage stage ;
     private static final HashMap<String, Scene> scenes = new HashMap<>();
     private static final HashMap<String, Object> controllers = new HashMap<>();
     private DataCallback dataCallback;
@@ -28,6 +28,10 @@ public abstract class Controller {
             FXMLLoader startLoader = new FXMLLoader(Main.class.getResource("start.fxml"));
             scenes.put("start", new Scene(startLoader.load(), 320, 480));
             controllers.put("start", startLoader.getController());
+
+            FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("separateQuestions.fxml"));
+            scenes.put("separateQuestions", new Scene(separateLoader.load(), 720, 482));
+            controllers.put("separateQuestions", separateLoader.getController());
 
             //cache "selections" scene and Controller
             FXMLLoader selectionsLoader = new FXMLLoader(Main.class.getResource("selections.fxml"));
@@ -58,6 +62,7 @@ public abstract class Controller {
             FXMLLoader studentIdFilterLoader = new FXMLLoader(Main.class.getResource("Filters/ByStudentIdFilter.fxml"));
             scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
             controllers.put("By Student ID", studentIdFilterLoader.getController());
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,8 +101,18 @@ public abstract class Controller {
             if (((ImageView) mouseEvent.getSource()).getId().equals("statisticsImage")) {
                 changeScene(mouseEvent, "selections");
             }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("questionsImage")) {
+                changeScene(mouseEvent, "separateQuestions");
+
+
+            }
             if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage")) {
                 changeScene(mouseEvent, "start");
+
+            }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("submit")) {
+                System.out.println("hiiiii");
+
             }
 
         }

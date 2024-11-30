@@ -1,20 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project11.Controllers.SeparateQuestions"
-            prefHeight="200.0" prefWidth="600.0"
-            style="-fx-background-color: #28323D;">
+<AnchorPane prefHeight="482.0" prefWidth="713.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
+    <children>
+        <Circle layoutX="112.0" layoutY="67.0" radius="283.0" stroke="TRANSPARENT" strokeType="INSIDE">
+            <fill>
+                <LinearGradient endX="1.0" endY="0.458628841607565" startX="0.10874704491725769">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color />
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" opacity="0.7799999713897705" />
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Circle>
+        <Text fill="WHITE" layoutX="24.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PHASE 1 VISUALISATIONS" wrappingWidth="205.13671875">
+            <font>
+                <Font name="System Bold" size="23.0" />
+            </font>
+        </Text>
 
+        <VBox fx:id="childComboBox" layoutX="24.0" layoutY="160.0" spacing="10.0" />
 
-
-
-
+        <Ellipse fill="#304a63e5" layoutX="643.0" layoutY="69.0" radiusX="56.0" radiusY="55.0" stroke="#ffffff00" strokeType="INSIDE" />
+        <MenuButton layoutX="24.0" layoutY="123.0" mnemonicParsing="false" text="PICK THE PHASE">
+            <items>
+                <Menu mnemonicParsing="false" text="STEP 1 ">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Easiest Classes" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Hardest Classes" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Similar Classes" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="CumLaude" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Best And Worst Student" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="STEP 2">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Which Students Are Graduating Soon " />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Graduating Soon " />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Predicting Passing Percentages" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="What Year Come for Which class " />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="STEP 3">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="GRADE PREDICTION" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="STEP 4">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="GRADE PREDICTION" />
+                    </items>
+                </Menu>
+            </items>
+        </MenuButton>
+        <Text fill="#f6faff" layoutX="24.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PICK A COURSE " wrappingWidth="165.13671875">
+            <font>
+                <Font name="System Bold" size="15.0" />
+            </font>
+        </Text>
+        <Slider fx:id="mySlider" blockIncrement="1" layoutX="24.0" layoutY="215.0" majorTickUnit="1" max="32" min="0" minorTickCount="0" prefHeight="38.0" prefWidth="282.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="0" />
+        <Button layoutX="24.0" layoutY="261.0" onAction="#getSliderValue" text="Confirm Value" />
+        <Pagination fx:id="pagination" layoutX="330.0" layoutY="-8.0" prefHeight="488.0" prefWidth="394.0" style="-fx-background-color: rgba(255,255,255,0.26);" />
+        <ToggleButton fx:id="graduatingGradesButton" layoutX="24.0" layoutY="365.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="124.0" text="Graduating Grades" onAction="#handleToggleButtonAction" />
+        <ToggleButton fx:id="currentGradesButton" layoutX="170.0" layoutY="365.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Current Grades" onAction="#handleToggleButtonAction" />
+        <ToggleButton fx:id="bootstrappedGradesButton" layoutX="24.0" layoutY="410.0" mnemonicParsing="false" text="Bootstrapped Grades" onAction="#handleToggleButtonAction" />
+    </children>
 </AnchorPane>
