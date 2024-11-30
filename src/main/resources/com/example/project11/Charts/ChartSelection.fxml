@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="container" prefHeight="480.0" prefWidth="320.0" style="-fx-background-color: #28323D;"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.project11.Controllers.Charts.ChartSelectionController">
+    <children>
+        <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <padding>
+                <Insets bottom="20" />
+            </padding>
+
+            <!-- First Row of 2 Images -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <children>
+                    <StackPane>
+                        <children>
+                            <ImageView fx:id="image1" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../ChartImages/AreaChart.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                    <StackPane>
+                        <children>
+                            <ImageView fx:id="image2" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../ChartImages/PieChart.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                </children>
+            </HBox>
+
+            <!-- Second Row of 2 Images -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <children>
+                    <StackPane>
+                        <children>
+                            <ImageView fx:id="image3" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../ChartImages/BarChart.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                    <StackPane>
+                        <children>
+                            <ImageView fx:id="image4" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../ChartImages/ScatterChart.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                </children>
+            </HBox>
+
+            <!-- Third Row of 2 Images -->
+            <HBox spacing="10.0" alignment="CENTER">
+                <children>
+                    <StackPane>
+                        <children>
+                            <ImageView fx:id="image5" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../ChartImages/BubbleChart.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                    <StackPane>
+                        <children>
+                            <ImageView fx:id="image6" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../ChartImages/LineChart.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                </children>
+            </HBox>
+
+        </VBox>
+
+        <Label layoutX="221.0" layoutY="672.0" text="Project 1-1 - Group 10" textAlignment="RIGHT" textFill="#bcbcbc" AnchorPane.bottomAnchor="4" AnchorPane.rightAnchor="8">
+            <font>
+                <Font size="9.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
