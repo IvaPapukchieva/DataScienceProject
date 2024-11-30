@@ -3,13 +3,16 @@ package com.example.project11.Controllers;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -166,6 +169,13 @@ public class SeparateQuestions extends Controller implements Initializable {
             }
 
             if( sequence.get(0).equals("STEP 4")){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("STUDENTCV.fxml"));
+                    AnchorPane anchorPane = loader.load();
+                    pageBox.getChildren().add(anchorPane);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
             // add your chart here
@@ -182,7 +192,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             // Add a new page and navigate to it
             addNewPage(); // Add the new page
             pagination.setPageCount(pages.size()); // Update the total page count
-            pagination.setCurrentPageIndex(pages.size() - 1); // Go to the new page
+            pagination.setCurrentPageIndex(pages.size() -2); // Go to the new page
         });
 
         // Add the button to the page
