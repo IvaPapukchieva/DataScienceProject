@@ -72,6 +72,8 @@ public class SelectionsController extends Controller implements Initializable {
         System.out.println(Arrays.deepToString(filteredData));
 
         System.out.println("Reached end of method");
+        Stage stage = (Stage) submit.getParent().getScene().getWindow();
+        stage.setScene(getScene("Chart Window"));
 
     }
 

@@ -63,10 +63,9 @@ public abstract class Controller {
             scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
             controllers.put("By Student ID", studentIdFilterLoader.getController());
 
-            FXMLLoader chartWindowFilterLoader = new FXMLLoader(Main.class.getResource("Chart/ChartSelection.fxml"));
-            scenes.put("Chart Window", new Scene( chartWindowFilterLoader.load(), 380, 250));
+            FXMLLoader chartWindowFilterLoader = new FXMLLoader(Main.class.getResource("Charts/ChartSelection.fxml"));
+            scenes.put("Chart Window", new Scene(chartWindowFilterLoader.load(), 320, 480));
             controllers.put("Chart Window",  chartWindowFilterLoader.getController());
-
 
 
 
