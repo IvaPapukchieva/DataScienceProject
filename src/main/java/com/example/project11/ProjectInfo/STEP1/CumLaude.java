@@ -2,7 +2,6 @@ package com.example.project11.ProjectInfo.STEP1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /** This program calculates GPAs, finds students eligible for honors by comparing their GPA values to
  * predefined thresholds for each honor level, and identifies the students
@@ -14,46 +13,54 @@ public class CumLaude {
     private double SummaCumLaude;
     private double MagnaCumLaude;
     protected double[][] allStudents;
-    private Map<String,Double>honorsMap;
+    private HashMap<String, HashMap<Integer, Double>> honorsMap; // Map to store honor categories and students
 
     public CumLaude(double[][] allStudents) {
 
         this.GPA = new double[allStudents.length];
+        this.allStudents = new double[allStudents.length][allStudents[0].length];
         this.allStudents = allStudents;
-        this.honorsMap = new HashMap<>();
+        this.honorsMap = new HashMap<>(); // Initialize the map
     }
 
     public void FindCumLaudeStudents() {
-        GPA = CalculateGPA();
+        GPA = CalculateGPA(); // Calculate GPAs
         FindCumLaude();
 
+        // HashMaps for each category
+        HashMap<Integer, Double> cumLaudeMap = new HashMap<>();
+        HashMap<Integer, Double> magnaCumLaudeMap = new HashMap<>();
+        HashMap<Integer, Double> summaCumLaudeMap = new HashMap<>();
 
-        ArrayList<Integer> cumLaudeList = new ArrayList<>();
-        ArrayList<Integer> magnaCumLaudeList = new ArrayList<>();
-        ArrayList<Integer> summaCumLaudeList = new ArrayList<>();
+        // Classify students based on GPA thresholds
         for (int i = 0; i < GPA.length; i++) {
             if (GPA[i] >= SummaCumLaude) {
-                summaCumLaudeList.add(i);
+                summaCumLaudeMap.put(i, GPA[i]);
             } else if (GPA[i] >= MagnaCumLaude) {
-                magnaCumLaudeList.add(i);
+                magnaCumLaudeMap.put(i, GPA[i]);
             } else if (GPA[i] >= CumLaude) {
-                cumLaudeList.add(i);
+                cumLaudeMap.put(i, GPA[i]);
             }
         }
 
-        double cumLaude= cumLaudeList.size();
-        double magnaCumLaude=summaCumLaudeList.size();
-        double summaCumLaude=summaCumLaudeList.size();
+        // Store results in the main honors map
+        honorsMap.put("Cum Laude", cumLaudeMap);
+        honorsMap.put("Magna Cum Laude", magnaCumLaudeMap);
+        honorsMap.put("Summa Cum Laude", summaCumLaudeMap);
 
-        honorsMap.put("Cum-Laude",cumLaude);
-        honorsMap.put("Magna Cum-Laude",magnaCumLaude);
-        honorsMap.put("Summa Cum-Laude",summaCumLaude);
-
-
+        // Output the honors map
+        printHonorsMap();
     }
 
+    private void printHonorsMap() {
+        System.out.println("Cum Laude Map: " + honorsMap.get("Cum Laude"));
+        System.out.println("Magna Cum Laude Map: " + honorsMap.get("Magna Cum Laude"));
+        System.out.println("Summa Cum Laude Map: " + honorsMap.get("Summa Cum Laude"));
+    }
+
+    // Method to calculate GPAs from allStudents
     public double[] CalculateGPA() {
-        int subjectNumber = 33;
+        int subjectNumber = 33; // Number of subjects per student
         for (int i = 0; i < allStudents.length; i++) {
             double sum = 0;
             for (int j = 0; j < allStudents[i].length; j++) {
@@ -64,7 +71,9 @@ public class CumLaude {
         return GPA;
     }
 
+    // Method to calculate Cum Laude, Magna Cum Laude, and Summa Cum Laude thresholds
     public void FindCumLaude() {
+        // Sorting the GPA array in ascending order
         double[] GPAcopy = new double[GPA.length];
         System.arraycopy(GPA, 0, GPAcopy, 0, GPA.length); // Copy GPA array
         java.util.Arrays.sort(GPAcopy); // Sort in ascending order

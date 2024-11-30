@@ -16,13 +16,13 @@ public class ScatterChartController {
     @FXML
     private NumberAxis yAxis;
 
-    public void setChartData(Map<String, Double> dataPoints) {
+    public void setChartData(Map<String, Integer> dataPoints) {
         scatterChart.getData().clear();
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Data Points");
 
-        for (Map.Entry<String, Double> entry : dataPoints.entrySet()) {
+        for (Map.Entry<String, Integer> entry : dataPoints.entrySet()) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
             series.getData().add(data);
         }
