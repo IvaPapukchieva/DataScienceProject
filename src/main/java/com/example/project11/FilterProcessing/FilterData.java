@@ -37,7 +37,7 @@ public class FilterData {
                     FilterByCourse filterByCourse = new FilterByCourse(result);
                     switch (filter.getSubType()) {
                         case "Number" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst());
-                        //case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByCourse.filterStudents((int[]) inputs.getFirst());
                     }
                     break;

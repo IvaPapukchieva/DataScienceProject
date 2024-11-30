@@ -1,7 +1,4 @@
 package com.example.project11.ProjectInfo.Filters;
-import com.example.project11.ProjectInfo.STEP1.*;
-
-import com.example.project11.ProjectInfo.STEP1.CumLaude;
 
 import java.util.*;
 
@@ -14,6 +11,12 @@ public class FilterByGPA {
     }
 
     public double[][] filterStudents(double lowerBound, double upperBound) {
+        if (lowerBound > upperBound) {
+            double temp = upperBound;
+            upperBound = lowerBound;
+            lowerBound = temp;
+        }
+
         List<double[]> filteredStudents = new ArrayList<>();
 
         for (double[] student : allStudents) {
@@ -32,15 +35,17 @@ public class FilterByGPA {
     private double calculateGPA(double[] student) {
         double total = 0;
         int size = 0;
-        for(Double grade : student) {
-            if(grade != -1)  {
+        for (double grade : student) { // Use primitive type here
+            if (grade != -1) {
                 total += grade;
                 size++;
             }
         }
 
-        return total/size;
+        if (size == 0) { // Prevent division by zero
+            return 0; // Or some default value indicating invalid GPA
+        }
+
+        return total / size;
     }
 }
-
-

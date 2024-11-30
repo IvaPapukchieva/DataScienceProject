@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -27,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class SelectionsController extends Controller implements Initializable {
 
+    public ImageView backButtonImage;
     @FXML private Button submit;
     @FXML private ComboBox<String> ngSelect;
     @FXML private ToggleGroup dataSets;
@@ -57,6 +59,7 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     public void submitButton() throws FileNotFoundException {
+        //FILTER DATA
         System.out.println(filters.toString());
         if(dataSets.getSelectedToggle() == null) return;
         RadioButton radioButton = (RadioButton) dataSets.getSelectedToggle();
@@ -71,7 +74,9 @@ public class SelectionsController extends Controller implements Initializable {
 
         System.out.println(Arrays.deepToString(filteredData));
 
-        System.out.println("Reached end of method");
+        //SWITCH SCENE
+        Stage stage = (Stage) submit.getParent().getScene().getWindow();
+        stage.setScene(getScene("start")); // chnage start to whatever
 
     }
 
