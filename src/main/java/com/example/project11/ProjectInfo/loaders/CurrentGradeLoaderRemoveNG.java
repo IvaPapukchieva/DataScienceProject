@@ -79,9 +79,7 @@ public class CurrentGradeLoaderRemoveNG implements Loader {
             /* PRINTS OUT THE ENTIRE 2D ARRAY */ 
 
             fileScanner.close();
-
-				return allClasses.toArray(new double[allClasses.size()][allClasses.get(0).size()]);
-
+			return (double[][]) allClasses.stream().toArray();
         }
 	public int[]setStudentID() throws FileNotFoundException {
 

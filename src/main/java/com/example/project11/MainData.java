@@ -19,7 +19,7 @@ public class MainData {
      CurrentGradeLoaderNG currentGradeLoaderNG = new CurrentGradeLoaderNG();
      CurrentGradeLoader currentGradeLoader=new CurrentGradeLoader();
      GraduatingGradesLoader graduatingGradesLoader= new GraduatingGradesLoader();
-     CurrentGradeLoaderRemoveNG currentGradeLoaderRemoveNG=new CurrentGradeLoaderRemoveNG();
+//     CurrentGradeLoaderRemoveNG currentGradeLoaderRemoveNG=new CurrentGradeLoaderRemoveNG();
      WeightedBootstrapping weightedBootstrapping= new WeightedBootstrapping();
 
 
@@ -35,7 +35,7 @@ public class MainData {
      double[][] meanLoader = currentGradeLoaderNG.readAllStudents();
      double[][] loaderNG= currentGradeLoader.readAllStudents();
      double[][] graduateLoader= graduatingGradesLoader.readAllStudents();
-     double[][] loaderNoNG=currentGradeLoaderRemoveNG.readAllStudents();
+//     double[][] loaderNoNG=currentGradeLoaderRemoveNG.readAllStudents();
      double[][] bootstrappingLoader= weightedBootstrapping.readAllStudents();
 
 
@@ -68,9 +68,9 @@ public class MainData {
  * This class identifies the classes that have the lowest average grades or the greatest difficulty,
  * considering the grade performance of students in those classes.
  */
-     HardestClasses findHardestClassesMeanLoader = new HardestClasses();
-     HardestClasses findHardestClassesGraduateLoader = new HardestClasses();
-     HardestClasses findHardestClassesBootstrappingLoader = new HardestClasses();
+//     HardestClasses findHardestClassesMeanLoader = new HardestClasses();
+//     HardestClasses findHardestClassesGraduateLoader = new HardestClasses();
+//     HardestClasses findHardestClassesBootstrappingLoader = new HardestClasses();
 
 /**
  * Identifies students eligible for honors based on their GPA.
@@ -114,5 +114,10 @@ public class MainData {
 //     FilterBySpecificGrade filter = new FilterBySpecificGrade(5, meanLoader);
 //     Map<String, Integer> gradeDistribution = filter.calculateStudentsGradeDistribution();
 //     System.out.println(gradeDistribution);
+
+
+  AverageGrades easy=new AverageGrades();
+     System.out.println(easy.findEasiestClasses(bootstrappingLoader));
+
 
 }}

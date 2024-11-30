@@ -5,7 +5,6 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<!-- Updated: Bottom container is now an AnchorPane -->
 
 <AnchorPane fx:id="container" prefWidth="200.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SelectionsController">
 
@@ -47,8 +46,7 @@
                     <Image url="@../../../images/back.png" />
                 </image>
             </ImageView>
-            <Button fx:id="submit" onAction="#submitButton" text="Submit" textAlignment="CENTER"
-                    onMouseClicked="#mouseClickedComponent"/>
+            <Button fx:id="submit" onMouseClicked="#submitButton" text="Submit" />
         </AnchorPane>
 
     </children>

@@ -13,7 +13,7 @@ public class ChartSelectionController extends Controller {
 
 
     private GradeDistributionCalculator gradeDistributionCalculator;
-    private Map<String,Integer> chartData;
+    private Map<String,Double> chartData;
     @FXML
     private AreaChartController areaChart;
     @FXML
@@ -30,16 +30,14 @@ public class ChartSelectionController extends Controller {
 
     }
 
-    public void initialize(double [][] filteredData){
+    public void setFilteredData(double[][] filteredData) {
         this.gradeDistributionCalculator = new GradeDistributionCalculator();
-        gradeDistributionCalculator.calculateGradeDistribution(filteredData);
+        this.chartData = gradeDistributionCalculator.calculateGradeDistribution(filteredData);
         areaChart.setChartData(chartData);
         barChart.setChartData(chartData);
         lineChart.setChartData(chartData);
         pieChart.setChartData(chartData);
         scatterChart.setChartData(chartData);
-
-
     }
 
 

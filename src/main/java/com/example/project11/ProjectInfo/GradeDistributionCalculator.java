@@ -6,20 +6,20 @@ import java.util.Map;
 public class GradeDistributionCalculator {
 
 
-    public Map<String, Integer> calculateGradeDistribution(double [][] allStudents) {
+    public Map<String, Double> calculateGradeDistribution(double [][] allStudents) {
 
-        Map<String, Integer> gradeCounts = new HashMap<>();
-        gradeCounts.put("0", 0);
-        gradeCounts.put("1", 0);
-        gradeCounts.put("2", 0);
-        gradeCounts.put("3", 0);
-        gradeCounts.put("4", 0);
-        gradeCounts.put("5", 0);
-        gradeCounts.put("6", 0);
-        gradeCounts.put("7", 0);
-        gradeCounts.put("8", 0);
-        gradeCounts.put("9", 0);
-        gradeCounts.put("10", 0);
+        Map<String, Double> gradeCounts = new HashMap<>();
+        gradeCounts.put("0", 0.0);
+        gradeCounts.put("1", 0.0);
+        gradeCounts.put("2", 0.0);
+        gradeCounts.put("3", 0.0);
+        gradeCounts.put("4", 0.0);
+        gradeCounts.put("5", 0.0);
+        gradeCounts.put("6", 0.0);
+        gradeCounts.put("7", 0.0);
+        gradeCounts.put("8", 0.0);
+        gradeCounts.put("9", 0.0);
+        gradeCounts.put("10", 0.0);
         for (double[] studentGrades : allStudents) {
             for (double grade : studentGrades) {
                 if (grade == -1) continue;
@@ -32,22 +32,21 @@ public class GradeDistributionCalculator {
     }
 
 
-    public Map<String, Integer> calculateStudentsGradeDistribution(double []allStudents) {
+    public Map<String, Double> calculateStudentsGradeDistribution(double []allStudents) {
 
-        Map<String, Integer> gradeCounts = new HashMap<>();
+        Map<String, Double> gradeCounts = new HashMap<>();
 
-        // Initialize grade ranges
-        gradeCounts.put("0", 0);
-        gradeCounts.put("1", 0);
-        gradeCounts.put("2", 0);
-        gradeCounts.put("3", 0);
-        gradeCounts.put("4", 0);
-        gradeCounts.put("5", 0);
-        gradeCounts.put("6", 0);
-        gradeCounts.put("7", 0);
-        gradeCounts.put("8", 0);
-        gradeCounts.put("9", 0);
-        gradeCounts.put("10", 0);
+        gradeCounts.put("0", 0.0);
+        gradeCounts.put("1", 0.0);
+        gradeCounts.put("2", 0.0);
+        gradeCounts.put("3", 0.0);
+        gradeCounts.put("4", 0.0);
+        gradeCounts.put("5", 0.0);
+        gradeCounts.put("6", 0.0);
+        gradeCounts.put("7", 0.0);
+        gradeCounts.put("8", 0.0);
+        gradeCounts.put("9", 0.0);
+        gradeCounts.put("10", 0.0);
 
             for (double grade : allStudents){
                 if (grade == -1) continue;
