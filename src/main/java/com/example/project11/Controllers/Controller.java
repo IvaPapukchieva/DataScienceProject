@@ -1,26 +1,22 @@
 package com.example.project11.Controllers;
 
-import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.DataCallback;
 import com.example.project11.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.RadioButton;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 
 public abstract class Controller {
-
+    private Stage stage ;
     private static final HashMap<String, Scene> scenes = new HashMap<>();
     private static final HashMap<String, Object> controllers = new HashMap<>();
     private DataCallback dataCallback;
@@ -32,6 +28,10 @@ public abstract class Controller {
             FXMLLoader startLoader = new FXMLLoader(Main.class.getResource("start.fxml"));
             scenes.put("start", new Scene(startLoader.load(), 320, 480));
             controllers.put("start", startLoader.getController());
+
+            FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("separateQuestions.fxml"));
+            scenes.put("separateQuestions", new Scene(separateLoader.load(), 720, 482));
+            controllers.put("separateQuestions", separateLoader.getController());
 
             //cache "selections" scene and Controller
             FXMLLoader selectionsLoader = new FXMLLoader(Main.class.getResource("selections.fxml"));
@@ -67,9 +67,6 @@ public abstract class Controller {
             scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
             controllers.put("By Student ID", studentIdFilterLoader.getController());
 
-            FXMLLoader chartWindowLoader= new FXMLLoader(Main.class.getResource("Filters/Charts/ChartSelection.fxml"));
-            scenes.put("Chart Window", new Scene(chartWindowLoader.load(), 380, 250));
-            controllers.put("Chart Window", chartWindowLoader.getController());
 
 
 
@@ -110,20 +107,25 @@ public abstract class Controller {
             if (((ImageView) mouseEvent.getSource()).getId().equals("statisticsImage")) {
                 changeScene(mouseEvent, "selections");
             }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("questionsImage")) {
+                changeScene(mouseEvent, "separateQuestions");
+
+
+            }
             if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage")) {
                 changeScene(mouseEvent, "start");
+
             }
             if (((ImageView) mouseEvent.getSource()).getId().equals("toolboxImage")) {
                 changeScene(mouseEvent, "selections");
             }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("submit")) {
+                System.out.println("hiiiii");
 
 
-//           else if (mouseEvent.getSource() instanceof Button) {
-//                if (((Button) mouseEvent.getSource()).getId().equals("submit"))
-//                    changeScene(mouseEvent, "Chart Window");
-//                }
             }
 
+        }
     }
 
     public void changeScene(MouseEvent mouseEvent, String sceneName) throws IOException {
