@@ -1,6 +1,7 @@
 package com.example.project11.FilterProcessing;
 
 import com.example.project11.ProjectInfo.Filters.FilterByCourse;
+import com.example.project11.ProjectInfo.Filters.FilterByGPA;
 import com.example.project11.ProjectInfo.Filters.FilterByGrade;
 import com.example.project11.ProjectInfo.Filters.FilterByProperty;
 import com.example.project11.ProjectInfo.loaders.*;
@@ -36,12 +37,13 @@ public class FilterData {
                     FilterByCourse filterByCourse = new FilterByCourse(result);
                     switch (filter.getSubType()) {
                         case "Number" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst());
-                        //case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByCourse.filterStudents((int[]) inputs.getFirst());
                     }
                     break;
                 case "By GPA":
-
+                    FilterByGPA filterByGPA = new FilterByGPA(result);
+                    result = filterByGPA.filterStudents((double) inputs.getFirst(), (double) inputs.getLast());
                     break;
                 case "By Property":
                     FilterByProperty filterByProperty = new FilterByProperty((String) filter.getValues().getLast(), (String) filter.getValues().getFirst(), result);

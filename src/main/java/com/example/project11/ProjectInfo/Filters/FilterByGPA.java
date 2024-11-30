@@ -1,75 +1,51 @@
 package com.example.project11.ProjectInfo.Filters;
-import com.example.project11.ProjectInfo.STEP1.*;
 
-import com.example.project11.ProjectInfo.STEP1.CumLaude;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FilterByGPA {
 
     private double[][] allStudents;
-    private double[] GPA;
 
     public FilterByGPA(double[][] allStudents) {
         this.allStudents = allStudents;
-        this.GPA = CalculateGPA();
     }
 
-    public double[] filterBySpecificGPA(double grade) {
-        double[] filteredStudents = new double[GPA.length];
-        for (int i = 0; i < GPA.length; i++) {
-            if (GPA[i] == grade) {
-                filteredStudents[i] = GPA[i];
-            } else {
-                filteredStudents[i] = -1;
+    public double[][] filterStudents(double lowerBound, double upperBound) {
+        if (lowerBound > upperBound) {
+            double temp = upperBound;
+            upperBound = lowerBound;
+            lowerBound = temp;
+        }
+
+        List<double[]> filteredStudents = new ArrayList<>();
+
+        for (double[] student : allStudents) {
+            double gpa = calculateGPA(student);
+            // Check if the GPA is outside the bounds
+            if (gpa < lowerBound || gpa > upperBound) {
+                // Add the student directly to the filtered list
+                filteredStudents.add(student);
             }
         }
-        return filteredStudents;
+
+        // Convert List<double[]> back to double[][]
+        return filteredStudents.toArray(new double[0][0]);
     }
 
-    public double[] getStudentsByGPARange(int lowerBound, int upperBound) {
-        double[] filteredStudents = new double[GPA.length];
-        for (int i = 0; i < GPA.length; i++) {
-            if (GPA[i] >= lowerBound && GPA[i] <= upperBound) {
-                filteredStudents[i] = GPA[i];
-            } else {
-                filteredStudents[i] = -1;
+    private double calculateGPA(double[] student) {
+        double total = 0;
+        int size = 0;
+        for (double grade : student) { // Use primitive type here
+            if (grade != -1) {
+                total += grade;
+                size++;
             }
         }
-        return filteredStudents;
-    }
 
-    public double[] getAllStudentsFilterByGrades(int[] gpa) {
-        double[] filteredStudents = new double[GPA.length];
-        for (int i = 0; i < GPA.length; i++) {
-            boolean matches = false;
-            for (int grade : gpa) {
-                if (GPA[i] == grade) {
-                    matches = true;
-                    break;
-                }
-            }
-            if (matches) {
-                filteredStudents[i] = GPA[i];
-            } else {
-                filteredStudents[i] = -1;
-            }
+        if (size == 0) { // Prevent division by zero
+            return 0; // Or some default value indicating invalid GPA
         }
-        return filteredStudents;
-    }
 
-    public double[] CalculateGPA() {
-        int subjectNumber = 33;
-        double[] GPA = new double[allStudents.length];
-        for (int i = 0; i < allStudents.length; i++) {
-            double sum = 0;
-            for (int j = 0; j < allStudents[i].length; j++) {
-                sum += allStudents[i][j];
-            }
-            GPA[i] = sum / subjectNumber;
-        }
-        return GPA;
+        return total / size;
     }
 }
-

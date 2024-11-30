@@ -14,6 +14,11 @@ public class FilterByGrade {
 
     // by range
     public double[][] filterStudents(int lowerBound, int upperBound) {
+        if (lowerBound > upperBound) {
+            int temp = upperBound;
+            upperBound = lowerBound;
+            lowerBound = temp;
+        }
         double[][] filteredStudents = new double[allStudents.length][allStudents[0].length];
         for (int i = 0; i < allStudents.length; i++) {
             for (int j = 0; j < allStudents[0].length; j++) {

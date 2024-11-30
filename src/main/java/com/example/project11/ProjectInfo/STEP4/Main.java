@@ -5,10 +5,10 @@ import java.util.Arrays;
 class Main{
         public static void main(String[] args) throws Exception{
 
-            prediction effPrediction = new prediction(0 , " ");
+            prediction effPrediction = new prediction(26 , "210333");
      
 
-            System.out.println(Arrays.deepToString(effPrediction.getPrediction()));
+            System.out.println((effPrediction.getPrediction()));
 
             
         }

@@ -6,7 +6,6 @@ import com.example.project11.Controllers.FilterControllers.*;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
 import com.example.project11.ProjectInfo.GradeDistributionCalculator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -57,7 +56,7 @@ public class SelectionsController extends Controller implements Initializable {
         AnchorPane.setTopAnchor(submit, (anchorPane.getPrefHeight() - submit.getHeight()) / 2);
     }
 
-    public void submitButton(MouseEvent mouseEvent) throws IOException {
+    public void submitButton() throws FileNotFoundException {
         System.out.println(filters.toString());
         if(dataSets.getSelectedToggle() == null) return;
         RadioButton radioButton = (RadioButton) dataSets.getSelectedToggle();
@@ -73,10 +72,6 @@ public class SelectionsController extends Controller implements Initializable {
         System.out.println(Arrays.deepToString(filteredData));
 
         System.out.println("Reached end of method");
-        changeScene(mouseEvent, "Chart Window");
-
-
-
 
     }
 
