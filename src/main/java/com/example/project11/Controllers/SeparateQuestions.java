@@ -92,7 +92,7 @@ public class SeparateQuestions extends Controller implements Initializable {
 
 
     }
-    private boolean isfilled(ArrayList<String> arrayList){
+    private boolean isFilled(ArrayList<String> arrayList){
         for( int i = 0  ; i<=4; i++){
             if(arrayList.get(i).equals(" ")|| Objects.equals(arrayList.get(3), " ")){
                 return false ;
@@ -104,34 +104,91 @@ public class SeparateQuestions extends Controller implements Initializable {
         return true ;
     }
     private void addNewPage() {
+        // Create a new VBox for the page
         VBox pageBox = new VBox(10); // 10px spacing
         pageBox.setStyle("-fx-padding: 20; -fx-alignment: center;");
 
+        // Create a "Create Graph" button
         Button createButton = new Button("Create Graph");
         createButton.setVisible(false); // Initially hidden
 
+        // Dynamically check if the sequence array is filled
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            if (isfilled(sequence)) {
-                createButton.setVisible(true);
-                sequence.clear();
+            if (isFilled(sequence)) {
+                createButton.setVisible(true); // Show the button when the array is filled
             } else {
-                createButton.setVisible(false);
+                createButton.setVisible(false); // Hide the button otherwise
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
+        // Button action to add a new page
         createButton.setOnAction(event -> {
-            int currentPage = pagination.getCurrentPageIndex();
-            addNewPage(); // Add a new page
+            if( sequence.get(0).equals("STEP 1")){
+                switch (sequence.get(2)){
+                    case "Easiest Classes":
+                        break;
+
+                    case "Hardest Classes":
+                        break;
+
+                    case "Similar Classes":
+                        break;
+
+                    case "CumLaude":
+                        break;
+
+
+                    case "Best And Worst Student":
+                        break;
+                }
+
+            }
+            if( sequence.get(0).equals("STEP 2")){
+                switch (sequence.get(1)){
+                    case "Which Students Are Graduating Soon ":
+                         break ;
+
+                    case "Graduating Soon ":
+                        break;
+
+                    case "Predicting Passing Percentages":
+                        break;
+
+                    case "What Year Come for Which class ":
+                        break;
+                }
+
+            }
+            if( sequence.get(0).equals("STEP 3")){
+
+            }
+
+            if( sequence.get(0).equals("STEP 4")){
+
+            }
+            // add your chart here
+
+
+
+
+            sequence.clear();
+            for (int i = 0; i < 4; i++) {
+                sequence.add(" "); // Reinitialize the sequence array
+            }
+            resetButtonStyles();
+
+            // Add a new page and navigate to it
+            addNewPage(); // Add the new page
             pagination.setPageCount(pages.size()); // Update the total page count
-            pagination.setCurrentPageIndex(currentPage); // Stay on the current page
+            pagination.setCurrentPageIndex(pages.size() - 1); // Go to the new page
         });
 
         // Add the button to the page
         pageBox.getChildren().add(createButton);
 
-        // Store the page
+        // Store the page in the list
         pages.add(pageBox);
     }
 
@@ -198,12 +255,15 @@ public class SeparateQuestions extends Controller implements Initializable {
         // Additional logic if needed when a button is pressed
         ToggleButton pressedButton = (ToggleButton) event.getSource();
         if (sequence.get(3) == null) {
-            System.out.println(pressedButton.getText() + " button pressed!");
             sequence.add(3, pressedButton.getText());
+            System.out.println(sequence);
+
 
         } else {
-            System.out.println(pressedButton.getText() + " button pressed!");
             sequence.set(3, pressedButton.getText());
+            System.out.println(sequence);
+
+
         }
     }
 
