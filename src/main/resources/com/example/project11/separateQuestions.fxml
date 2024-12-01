@@ -38,32 +38,27 @@
         <MenuButton layoutX="24.0" layoutY="123.0" mnemonicParsing="false" text="PICK THE PHASE">
             <items>
                 <Menu mnemonicParsing="false" text="STEP 1 ">
-                    <items>
-                  <MenuItem mnemonicParsing="false" text="Average Grades" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Easiest Classes" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Hardest Classes" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Similar Classes" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="CumLaude" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Best And Worst Student" />
-                    </items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Average Grades"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Easiest Classes"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Hardest Classes"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Similar Classes"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="CumLaude"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Best And Worst Student"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="STEP 2">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Which Students Are Graduating Soon " />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Graduating Soon " />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Predicting Passing Percentages" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="What Year Come for Which class " />
-                    </items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection"
+                              text="Which Students Are Graduating Soon "/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Graduating Soon "/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection"
+                              text="Predicting Passing Percentages"/>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection"
+                              text="What Year Come for Which class "/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="STEP 3">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="GRADE PREDICTION" />
-                    </items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="GRADE PREDICTION"/>
                 </Menu>
                 <Menu mnemonicParsing="false" text="STEP 4">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="GRADE PREDICTION" />
-                    </items>
+                    <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="GRADE PREDICTION"/>
                 </Menu>
             </items>
         </MenuButton>

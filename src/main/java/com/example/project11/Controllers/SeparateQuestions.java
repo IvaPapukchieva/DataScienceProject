@@ -1,12 +1,19 @@
 package com.example.project11.Controllers;
 
+import com.example.project11.Controllers.Charts.AreaChartController;
 import com.example.project11.Main;
+import com.example.project11.ProjectInfo.STEP1.AverageGrades;
+import com.example.project11.ProjectInfo.loaders.CurrentGradeLoader;
+import com.example.project11.ProjectInfo.loaders.CurrentGradeLoaderNG;
+import com.example.project11.ProjectInfo.loaders.GraduatingGradesLoader;
+import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -14,14 +21,23 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SeparateQuestions extends Controller implements Initializable {
     // Track selected phases (if needed)
+    private CurrentGradeLoaderNG currentGradeLoaderNG = new CurrentGradeLoaderNG();
+    private CurrentGradeLoader currentGradeLoader=new CurrentGradeLoader();
+    private GraduatingGradesLoader graduatingGradesLoader= new GraduatingGradesLoader();
+    //     CurrentGradeLoaderRemoveNG currentGradeLoaderRemoveNG=new CurrentGradeLoaderRemoveNG();
+    private WeightedBootstrapping weightedBootstrapping= new WeightedBootstrapping();
+
+
     public ArrayList<String> sequence = new ArrayList<>();
 
     {
@@ -70,6 +86,9 @@ public class SeparateQuestions extends Controller implements Initializable {
 
     private  Button createButton ;
     private int pagenum = 0 ;
+
+    public SeparateQuestions() throws FileNotFoundException {
+    }
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -132,27 +151,31 @@ public class SeparateQuestions extends Controller implements Initializable {
 
         // Button action to add a new page
         createButton.setOnAction(event -> {
-            if( sequence.get(0).equals("STEP 1")){
-                switch (sequence.get(2)){
-                    case "Easiest Classes":
-                        break;
+            if(sequence.get(0).trim().equalsIgnoreCase("STEP 1")){
+                System.out.println("STEP 1 ");
 
-                    case "Hardest Classes":
-                        break;
+                    if( sequence.get(1).trim().equalsIgnoreCase("Average Grades")) {
 
-                    case "Similar Classes":
-                        break;
+                        System.out.println("Step 1 Average Grades ");
+                        if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
+                            try {
+                                System.out.println(" Graduating Grades");
+                                AverageGrades obj = new AverageGrades(graduatingGradesLoader.readAllStudents());
+                                Map<String, Integer> AverageList =(Map<String, Integer>) obj;
 
-                    case "CumLaude":
-                        break;
+                                AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
+                                areaChartController.setChartData(AverageList);
+                                VBox newVBox = loadFXMLIntoVBox("Area Chart");
+                                pages.add(newVBox);
 
-
-                    case "Best And Worst Student":
-                        break;
-                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
 
             }
-            if( sequence.get(0).equals("STEP 2")){
+            if( sequence.get(0).trim().equalsIgnoreCase("STEP 2")){
                 switch (sequence.get(1)){
                     case "Which Students Are Graduating Soon ":
                          break ;
@@ -165,15 +188,20 @@ public class SeparateQuestions extends Controller implements Initializable {
 
                     case "What Year Come for Which class ":
                         break;
+                    default:
+                        break;
                 }
 
             }
-            if( sequence.get(0).equals("STEP 3")){
+            if( sequence.get(0).trim().equalsIgnoreCase("STEP 3")){
+                System.out.println("STEP 3");
+
 
             }
 
-            if( sequence.get(0).equals("STEP 4")){
-                System.out.println("heyyyyyy");
+            if( sequence.get(0).trim().equalsIgnoreCase("STEP 4")){
+                System.out.println("STEP 4");
+
                 try {
                     FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("STUDENTCV.fxml"));
                     Node studentCVNode = separateLoader.load();
@@ -184,7 +212,7 @@ public class SeparateQuestions extends Controller implements Initializable {
                     // Add the new page to the pagination
                     pages.add(studentCVPage);
                     pagination.setPageCount(pages.size()); // Update the total page count
-                    pagination.setCurrentPageIndex(pagenum); // Navigate to the newly added page
+                    pagination.setCurrentPageIndex(pages.size()-2); // Navigate to the newly added page
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -236,7 +264,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             MenuItem selectedMenuItem = (MenuItem) event.getSource();
             String subsection = selectedMenuItem.getText();
             String property = getParentMenuText(selectedMenuItem);
-            String selectedFunction = "Property: " + property + ", Subsection: " + subsection;
+            String selectedFunction = subsection;
             System.out.println("Selected Function: " + selectedFunction);
             sequence.set(0, (property));
             sequence.set(1, (selectedFunction));
@@ -289,6 +317,14 @@ public class SeparateQuestions extends Controller implements Initializable {
 
 
         }
+    }
+
+    public VBox loadFXMLIntoVBox(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent root = loader.load();
+        VBox vbox = new VBox();
+        vbox.getChildren().add(root);
+        return vbox;
     }
 
 
