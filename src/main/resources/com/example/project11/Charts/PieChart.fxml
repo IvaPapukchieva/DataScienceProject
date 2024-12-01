@@ -14,7 +14,8 @@
 
              >
     <children>
-        <PieChart fx:id="pieChart" prefWidth="600" prefHeight="400" />
+        <PieChart fx:id="pieChart" prefHeight="250.0"
+                  prefWidth="380.0"  />
     </children>
 
 </AnchorPane>

@@ -26,6 +26,11 @@ public class BubbleChartController {
     };
 
     public void setChartData(Map<String, Integer> gradeDistribution) {
+        xAxis.setAutoRanging(false);
+        xAxis.setLowerBound(0);
+        xAxis.setUpperBound(10);
+        xAxis.setTickUnit(1);
+
         bubbleChart.getData().clear();
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -35,27 +40,21 @@ public class BubbleChartController {
         int index = 0;
 
         for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
-            // Use the key for x-value, the value for y-value, and set a fixed size for the bubble
             double xValue = Integer.parseInt(entry.getKey());
-            double yValue = entry.getValue(); // number of students is y value
-            double size = 10 + (yValue * 1.1); // Bubble size
+            double yValue = entry.getValue();
+            double size = 5 + (yValue);
 
-            // Add each entry as a new Data point in the series
             XYChart.Data<Number, Number> data = new XYChart.Data<>(xValue, yValue, size);
             series.getData().add(data);
 
-            // Cycles through colors for each bubble
             colorList.add(colors[index % colors.length]);
             index++;
         }
 
-        // Add the series to the bubble chart
         bubbleChart.getData().add(series);
-
         bubbleChart.applyCss();
         bubbleChart.layout();
 
-        // Apply the colors to each bubble
         for (int i = 0; i < series.getData().size(); i++) {
             XYChart.Data<Number, Number> data = series.getData().get(i);
             String color = colorList.get(i);
@@ -74,8 +73,6 @@ public class BubbleChartController {
                 }
             }
         }
-    }
-}
-
+    }}
 
 

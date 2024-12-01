@@ -77,9 +77,9 @@ public class SelectionsController extends Controller implements Initializable {
 
         double [][]filteredData = filterData.applyFilters();
 
-        System.out.println(Arrays.deepToString(filteredData));
-
-        System.out.println("Reached end of method");
+//        System.out.println(Arrays.deepToString(filteredData));
+//
+//        System.out.println("Reached end of method");
 ChartSelectionController data=new ChartSelectionController();
 data.setFilteredData(filteredData);
         Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
