@@ -1,9 +1,7 @@
 package com.example.project11.ProjectInfo.STEP2;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 /**Counted how many grades are each of the grades starting from 6.0 and if a course has more 6’s than any
  * other grade then the passing percentage would be the division between the number of 6’s over the
@@ -20,10 +18,10 @@ public class GraduatePassingGradePredictionThreshold {
 
     }
 
-    public void passingpercentagesarray() {
+    public void calculatePassingPercentagesArray() {
         coursePassingMap = new HashMap<>();
         // Calculate passing percentages
-            double[] passingPercentages = calculatePassingPercentages(allStudents);
+            double[] passingPercentages = calculatePassingPercentagesArray(allStudents);
 
             for (int i = 0; i < passingPercentages.length; i++) {
                 coursePassingMap.put(Integer.toString(i), passingPercentages[i]); // Course numbers start at 1
@@ -32,7 +30,7 @@ public class GraduatePassingGradePredictionThreshold {
 
     }
     // a method for calculating a passing percentage
-    private double[] calculatePassingPercentages(double[][] matrix) {
+    private double[] calculatePassingPercentagesArray(double[][] matrix) {
         // we have determined that a passing student is one that has a 6 or higher based on the graduating grades
         double[]passingPercentages = new double[matrix[0].length];
 
@@ -54,7 +52,7 @@ public class GraduatePassingGradePredictionThreshold {
 
     // a getter for the hash map
     public Map<String, Double> getCoursePassingMap() {
-        passingpercentagesarray();
+        calculatePassingPercentagesArray();
 
 
         return coursePassingMap;
