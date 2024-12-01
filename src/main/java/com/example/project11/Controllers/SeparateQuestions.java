@@ -111,6 +111,10 @@ public class SeparateQuestions extends Controller implements Initializable {
         pageBox.getChildren().add(createButton);
         pages.add(pageBox);
         pagination.setPageCount(pages.size());
+
+
+
+
     }
 
     private void setupDynamicButtonVisibility(Button button) {
@@ -190,10 +194,10 @@ public class SeparateQuestions extends Controller implements Initializable {
 
             EasiestClasses easiestClasses = new EasiestClasses(currentGradeLoader.readAllStudents());
             Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
-            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-            barChartController.setChartData(easiestClassesMap);
 
-            displayChartOnCurrentPage("Bar Chart");
+
+
+            displayChartOnCurrentPage("Easiest Hardest");
 
 
             addNewPage();

@@ -31,6 +31,8 @@ public abstract class Controller {
             scenes.put("start", new Scene(startLoader.load(), 320, 480));
             controllers.put("start", startLoader.getController());
 
+
+
             FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("separateQuestions.fxml"));
             scenes.put("separateQuestions", new Scene(separateLoader.load(), 720, 482));
             controllers.put("separateQuestions", separateLoader.getController());
@@ -111,7 +113,9 @@ public abstract class Controller {
             scenes.put("Area Chart", new Scene(areaChartRoot, 380, 250));
             controllers.put("Area Chart", areaChartController);
 
-
+            FXMLLoader EasiestHardest = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
+            scenes.put("Easiest Hardest", new Scene(EasiestHardest.load(), 320, 480));
+            controllers.put("Easiest Hardest", EasiestHardest.getController());
 
 
 
