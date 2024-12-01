@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.image.ImageView;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,11 +29,13 @@ import java.util.ResourceBundle;
 
 public class SelectionsController extends Controller implements Initializable {
 
+    public ImageView backButtonImage;
     @FXML private Button submit;
     @FXML private ComboBox<String> ngSelect;
     @FXML private ToggleGroup dataSets;
     @FXML private ToggleButton ngButton;
     @FXML private AnchorPane container;
+
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
@@ -78,10 +82,13 @@ public class SelectionsController extends Controller implements Initializable {
         double [][]filteredData = filterData.applyFilters();
 
         System.out.println(Arrays.deepToString(filteredData));
-
-        System.out.println("Reached end of method");
-ChartSelectionController data=new ChartSelectionController();
-data.setFilteredData(filteredData);
+        //SWITCH SCENE
+//        Stage stage = (Stage) submit.getParent().getScene().getWindow();
+//        stage.setScene(getScene("start"));
+//
+//        System.out.println("Reached end of method");
+        ChartSelectionController data=new ChartSelectionController();
+        data.setFilteredData(filteredData);
         Stage stage = (Stage) submit.getParent().getScene().getWindow();
         stage.setScene(getScene("Chart Window"));
 
