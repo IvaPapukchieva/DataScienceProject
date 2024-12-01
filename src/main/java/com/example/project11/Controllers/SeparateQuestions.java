@@ -1,7 +1,9 @@
 package com.example.project11.Controllers;
 
 import com.example.project11.Controllers.Charts.AreaChartController;
+import com.example.project11.Controllers.Charts.BarChartController;
 import com.example.project11.Main;
+import com.example.project11.ProjectInfo.STEP1.CumLaude;
 import com.example.project11.ProjectInfo.STEP1.EasiestClasses;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
@@ -44,7 +46,7 @@ public class SeparateQuestions extends Controller implements Initializable {
         }
     }
 
-    private  static CurrentGradeLoader currentGradeLoader;
+    private static CurrentGradeLoader currentGradeLoader;
 
     static {
         try {
@@ -54,7 +56,7 @@ public class SeparateQuestions extends Controller implements Initializable {
         }
     }
 
-    private  static GraduatingGradesLoader graduatingGradesLoader;
+    private static GraduatingGradesLoader graduatingGradesLoader;
 
     static {
         try {
@@ -65,7 +67,7 @@ public class SeparateQuestions extends Controller implements Initializable {
     }
 
     //     CurrentGradeLoaderRemoveNG currentGradeLoaderRemoveNG=new CurrentGradeLoaderRemoveNG();
-    private  static WeightedBootstrapping weightedBootstrapping;
+    private static WeightedBootstrapping weightedBootstrapping;
 
     static {
         try {
@@ -428,16 +430,94 @@ public class SeparateQuestions extends Controller implements Initializable {
                         // Add the chart to the current page
 
 
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            if (sequence.get(1).trim().equalsIgnoreCase("CumLaude")) {
+                System.out.println("cumlaude");
+                if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
+                    try {
+                        CumLaude obj = new CumLaude(graduatingGradesLoader.readAllStudents());
+                        Map<String, Integer> CumLaudeList = obj.getHonorsMap();
+                        System.out.println("Graduating Grades");
+
+                        BarChartController BarChartController = (BarChartController) controllers.get("Bar Chart");
+                        BarChartController.setChartData(CumLaudeList);
+                        Scene chartScene = scenes.get("Bar Chart");
+                        Parent newroot = chartScene.getRoot();
+
+                        // Add the chart to the current page
+                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
+                        currentPage.setAlignment(Pos.CENTER); // Center alignment
+                        currentPage.getChildren().add(newroot);
+
+                        // Create a new empty page
+                        addNewEmptyPage();
+                        resetSequence();
+
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (sequence.get(3).trim().equalsIgnoreCase("Current Grades")) {
+                    try {
+                        CumLaude obj = new CumLaude(currentGradeLoader.readAllStudents());
+                        Map<String, Integer> CumLaudeList = obj.getHonorsMap();
+
+                        BarChartController BarChartController = (BarChartController) controllers.get("Bar Chart");
+                        BarChartController.setChartData(CumLaudeList);
+                        Scene chartScene = scenes.get("Bar Chart");
+                        Parent newroot = chartScene.getRoot();
+
+                        // Add the chart to the current page
+                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
+                        currentPage.setAlignment(Pos.CENTER); // Center alignment
+                        currentPage.getChildren().add(newroot);
+
+                        // Create a new empty page
+                        addNewEmptyPage();
+                        resetSequence();
+
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                if (sequence.get(3).trim().equalsIgnoreCase("Bootstrapped Grades")) {
+                    try {
+                        CumLaude obj = new CumLaude(weightedBootstrapping.readAllStudents());
+                        Map<String, Integer> CumLaudeList = obj.getHonorsMap();
+                        System.out.println("Graduating Grades");
+
+                        BarChartController BarChartController = (BarChartController) controllers.get("Bar Chart");
+                        BarChartController.setChartData(CumLaudeList);
+                        Scene chartScene = scenes.get("Bar Chart");
+                        Parent newroot = chartScene.getRoot();
+
+                        // Add the chart to the current page
+                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
+                        currentPage.setAlignment(Pos.CENTER); // Center alignment
+                        currentPage.getChildren().add(newroot);
+
+                        // Create a new empty page
+                        addNewEmptyPage();
+                        resetSequence();
+
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
             }
-                if (sequence.get(0).trim().equalsIgnoreCase("STEP 2")) {
+        if (sequence.get(0).trim().equalsIgnoreCase("STEP 2")) {
+            if (sequence.get(1).trim().equalsIgnoreCase("Which Students Are Graduating Soon ")){
 
+            }
 
-                }
+            }
 
                 if (sequence.get(0).trim().equalsIgnoreCase("STEP 3")) {
                     System.out.println("STEP 3");
@@ -458,7 +538,10 @@ public class SeparateQuestions extends Controller implements Initializable {
                 pagination.setPageCount(pages.size()); // Update the total page count
                 pagination.setCurrentPageIndex(pages.size() - 2);
                 pagenum = pages.size() - 2;// Go to the new page
+
+
             }
         }
     }
+
 

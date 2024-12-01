@@ -10,17 +10,16 @@ import java.util.*;
  * resulting in identifying 237 students by saving their indices.
  */
 public class GraduatingSoon {
-	private Map<Integer, Double> studentDataMap;
-	private double[][] allStudents;
+	private Map<String, Integer> studentDataMap;
+	private static double[][] allStudents;
 
 	public GraduatingSoon(double[][] allStudents) {
 		this.allStudents = allStudents;
 	}
 
-	public static void graduatingSoon(double[][] allStudents) {
-		// Initialize the list to store the number of NG values for each student
-		ArrayList<Double> amountOfNgForEachStudent = new ArrayList<>();
+	public static void graduatingSoon() {
 
+		ArrayList<Double> amountOfNgForEachStudent = new ArrayList<>();
 		for (int i = 0; i < allStudents.length; i++) {
 			double amountNG = 0;
 			for (int j = 0; j < allStudents[i].length; j++) {
@@ -36,13 +35,14 @@ public class GraduatingSoon {
 		System.out.println("Sorted NG Values: " + amountOfNgForEachStudent);
 
 		// Create year data from the sorted list
-		Map<String, Double> yearData = generateYearData(amountOfNgForEachStudent);
+		Map<String, Integer> yearData = generateYearData(amountOfNgForEachStudent);
 		System.out.println("Year Data: " + yearData);
 	}
 
-	public static Map<String, Double> generateYearData(List<Double> sortedData) {
-		// Map to store years and their respective counts
-		Map<String, Double> yearDataMap = new LinkedHashMap<>();
+	public static Map<String, Integer> generateYearData(List<Double> sortedData) {
+		// Map to store years and their respective counts*
+		graduatingSoon();
+		Map<String, Integer> yearDataMap = new LinkedHashMap<>();
 		int year = 1;
 		double previousValue = -1;
 		double count = 0;
@@ -50,7 +50,7 @@ public class GraduatingSoon {
 		for (double value : sortedData) {
 			if (value != previousValue ) { // A new value appears
 				if (count >20) { // Add previous count to the map
-					yearDataMap.put("Year " + year, count);
+					yearDataMap.put("Year " + year, (int)count);
 					year++;
 				}
 				// Reset count for the new value
@@ -61,10 +61,8 @@ public class GraduatingSoon {
 				count++;
 			}
 		}
-
-		// Add the final year to the map
 		if (count > 0) {
-			yearDataMap.put("Year " + year, count);
+			yearDataMap.put(Integer.toString(year), (int)count);
 		}
 
 		return yearDataMap;
