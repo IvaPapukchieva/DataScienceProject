@@ -5,8 +5,6 @@ import com.example.project11.Controllers.Charts.BarChartController;
 import com.example.project11.Main;
 import com.example.project11.ProjectInfo.STEP1.CumLaude;
 import com.example.project11.ProjectInfo.STEP1.EasiestClasses;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.MenuItem;
 import com.example.project11.ProjectInfo.STEP1.AverageGrades;
 import com.example.project11.ProjectInfo.loaders.CurrentGradeLoader;
 import com.example.project11.ProjectInfo.loaders.CurrentGradeLoaderNG;
@@ -14,277 +12,140 @@ import com.example.project11.ProjectInfo.loaders.GraduatingGradesLoader;
 import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.Chart;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx. scene. text. Text;
-import javafx.event.ActionEvent;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class SeparateQuestions extends Controller implements Initializable {
-    // Track selected phases (if needed)
-    private static CurrentGradeLoaderNG currentGradeLoaderNG;
+    private static final SequenceManager sequenceManager = new SequenceManager();
+
+    private static final CurrentGradeLoaderNG currentGradeLoaderNG;
+    private static final CurrentGradeLoader currentGradeLoader;
+    private static final GraduatingGradesLoader graduatingGradesLoader;
+    private static final WeightedBootstrapping weightedBootstrapping;
 
     static {
         try {
-            currentGradeLoaderNG = new CurrentGradeLoaderNG();
+            currentGradeLoaderNG = loadLoader(new CurrentGradeLoaderNG());
+            currentGradeLoader = loadLoader(new CurrentGradeLoader());
+            graduatingGradesLoader = loadLoader(new GraduatingGradesLoader());
+            weightedBootstrapping = loadLoader(new WeightedBootstrapping());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static CurrentGradeLoader currentGradeLoader;
+    @FXML private Slider mySlider;
+    @FXML private Button button, createButton;
+    @FXML private ToggleButton graduatingGradesButton, currentGradesButton, bootstrappedGradesButton;
+    @FXML private VBox childComboBox;
+    @FXML private Pagination pagination;
+    @FXML private MenuItem step1MenuItem, step2MenuItem, step3MenuItem, step4MenuItem;
 
-    static {
-        try {
-            currentGradeLoader = new CurrentGradeLoader();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private ToggleGroup toggleGroup = new ToggleGroup();
+    private final List<VBox> pages = new ArrayList<>();
 
-    private static GraduatingGradesLoader graduatingGradesLoader;
-
-    static {
-        try {
-            graduatingGradesLoader = new GraduatingGradesLoader();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //     CurrentGradeLoaderRemoveNG currentGradeLoaderRemoveNG=new CurrentGradeLoaderRemoveNG();
-    private static WeightedBootstrapping weightedBootstrapping;
-
-    static {
-        try {
-            weightedBootstrapping = new WeightedBootstrapping();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private static ArrayList<String> sequence = new ArrayList<>();
-
-    {
-        sequence.add(" ");
-        sequence.add(" ");
-        sequence.add(" ");
-        sequence.add(" ");
-    }
-
-    public double currentsliderValue;
-
-    @FXML
-    private Slider mySlider; // Connect this to your Slider in FXML
-    @FXML
-    private Button button;
-
-    @FXML
-    private ToggleButton graduatingGradesButton;
-
-    @FXML
-    private ToggleButton currentGradesButton;
-
-    @FXML
-    private ToggleButton bootstrappedGradesButton;
-
-
-    private ToggleGroup toggleGroup;
-
-
-    @FXML
-    private VBox childComboBox; // VBox for dynamically added ComboBoxes
-    @FXML
-    private MenuItem step1MenuItem;
-    @FXML
-    private MenuItem step2MenuItem;
-    @FXML
-    private MenuItem step3MenuItem;
-    @FXML
-    private MenuItem step4MenuItem;
-    @FXML
-    private Pagination pagination;
-    @FXML
-    private Label LABLE1;
-    @FXML
-    private Label LABLE2;
-    @FXML
-    private Label LABLE3;
-
-    @FXML
-    private final ArrayList<VBox> pages = new ArrayList<>(); // List to hold page content
-    @FXML
-
-    private Button createButton;
-    private int pagenum = 0;
-
-    public SeparateQuestions() throws FileNotFoundException {
-    }
-
-    @FXML
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize ToggleGroup and set up toggle buttons
-        toggleGroup = new ToggleGroup();
+        setupToggleGroup();
+        setupPagination();
+        addNewPage();
+    }
 
-
-        if (graduatingGradesButton != null) {
-            graduatingGradesButton.setToggleGroup(toggleGroup);
-        } else {
-            System.out.println("graduatingGradesButton is null. Check your FXML file.");
+    private static <T> T loadLoader(T loader) {
+        try {
+            return loader;
+        } catch (Exception e) {
+            throw new RuntimeException("Error initializing loader", e);
         }
+    }
 
-        if (currentGradesButton != null) {
-            currentGradesButton.setToggleGroup(toggleGroup);
-        } else {
-            System.out.println("currentGradesButton is null. Check your FXML file.");
-        }
-
-        if (bootstrappedGradesButton != null) {
-            bootstrappedGradesButton.setToggleGroup(toggleGroup);
-        } else {
-            System.out.println("bootstrappedGradesButton is null. Check your FXML file.");
-        }
+    private void setupToggleGroup() {
+        graduatingGradesButton.setToggleGroup(toggleGroup);
+        currentGradesButton.setToggleGroup(toggleGroup);
+        bootstrappedGradesButton.setToggleGroup(toggleGroup);
 
         toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             resetButtonStyles();
-            if (newValue != null) {
+            if (newValue instanceof ToggleButton) {
                 ToggleButton selectedButton = (ToggleButton) newValue;
                 selectedButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
             }
         });
-
-        // Set default styles
-        //resetButtonStyles();
-
-        // Add initial page
-        addNewPage();
-        pagination.setPageCount(pages.size());
-        pagination.setPageFactory(this::createPageContent);
     }
 
-    private boolean isFilled(ArrayList<String> arrayList) {
-        for (int i = 0; i <= 4; i++) {
-            if (arrayList.get(i).equals(" ") || Objects.equals(arrayList.get(3), " ")) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return true;
+    private void setupPagination() {
+        pagination.setPageFactory(this::getPageContent);
+    }
+
+    private VBox getPageContent(int pageIndex) {
+        return pageIndex >= 0 && pageIndex < pages.size() ? pages.get(pageIndex) : new VBox();
     }
 
     private void addNewPage() {
-        // Create a new VBox for the page
-        VBox pageBox = new VBox(10); // 10px spacing
+        VBox pageBox = new VBox(10);
         pageBox.setStyle("-fx-padding: 20; -fx-alignment: center;");
-        pages.add(pageBox);
-        pagination.setPageCount(pages.size());
-        // Create a "Create Graph" button
+
         Button createButton = new Button("Create Graph");
-        createButton.setVisible(false); // Initially hidden
-
-        // Dynamically check if the sequence array is filled
+        createButton.setVisible(false);
         setupDynamicButtonVisibility(createButton);
-
-        // Button action to add a new page
         createButton.setOnAction(this::handle);
 
-        // Add the button to the page
         pageBox.getChildren().add(createButton);
-
-        // Store the page in the list
-        //pages.add(pageBox);
+        pages.add(pageBox);
+        pagination.setPageCount(pages.size());
     }
 
-    // Method to add a new page with a graph or button
-
-    private void resetSequence() {
-        sequence.clear();
-        for (int i = 0; i < 4; i++) {
-            sequence.add(" ");
-        }
-
-    }
-
-    private void setupDynamicButtonVisibility(Button createButton) {
+    private void setupDynamicButtonVisibility(Button button) {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            if (isFilled(sequence)) {
-                createButton.setVisible(true); // Show the button when the array is filled
-            } else {
-                createButton.setVisible(false); // Hide the button otherwise
-            }
+            button.setVisible(sequenceManager.isFilled());
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
-    // Page factory to display content for the current page
-    private VBox createPageContent(int pageIndex) {
-        if (pageIndex >= 0 && pageIndex < pages.size()) {
-            return pages.get(pageIndex); // Return the corresponding page content
-        }
-        return new VBox(); // Return empty content if index is invalid
-    }
-
-    private void addNewEmptyPage() {
-        addNewPage();
-
-    }
-
     @FXML
     private void handleMenuSelection(ActionEvent event) {
-
-        if (!sequence.isEmpty()) {
-
+        if (event.getSource() instanceof MenuItem) {
             MenuItem selectedMenuItem = (MenuItem) event.getSource();
-            String subsection = selectedMenuItem.getText();
-            String property = getParentMenuText(selectedMenuItem);
-            String selectedFunction = subsection;
-            System.out.println("Selected Function: " + selectedFunction);
-            sequence.set(0, (property));
-            sequence.set(1, (selectedFunction));
-        } else {
-            MenuItem selectedMenuItem = (MenuItem) event.getSource();
-            String subsection = selectedMenuItem.getText();
-            String property = getParentMenuText(selectedMenuItem);
-            String selectedFunction = "Property: " + property + ", Subsection: " + subsection;
-            System.out.println("Selected Function: " + selectedFunction);
-            sequence.add(0, (property));
-            sequence.add(1, (selectedFunction));
-
-
+            String parentMenu = getParentMenuText(selectedMenuItem);
+            sequenceManager.update(parentMenu, selectedMenuItem.getText());
+            System.out.println(sequenceManager.getSequence());
         }
-        System.out.println(sequence);
-
     }
 
     @FXML
-    private void getSliderValue(ActionEvent event) {
-
+    private void getSliderValue() {
         double sliderValue = mySlider.getValue();
-        if (sequence.size() < 3) {
-            sequence.add(String.valueOf(sliderValue));
-        } else {
-            sequence.set(2, String.valueOf(sliderValue));
-        }
-        System.out.println(sequence);
+        sequenceManager.updateSliderValue(sliderValue);
+        System.out.println(sequenceManager.getSequence());
     }
 
+    @FXML
+    private void handleToggleButtonAction(ActionEvent event) {
+        if (event.getSource() instanceof ToggleButton) {
+            ToggleButton pressedButton = (ToggleButton) event.getSource();
+            sequenceManager.updateGradeType(pressedButton.getText());
+            System.out.println(sequenceManager.getSequence());
+        }
+    }
 
     private void resetButtonStyles() {
         graduatingGradesButton.setStyle("-fx-background-color: #cccccc; -fx-text-fill: black;");
@@ -292,256 +153,167 @@ public class SeparateQuestions extends Controller implements Initializable {
         bootstrappedGradesButton.setStyle("-fx-background-color: #cccccc; -fx-text-fill: black;");
     }
 
-    @FXML
-    private void handleToggleButtonAction(ActionEvent event) {
-        // Additional logic if needed when a button is pressed
-        ToggleButton pressedButton = (ToggleButton) event.getSource();
-        if (sequence.get(3) == null) {
-            sequence.add(3, pressedButton.getText());
-            System.out.println(sequence);
-
-
-        } else {
-            sequence.set(3, pressedButton.getText());
-            System.out.println(sequence);
-
-
-        }
-    }
-
-    public VBox loadFXMLIntoVBox(String fxmlPath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = loader.load();
-        VBox vbox = new VBox();
-        vbox.getChildren().add(root);
-        return vbox;
-    }
-
-
     private String getParentMenuText(MenuItem menuItem) {
-        if (menuItem.getParentMenu() != null) {
-            return menuItem.getParentMenu().getText(); // Direct parent is the Menu (Property)
-        }
-        return "Unknown";
+        return menuItem.getParentMenu() != null ? menuItem.getParentMenu().getText() : "Unknown";
     }
-
 
     private void handle(ActionEvent event) {
-        if (sequence.get(0).trim().equalsIgnoreCase("STEP 1")) {
-            System.out.println("STEP 1 ");
-            if (sequence.get(1).trim().equalsIgnoreCase("Average Grades")) {
+        List<String> sequence = sequenceManager.getSequence();
 
-                if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
-                    try {
-                        AverageGrades obj = new AverageGrades(graduatingGradesLoader.readAllStudents());
-                        Map<String, Integer> AverageList = obj.getAverageGradesMap();
-                        System.out.println("Graduating Grades");
+        // Validate that STEP 1 is the first sequence item
+        if (!"STEP 1".equalsIgnoreCase(sequence.get(0).trim())) {
+            return;
+        }
 
-                        AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
-                        areaChartController.setChartData(AverageList);
-                        Scene chartScene = scenes.get("Area Chart");
-                        Parent newroot = chartScene.getRoot();
-
-                        // Add the chart to the current page
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Center alignment
-                        currentPage.getChildren().add(newroot);
-
-                        // Create a new empty page
-                        addNewEmptyPage();
-                        resetSequence();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (sequence.get(3).trim().equalsIgnoreCase("Current Grades")) {
-                    try {
-                        AverageGrades obj = new AverageGrades(currentGradeLoader.readAllStudents());
-                        Map<String, Integer> AverageList = obj.getAverageGradesMap();
-                        System.out.println("Current Grades");
-
-                        AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
-                        areaChartController.setChartData(AverageList);
-                        Scene chartScene = scenes.get("Area Chart");
-                        Parent newroot = chartScene.getRoot();
-
-                        // Add the chart to the current page
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Center alignment
-                        currentPage.getChildren().add(newroot);
-                        // Create a new empty page
-                        addNewEmptyPage();
-                        resetSequence();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                }
-                if (sequence.get(3).trim().equalsIgnoreCase("Bootstrapped Grades")) {
-                    try {
-                        AverageGrades obj = new AverageGrades(weightedBootstrapping.readAllStudents());
-                        Map<String, Integer> AverageList = obj.getAverageGradesMap();
-                        System.out.println("Graduating Grades");
-
-                        AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
-                        areaChartController.setChartData(AverageList);
-                        Scene chartScene = scenes.get("Area Chart");
-                        Parent newroot = chartScene.getRoot();
-
-                        // Add the chart to the current page
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Center alignment
-                        currentPage.getChildren().add(newroot);
-
-                        // Create a new empty page
-                        addNewEmptyPage();
-                        resetSequence();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-            if (sequence.get(1).trim().equalsIgnoreCase("Easiest Classes")) {
-
-                System.out.println("Step 1 easiest Classes ");
-                if (sequence.get(3).trim().equalsIgnoreCase("Current Grades")) {
-                    try {
-                        EasiestClasses obj = new EasiestClasses(currentGradeLoader.readAllStudents());
-                        Map<String, Integer> AverageList = obj.getEasiestClassesMap();
-
-                        FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
-                        Node contentNode = separateLoader.load(); // Load the content as a Node
-
-                        // Add the contentNode to the current page in the pagination
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Optional: Center the content
-                        currentPage.getChildren().add(contentNode);
-
-                        // Add a new empty page after loading the current content
-                        addNewEmptyPage();
-                        resetSequence(); // Reset the sequence if needed
-
-                        // Add the chart to the current page
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-            if (sequence.get(1).trim().equalsIgnoreCase("CumLaude")) {
-                System.out.println("cumlaude");
-                if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
-                    try {
-                        CumLaude obj = new CumLaude(graduatingGradesLoader.readAllStudents());
-                        Map<String, Integer> CumLaudeList = obj.getHonorsMap();
-                        System.out.println("Graduating Grades");
-
-                        BarChartController BarChartController = (BarChartController) controllers.get("Bar Chart");
-                        BarChartController.setChartData(CumLaudeList);
-                        Scene chartScene = scenes.get("Bar Chart");
-                        Parent newroot = chartScene.getRoot();
-
-                        // Add the chart to the current page
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Center alignment
-                        currentPage.getChildren().add(newroot);
-
-                        // Create a new empty page
-                        addNewEmptyPage();
-                        resetSequence();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (sequence.get(3).trim().equalsIgnoreCase("Current Grades")) {
-                    try {
-                        CumLaude obj = new CumLaude(currentGradeLoader.readAllStudents());
-                        Map<String, Integer> CumLaudeList = obj.getHonorsMap();
-
-                        BarChartController BarChartController = (BarChartController) controllers.get("Bar Chart");
-                        BarChartController.setChartData(CumLaudeList);
-                        Scene chartScene = scenes.get("Bar Chart");
-                        Parent newroot = chartScene.getRoot();
-
-                        // Add the chart to the current page
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Center alignment
-                        currentPage.getChildren().add(newroot);
-
-                        // Create a new empty page
-                        addNewEmptyPage();
-                        resetSequence();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if (sequence.get(3).trim().equalsIgnoreCase("Bootstrapped Grades")) {
-                    try {
-                        CumLaude obj = new CumLaude(weightedBootstrapping.readAllStudents());
-                        Map<String, Integer> CumLaudeList = obj.getHonorsMap();
-                        System.out.println("Graduating Grades");
-
-                        BarChartController BarChartController = (BarChartController) controllers.get("Bar Chart");
-                        BarChartController.setChartData(CumLaudeList);
-                        Scene chartScene = scenes.get("Bar Chart");
-                        Parent newroot = chartScene.getRoot();
-
-                        // Add the chart to the current page
-                        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-                        currentPage.setAlignment(Pos.CENTER); // Center alignment
-                        currentPage.getChildren().add(newroot);
-
-                        // Create a new empty page
-                        addNewEmptyPage();
-                        resetSequence();
-
-
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        if (sequence.get(0).trim().equalsIgnoreCase("STEP 2")) {
-            if (sequence.get(1).trim().equalsIgnoreCase("Which Students Are Graduating Soon ")){
-
-            }
-
-            }
-
-                if (sequence.get(0).trim().equalsIgnoreCase("STEP 3")) {
-                    System.out.println("STEP 3");
-
-
-                }
-
-                if (sequence.get(0).trim().equalsIgnoreCase("STEP 4")) {
-                    System.out.println("STEP 4");
-
-
-                }
-                // add your chart here
-                resetSequence();
-                resetButtonStyles();
-
-                // Add a new page and navigate to it
-                pagination.setPageCount(pages.size()); // Update the total page count
-                pagination.setCurrentPageIndex(pages.size() - 2);
-                pagenum = pages.size() - 2;// Go to the new page
-
-
-            }
+        // Perform relevant action based on the selected function
+        switch (sequence.get(1).trim()) {
+            case "Average Grades":
+                handleAverageGrades(sequence);
+                break;
+            case "Easiest Classes":
+                handleEasiestClasses(sequence);
+                break;
+            case "CumLaude":
+                handleCumLaude(sequence);
+                break;
+            default:
+                System.out.println("Unknown function: " + sequence.get(1));
         }
     }
 
+    private void handleEasiestClasses(List<String> sequence) {
+        try {
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim())) {
+                System.out.println("Easiest Classes only supports Current Grades.");
+                return;
+            }
 
+            EasiestClasses easiestClasses = new EasiestClasses(currentGradeLoader.readAllStudents());
+            Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
+
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
+            Node contentNode = loader.load();
+
+            VBox currentPage = pages.get(pagination.getCurrentPageIndex());
+            currentPage.setAlignment(Pos.CENTER);
+            currentPage.getChildren().add(contentNode);
+
+            addNewEmptyPage();
+            sequenceManager.reset();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void handleCumLaude(List<String> sequence) {
+        try {
+            CumLaude cumLaude;
+            String gradesType = sequence.get(3).trim();
+
+            if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
+                cumLaude = new CumLaude(graduatingGradesLoader.readAllStudents());
+            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+                cumLaude = new CumLaude(currentGradeLoader.readAllStudents());
+            } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+                cumLaude = new CumLaude(weightedBootstrapping.readAllStudents());
+            } else {
+                System.out.println("Invalid grades type for CumLaude.");
+                return;
+            }
+
+            Map<String, Integer> honorsMap = cumLaude.getHonorsMap();
+            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
+            barChartController.setChartData(honorsMap);
+
+            displayChartOnCurrentPage("Bar Chart");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleAverageGrades(List<String> sequence) {
+        try {
+            AverageGrades averageGrades;
+            String gradesType = sequence.get(3).trim();
+
+            if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
+                averageGrades = new AverageGrades(graduatingGradesLoader.readAllStudents());
+            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+                averageGrades = new AverageGrades(currentGradeLoader.readAllStudents());
+            } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+                averageGrades = new AverageGrades(weightedBootstrapping.readAllStudents());
+            } else {
+                System.out.println("Invalid grades type for Average Grades.");
+                return;
+            }
+
+            Map<String, Integer> averageGradesMap = averageGrades.getAverageGradesMap();
+            AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
+            areaChartController.setChartData(averageGradesMap);
+
+            displayChartOnCurrentPage("Area Chart");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displayChartOnCurrentPage(String chartSceneKey) throws IOException {
+        Scene chartScene = scenes.get(chartSceneKey);
+        Parent newRoot = chartScene.getRoot();
+
+        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
+        currentPage.setAlignment(Pos.CENTER);
+        currentPage.getChildren().add(newRoot);
+
+        addNewEmptyPage();
+        sequenceManager.reset();
+    }
+
+    private void addNewEmptyPage() {
+        VBox newPage = new VBox();
+        newPage.setAlignment(Pos.CENTER);
+        pages.add(newPage);
+        pagination.setPageCount(pages.size());
+    }
+}
+
+
+
+
+// Helper Class to Manage Sequence
+class SequenceManager {
+    private final List<String> sequence = new ArrayList<>(List.of(" ", " ", " ", " "));
+
+    public void update(String step, String function) {
+        sequence.set(0, step);
+        sequence.set(1, function);
+    }
+
+    public void updateSliderValue(double value) {
+        sequence.set(2, String.valueOf(value));
+    }
+
+    public void updateGradeType(String gradeType) {
+        sequence.set(3, gradeType);
+    }
+
+    public boolean isFilled() {
+        return sequence.stream().noneMatch(String::isBlank);
+    }
+
+    public void reset() {
+        for (int i = 0; i < sequence.size(); i++) {
+            sequence.set(i, " ");
+        }
+    }
+
+    public String getStep() {
+        return sequence.get(0);
+    }
+
+    public List<String> getSequence() {
+        return new ArrayList<>(sequence);
+    }
+}

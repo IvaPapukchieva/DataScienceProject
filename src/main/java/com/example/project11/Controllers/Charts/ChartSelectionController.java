@@ -26,7 +26,6 @@ public class ChartSelectionController extends Controller {
     }
 
     @Override
-    @FXML
     public void mouseClickedComponent(MouseEvent mouseEvent) throws IOException {
         if (filteredData == null || filteredData.length == 0) {
             System.out.println("Filtered data is null or empty!");
