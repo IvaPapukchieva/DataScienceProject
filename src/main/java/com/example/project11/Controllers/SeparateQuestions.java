@@ -170,7 +170,7 @@ public class SeparateQuestions extends Controller implements Initializable {
 
             if( sequence.get(0).equals("STEP 4")){
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("STUDENTCV.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentCV.fxml"));
                     AnchorPane anchorPane = loader.load();
                     pageBox.getChildren().add(anchorPane);
                 } catch (IOException e) {
