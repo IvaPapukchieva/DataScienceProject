@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="435.0" prefWidth="365.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
+<AnchorPane prefHeight="415.0" prefWidth="360.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
    <children>
       <Circle layoutX="258.0" layoutY="342.0" radius="73.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>

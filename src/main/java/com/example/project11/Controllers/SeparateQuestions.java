@@ -1,10 +1,12 @@
 package com.example.project11.Controllers;
 
+import com.example.project11.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -45,6 +47,7 @@ public class SeparateQuestions extends Controller implements Initializable {
     @FXML
     private ToggleButton bootstrappedGradesButton;
 
+
     private ToggleGroup toggleGroup;
 
 
@@ -66,12 +69,13 @@ public class SeparateQuestions extends Controller implements Initializable {
     @FXML
 
     private  Button createButton ;
+    private int pagenum = 0 ;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         toggleGroup = new ToggleGroup();
-        graduatingGradesButton.setToggleGroup(toggleGroup);
+        this.graduatingGradesButton.setToggleGroup(toggleGroup);
         currentGradesButton.setToggleGroup(toggleGroup);
         bootstrappedGradesButton.setToggleGroup(toggleGroup);
 
@@ -169,13 +173,22 @@ public class SeparateQuestions extends Controller implements Initializable {
             }
 
             if( sequence.get(0).equals("STEP 4")){
+                System.out.println("heyyyyyy");
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("STUDENTCV.fxml"));
-                    AnchorPane anchorPane = loader.load();
-                    pageBox.getChildren().add(anchorPane);
+                    FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("STUDENTCV.fxml"));
+                    Node studentCVNode = separateLoader.load();
+
+                    VBox studentCVPage = new VBox();
+                    studentCVPage.getChildren().add(studentCVNode);
+
+                    // Add the new page to the pagination
+                    pages.add(studentCVPage);
+                    pagination.setPageCount(pages.size()); // Update the total page count
+                    pagination.setCurrentPageIndex(pagenum); // Navigate to the newly added page
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
 
             }
             // add your chart here
@@ -192,7 +205,8 @@ public class SeparateQuestions extends Controller implements Initializable {
             // Add a new page and navigate to it
             addNewPage(); // Add the new page
             pagination.setPageCount(pages.size()); // Update the total page count
-            pagination.setCurrentPageIndex(pages.size() -2); // Go to the new page
+            pagination.setCurrentPageIndex(pages.size() -2);
+            pagenum = pages.size()-2;// Go to the new page
         });
 
         // Add the button to the page
