@@ -65,7 +65,7 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     public void submitButton() throws FileNotFoundException {
-        System.out.println(filters.toString());
+//        System.out.println(filters.toString());
         if(dataSets.getSelectedToggle() == null) return;
         RadioButton radioButton = (RadioButton) dataSets.getSelectedToggle();
         FilterData filterData = null;
