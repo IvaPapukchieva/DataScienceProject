@@ -190,13 +190,11 @@ public class SeparateQuestions extends Controller implements Initializable {
 
             EasiestClasses easiestClasses = new EasiestClasses(currentGradeLoader.readAllStudents());
             Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
+            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
+            barChartController.setChartData(easiestClassesMap);
 
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
-            Node contentNode = loader.load();
+            displayChartOnCurrentPage("Bar Chart");
 
-            VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-            currentPage.setAlignment(Pos.CENTER);
-            currentPage.getChildren().add(contentNode);
 
             addNewPage();
             sequenceManager.reset();
@@ -266,6 +264,8 @@ public class SeparateQuestions extends Controller implements Initializable {
         VBox currentPage = pages.get(pagination.getCurrentPageIndex());
         currentPage.setAlignment(Pos.CENTER);
         currentPage.getChildren().add(newRoot);
+        currentPage.getChildren().remove(createButton);
+
 
         addNewPage();
         sequenceManager.reset();
