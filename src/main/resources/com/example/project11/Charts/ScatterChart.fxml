@@ -10,7 +10,7 @@
 
     <ScatterChart fx:id="scatterChart" alternativeColumnFillVisible="true"
                   alternativeRowFillVisible="false" prefHeight="400"
-                  prefWidth="600" stylesheets="@css/chart-style.css" title="Data Points">
+                  prefWidth="600"  title="Data Points">
         <xAxis>
             <CategoryAxis label="X-Axis" fx:id="xAxis" />
         </xAxis>

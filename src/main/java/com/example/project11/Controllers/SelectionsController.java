@@ -38,12 +38,20 @@ public class SelectionsController extends Controller implements Initializable {
     private ArrayList<Filter> filters;
     private String selectedSubType;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         filters = new ArrayList<>();
 
-        ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs");
-        addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property", "By Student ID");
+        if (ngSelect != null) {
+            ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs");
+        } else {
+            System.out.println("ngSelect is null! Check FXML and Controller association.");
+        }
+
+        if (addFilter != null) {
+            addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property", "By Student ID");
+        }
 
         ngButton.setSelected(true);
         // Center the submit button
@@ -67,11 +75,13 @@ public class SelectionsController extends Controller implements Initializable {
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Replace With Average")) {filterData = new FilterData(filters, "currentGradeLoaderNG");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Remove NGs")) {filterData = new FilterData(filters, "currentGradeLoaderRemoveNG");}
 
-        double[][] filteredData = filterData.applyFilters();
+        double [][]filteredData = filterData.applyFilters();
 
         System.out.println(Arrays.deepToString(filteredData));
 
         System.out.println("Reached end of method");
+ChartSelectionController data=new ChartSelectionController();
+data.setFilteredData(filteredData);
         Stage stage = (Stage) submit.getParent().getScene().getWindow();
         stage.setScene(getScene("Chart Window"));
 

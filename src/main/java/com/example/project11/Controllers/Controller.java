@@ -1,14 +1,16 @@
 package com.example.project11.Controllers;
 
+import com.example.project11.Controllers.Charts.*;
 import com.example.project11.DataCallback;
 import com.example.project11.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 public abstract class Controller {
     private Stage stage ;
     private static final HashMap<String, Scene> scenes = new HashMap<>();
-    private static final HashMap<String, Object> controllers = new HashMap<>();
+    public static final HashMap<String, Object> controllers = new HashMap<>();
     private DataCallback dataCallback;
 
 
@@ -66,6 +68,41 @@ public abstract class Controller {
             FXMLLoader chartWindowFilterLoader = new FXMLLoader(Main.class.getResource("Charts/ChartSelection.fxml"));
             scenes.put("Chart Window", new Scene(chartWindowFilterLoader.load(), 320, 480));
             controllers.put("Chart Window",  chartWindowFilterLoader.getController());
+
+            FXMLLoader barChartLoader = new FXMLLoader(Main.class.getResource("Charts/BarChart.fxml"));
+            AnchorPane barChartRoot = barChartLoader.load();
+            BarChart<?, ?> barChart = (BarChart<?, ?>) barChartRoot.lookup("#barChart");
+            BarChartController barChartController = barChartLoader.getController();
+            scenes.put("Bar Chart", new Scene(barChartRoot, 600, 400));
+            controllers.put("Bar Chart", barChartController);
+
+            FXMLLoader bubbleChartLoader = new FXMLLoader(Main.class.getResource("Charts/BubbleChart.fxml"));
+            AnchorPane bubbleChartRoot = bubbleChartLoader.load();
+            BubbleChart<?, ?> bubbleChart = (BubbleChart<?, ?>) bubbleChartRoot.lookup("#bubbleChart");
+            BubbleChartController bubbleChartController = bubbleChartLoader.getController();
+            scenes.put("Bubble Chart", new Scene(bubbleChartRoot, 600, 400));
+            controllers.put("Bubble Chart", bubbleChartController);
+
+            FXMLLoader lineChartLoader = new FXMLLoader(Main.class.getResource("Charts/LineChart.fxml"));
+            AnchorPane lineChartRoot = lineChartLoader.load();
+            LineChart<?, ?> lineChart = (LineChart<?, ?>) lineChartRoot.lookup("#lineChart");
+            LineChartController lineChartController = lineChartLoader.getController();
+            scenes.put("Line Chart", new Scene(lineChartRoot, 600, 400));
+            controllers.put("Line Chart", lineChartController);
+
+            FXMLLoader pieChartLoader = new FXMLLoader(Main.class.getResource("Charts/PieChart.fxml"));
+            AnchorPane pieChartRoot = pieChartLoader.load();
+            PieChart pieChart = (PieChart) pieChartRoot.lookup("#pieChart");
+            PieChartController pieChartController = pieChartLoader.getController();
+            scenes.put("Pie Chart", new Scene(pieChartRoot, 600, 400));
+            controllers.put("Pie Chart", pieChartController);
+
+            FXMLLoader scatterChartLoader = new FXMLLoader(Main.class.getResource("Charts/ScatterChart.fxml"));
+            AnchorPane scatterChartRoot = scatterChartLoader.load();
+            ScatterChart<?, ?> scatterChart = (ScatterChart<?, ?>) scatterChartRoot.lookup("#scatterChart");
+            ScatterChartController scatterChartController = scatterChartLoader.getController();
+            scenes.put("Scatter Chart", new Scene(scatterChartRoot, 600, 400));
+            controllers.put("Scatter Chart", scatterChartController);
 
 
 
@@ -116,6 +153,7 @@ public abstract class Controller {
                 changeScene(mouseEvent, "start");
 
             }
+
 
 
         }
