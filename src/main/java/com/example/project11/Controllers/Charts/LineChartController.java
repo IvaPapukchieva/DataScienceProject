@@ -17,20 +17,13 @@ public class LineChartController {
 
     public void setChartData(Map<String, Integer> gradeDistribution) {
         lineChart.getData().clear();
-
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Grade Distribution");
 
-        List<String> colorList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
             series.getData().add(data);
-
-
         lineChart.getData().add(series);
-            lineChart.applyCss();
-            lineChart.layout();
-
 
 
     }

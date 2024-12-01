@@ -12,7 +12,6 @@
             >
 
     <LineChart fx:id="lineChart"
-               stylesheets="css/chart-style.css"
                prefHeight="250.0"
                prefWidth="380.0">
 
