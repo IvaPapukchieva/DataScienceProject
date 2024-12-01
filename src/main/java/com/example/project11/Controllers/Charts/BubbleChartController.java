@@ -26,15 +26,11 @@ public class BubbleChartController {
     };
 
     public void setChartData(Map<String, Integer> gradeDistribution) {
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(0);
-        xAxis.setUpperBound(10);
-        xAxis.setTickUnit(1);
-
         bubbleChart.getData().clear();
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName("Grade Distribution");
+//    container for the data points in the chart.
 
         List<String> colorList = new ArrayList<>();
         int index = 0;

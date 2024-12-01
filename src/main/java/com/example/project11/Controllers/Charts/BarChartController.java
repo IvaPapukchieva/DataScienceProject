@@ -34,7 +34,6 @@ public class BarChartController {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName(" Grade Distribution");
 
-        // Prepare color list and populate the series with data
         List<String> colorList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
             // Add each entry as a new Data point in the series
