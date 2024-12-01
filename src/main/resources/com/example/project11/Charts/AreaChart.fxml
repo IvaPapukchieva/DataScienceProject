@@ -3,12 +3,12 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="250.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.Charts.AreaChartController">
+<AnchorPane prefHeight="310.0" prefWidth="348.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.Charts.AreaChartController">
     <children>
 
-        <AreaChart fx:id="areaChart" prefHeight="250.0" prefWidth="362.0">
+        <AreaChart fx:id="areaChart" layoutY="9.0" prefHeight="298.0" prefWidth="335.0">
             <xAxis>
-                <NumberAxis label="Grade" side="BOTTOM" fx:id="xAxis" />
+                <NumberAxis label="Grade" prefWidth="257.0" side="BOTTOM" fx:id="xAxis" />
             </xAxis>
             <yAxis>
                 <NumberAxis fx:id="yAxis" label="Frequency" side="LEFT" />
