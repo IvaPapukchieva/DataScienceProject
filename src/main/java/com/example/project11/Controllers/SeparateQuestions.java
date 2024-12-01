@@ -14,11 +14,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.chart.Chart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
@@ -159,15 +162,23 @@ public class SeparateQuestions extends Controller implements Initializable {
                         System.out.println("Step 1 Average Grades ");
                         if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
                             try {
-                                System.out.println(" Graduating Grades");
                                 AverageGrades obj = new AverageGrades(graduatingGradesLoader.readAllStudents());
-                                Map<String, Integer> AverageList =(Map<String, Integer>) obj;
+                                Map<String, Integer> AverageList = obj.getAverageGradesMap();
+                                System.out.println("Graduating Grades");
 
                                 AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
                                 areaChartController.setChartData(AverageList);
-                                VBox newVBox = loadFXMLIntoVBox("Area Chart");
-                                pages.add(newVBox);
+                                Scene chartScene = scenes.get("Area Chart");
+                                Parent newroot = chartScene.getRoot();
 
+                                VBox chartVbox = new VBox();
+                                chartVbox.setStyle("-fx-padding: 10; -fx-alignment: LEFT;"); // Optional styling
+                                chartVbox.getChildren().add(newroot);
+
+                                // Add chart to a new VBox and include it in pagination
+                                pages.add(chartVbox);
+                                pagination.setPageCount(pages.size());
+                                pagination.setCurrentPageIndex(pages.size() - 2);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -335,6 +346,8 @@ public class SeparateQuestions extends Controller implements Initializable {
         }
         return "Unknown";
     }
+
+
 
 
 }

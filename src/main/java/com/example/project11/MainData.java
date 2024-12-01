@@ -110,7 +110,7 @@ public class MainData {
 
 
   AverageGrades easy=new AverageGrades(currentGradeLoaderNG.readAllStudents());
-     System.out.println(easy.getAverageGradesMap(bootstrappingLoader));
+     System.out.println(easy.getAverageGradesMap());
 
 
 }}

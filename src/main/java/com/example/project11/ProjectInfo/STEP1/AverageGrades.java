@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class AverageGrades{
 
-    private Map<String, Double> courseAvargeMap;
+    private Map<String, Integer> courseAvargeMap;
     private double[][] allStudents;
 
     public AverageGrades(double[][]allStudent) {
@@ -14,12 +14,12 @@ public class AverageGrades{
         this.courseAvargeMap = new LinkedHashMap<>();
     }
 
-    public Map<String, Double> getAverageGradesMap(double[][] allStudents) {
+    public Map<String, Integer> getAverageGradesMap() {
         try {
-            double[] averageCourse = calculateCourseAverages(allStudents);
+            int[] averageCourse = calculateCourseAverages(allStudents);
 
             for (int i = 0; i < averageCourse.length; i++) {
-                String courseName = "Course " + (i + 1);
+                String courseName =  Integer.toString((i + 1));
                 courseAvargeMap.put(courseName, averageCourse[i]);
             }
 
@@ -29,17 +29,17 @@ public class AverageGrades{
         return courseAvargeMap;
     }
 
-    public double[] calculateCourseAverages(double[][] matrix) {
+    public int[] calculateCourseAverages(double[][] matrix) {
         int numRows = matrix.length;
         int numCols = matrix[0].length;
-        double[] averageCourse = new double[numCols];
+        int[] averageCourse = new int[numCols];
 
         for (int j = 0; j < numCols; j++) {
             double sum = 0;
             for (int i = 0; i < numRows; i++) {
                 sum += matrix[i][j];
             }
-            averageCourse[j] = sum / numRows;
+            averageCourse[j] = (int)sum / numRows;
         }
         return averageCourse;
     }

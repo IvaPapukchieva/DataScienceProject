@@ -3,21 +3,15 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.layout.*?>
 
-<?import java.net.URL?>
-<AnchorPane
-            prefHeight="250.0" prefWidth="380.0"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.project11.Controllers.Charts.AreaChartController">
+<AnchorPane prefHeight="250.0" prefWidth="371.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.Charts.AreaChartController">
     <children>
 
-        <AreaChart fx:id="areaChart"
-                   prefHeight="250.0" prefWidth="380.0">
+        <AreaChart fx:id="areaChart" prefHeight="250.0" prefWidth="362.0">
             <xAxis>
-                <NumberAxis side="BOTTOM" fx:id="xAxis" label="Grade" />
+                <NumberAxis label="Grade" side="BOTTOM" fx:id="xAxis" />
             </xAxis>
             <yAxis>
-                <NumberAxis fx:id="yAxis" side="LEFT" label="Frequency" />
+                <NumberAxis fx:id="yAxis" label="Frequency" side="LEFT" />
             </yAxis>
         </AreaChart>
     </children>
