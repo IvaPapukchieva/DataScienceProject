@@ -22,7 +22,6 @@ public class Main extends Application {
         //Import starting scene
         Scene scene = Controller.getScene("start");
 
-
         //Set scene and show to user
         stage.setTitle("Project 1-1");
         stage.setScene(scene);
