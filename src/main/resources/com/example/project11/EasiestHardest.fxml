@@ -6,72 +6,79 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="482.0" prefWidth="713.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
-
-    <Circle layoutX="136.0" layoutY="227.0" radius="42.0" rotate="142.4" stroke="TRANSPARENT" strokeType="INSIDE">
-        <fill>
-          <LinearGradient endX="0.054373522458628844" startX="1.0" startY="0.5626477541371159">
-              <stops>
-                  <Stop>
-                      <color>
-                          <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265"/>
-                      </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                      <color>
-                          <Color red="1.0" green="1.0" blue="1.0"/>
-                      </color>
-                  </Stop>
-              </stops>
-          </LinearGradient>
-        </fill>
-    </Circle>
-    <Circle layoutX="36.0" layoutY="57.0" radius="112.0" stroke="TRANSPARENT" strokeType="INSIDE">
-        <fill>
-          <LinearGradient endX="1.0" endY="1.0" startX="0.3144208037825059" startY="0.557919621749409">
-              <stops>
-                  <Stop>
-                      <color>
-                          <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265"/>
-                      </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                      <color>
-                          <Color red="1.0" green="1.0" blue="1.0"/>
-                      </color>
-                  </Stop>
-              </stops>
-          </LinearGradient>
-        </fill>
-    </Circle>
-    <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EASIEST CLASSES"
-          wrappingWidth="126.13671875">
-        <font>
-            <Font size="15.0"/>
-        </font>
-    </Text>
-    <Text layoutX="14.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1 BEST CLASS IS  "
-          wrappingWidth="104.13671875">
-        <font>
-            <Font name="System Bold" size="12.0"/>
-        </font>
-    </Text>
-    <Label fx:id="LABLE1" layoutX="61.0" layoutY="79.0" text="FIRST CLASS"/>
-    <Text layoutX="14.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2 BEST CLASS IS  "
-          wrappingWidth="104.13671875">
-        <font>
-            <Font name="System Bold" size="12.0"/>
-        </font>
-    </Text>
-    <Label fx:id="LABLE2" layoutX="57.0" layoutY="136.0" prefHeight="17.0" prefWidth="84.0" text="SECONDCLASS"/>
-    <Text layoutX="14.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3 BEST CLASS IS  "
-          wrappingWidth="104.13671875">
-        <font>
-            <Font name="System Bold" size="12.0"/>
-        </font>
-    </Text>
-    <Label fx:id="LABLE3" layoutX="61.0" layoutY="198.0" text="FIRST CLASS"/>
-    <Line endX="100.0" layoutX="108.0" layoutY="70.0" startX="-100.0"/>
-    <Line endX="91.5" layoutX="115.0" layoutY="122.0" startX="-107.5"/>
-    <Line endX="91.5" layoutX="116.0" layoutY="178.0" startX="-107.5"/>
+<AnchorPane prefHeight="263.0" prefWidth="224.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
+   <Circle layoutX="179.0" layoutY="62.0" radius="23.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <fill>
+         <LinearGradient endX="1.0" endY="1.0" startX="0.4799054373522459" startY="0.14420803782505912">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="1.0" green="1.0" blue="1.0" />
+                  </color>
+               </Stop>
+            </stops>
+         </LinearGradient>
+      </fill>
+   </Circle>
+   <Circle layoutX="53.0" layoutY="54.0" radius="96.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <fill>
+         <LinearGradient endX="1.0" endY="1.0" startX="0.4799054373522459" startY="0.14420803782505912">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="1.0" green="1.0" blue="1.0" />
+                  </color>
+               </Stop>
+            </stops>
+         </LinearGradient>
+      </fill></Circle>
+   <Circle layoutX="169.0" layoutY="213.0" radius="35.0" rotate="-177.9" stroke="TRANSPARENT" strokeType="INSIDE">
+      <fill>
+         <LinearGradient endX="1.0" endY="1.0" startX="0.4799054373522459" startY="0.14420803782505912">
+            <stops>
+               <Stop>
+                  <color>
+                     <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
+                  </color>
+               </Stop>
+               <Stop offset="1.0">
+                  <color>
+                     <Color red="1.0" green="1.0" blue="1.0" />
+                  </color>
+               </Stop>
+            </stops>
+         </LinearGradient>
+      </fill>
+   </Circle>
+    <Label fx:id="LABLE1" layoutX="66.0" layoutY="78.0" text="FIRST CLASS" />
+    <Label fx:id="LABLE2" layoutX="57.0" layoutY="136.0" prefHeight="17.0" prefWidth="84.0" text="SECONDCLASS" />
+    <Label fx:id="LABLE3" layoutX="66.0" layoutY="198.0" text="THIRD CLASS" />
+   <Text layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EASIEST CLASSES">
+      <font>
+         <Font name="System Bold" size="13.0" />
+      </font>
+   </Text>
+   <Line endX="19.0" layoutX="116.0" layoutY="31.0" startX="-100.0" />
+   <Line endX="81.0" layoutX="117.0" layoutY="66.0" startX="-100.0" />
+   <Text layoutX="23.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COURSE 1  : " wrappingWidth="127.806640625" />
+   <Line endX="82.0" layoutX="116.0" layoutY="119.0" startX="-100.0" />
+   <Line endX="72.5" endY="-91.5" layoutX="127.0" layoutY="142.0" startX="71.5" startY="87.5" />
+   <Text layoutX="23.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COURSE 2  : " wrappingWidth="127.806640625" />
+   <Line endX="72.5" endY="-91.5" layoutX="-55.0" layoutY="142.0" startX="71.5" startY="87.5" />
+   <Text layoutX="23.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COURSE 3  : " wrappingWidth="127.806640625" />
+   <Line endX="82.0" layoutX="116.0" layoutY="181.0" startX="-100.0" />
+   <Line endX="82.0" layoutX="117.0" layoutY="230.0" startX="-100.0" />
+   <Line endX="81.0" layoutX="118.0" layoutY="50.0" startX="-100.0" />
+   <Line endX="81.0" layoutX="118.0" layoutY="104.0" startX="-100.0" />
+   <Line endX="81.0" layoutX="118.0" layoutY="163.0" startX="-100.0" />
 </AnchorPane>

@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class PredictPercentage {
 
-    private HashMap<Integer, Double> coursePassingMap;
+    private HashMap<String, Integer> coursePassingMap;
     private double[][] allStudents ;
 
     public PredictPercentage(double[][] allStudents) {
@@ -42,7 +42,7 @@ public class PredictPercentage {
     }
 
     // Getter for the HashMap to be used in a GUI
-    public HashMap<Integer, Double> getCoursePassingMap() {
+    public HashMap<String, Integer> getCoursePassingMap() {
         calculatePassingPercentages();
         return coursePassingMap;
     }
