@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.AreaChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
+<AnchorPane
+            prefHeight="250.0" prefWidth="380.0"
+            xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
-
             fx:controller="com.example.project11.Controllers.Charts.AreaChartController">
-   <children>
-      <AreaChart fx:id="areaChart" layoutX="50.0">
-        <xAxis>
-          <NumberAxis side="BOTTOM" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" />
-        </yAxis>
-      </AreaChart>
-   </children>
+    <children>
+        <AreaChart fx:id="areaChart"
+                   prefHeight="250.0" prefWidth="380.0">
+            <xAxis>
+                <NumberAxis side="BOTTOM" fx:id="xAxis" label="Grade" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT" label="Frequency" />
+            </yAxis>
+        </AreaChart>
+    </children>
 </AnchorPane>

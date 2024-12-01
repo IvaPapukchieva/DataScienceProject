@@ -65,7 +65,7 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     public void submitButton() throws FileNotFoundException {
-        System.out.println(filters.toString());
+//        System.out.println(filters.toString());
         if(dataSets.getSelectedToggle() == null) return;
         RadioButton radioButton = (RadioButton) dataSets.getSelectedToggle();
         FilterData filterData = null;
@@ -77,9 +77,9 @@ public class SelectionsController extends Controller implements Initializable {
 
         double [][]filteredData = filterData.applyFilters();
 
-        System.out.println(Arrays.deepToString(filteredData));
-
-        System.out.println("Reached end of method");
+//        System.out.println(Arrays.deepToString(filteredData));
+//
+//        System.out.println("Reached end of method");
 ChartSelectionController data=new ChartSelectionController();
 data.setFilteredData(filteredData);
         Stage stage1 = (Stage) submit.getParent().getScene().getWindow();

@@ -34,7 +34,6 @@ public class AreaChartController {
         int index = 0;
 
         for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
-            // Use the key for x-value, and the value for y-value
             double xValue = Integer.parseInt(entry.getKey());
             double yValue = entry.getValue();
 
@@ -53,12 +52,9 @@ public class AreaChartController {
         areaChart.applyCss();
         areaChart.layout();
 
-        // Color the area under the line
         for (int i = 0; i < series.getData().size(); i++) {
             XYChart.Data<Number, Number> data = series.getData().get(i);
             String color = colorList.get(i);
-
-            // Apply the color to the filled area under each segment of the chart line
             if (data.getNode() != null) {
                 data.getNode().setStyle("-fx-fill: " + color + ";");
             }
