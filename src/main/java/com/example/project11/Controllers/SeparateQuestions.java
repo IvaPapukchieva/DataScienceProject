@@ -198,7 +198,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             currentPage.setAlignment(Pos.CENTER);
             currentPage.getChildren().add(contentNode);
 
-            addNewEmptyPage();
+            addNewPage();
             sequenceManager.reset();
 
         } catch (IOException e) {
@@ -267,15 +267,8 @@ public class SeparateQuestions extends Controller implements Initializable {
         currentPage.setAlignment(Pos.CENTER);
         currentPage.getChildren().add(newRoot);
 
-        addNewEmptyPage();
+        addNewPage();
         sequenceManager.reset();
-    }
-
-    private void addNewEmptyPage() {
-        VBox newPage = new VBox();
-        newPage.setAlignment(Pos.CENTER);
-        pages.add(newPage);
-        pagination.setPageCount(pages.size());
     }
 }
 
