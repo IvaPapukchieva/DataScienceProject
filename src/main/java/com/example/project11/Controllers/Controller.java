@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public abstract class Controller {
     private Stage stage ;
-    private static final HashMap<String, Scene> scenes = new HashMap<>();
+    public static final HashMap<String, Scene> scenes = new HashMap<>();
     public static final HashMap<String, Object> controllers = new HashMap<>();
     private DataCallback dataCallback;
 

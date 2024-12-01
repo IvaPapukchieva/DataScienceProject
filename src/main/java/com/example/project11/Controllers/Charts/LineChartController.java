@@ -19,7 +19,7 @@ public class LineChartController {
         lineChart.getData().clear();
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Grade Distribution"); // Optional: Set a name for the series
+        series.setName("Grade Distribution");
 
         List<String> colorList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
@@ -28,6 +28,8 @@ public class LineChartController {
 
 
         lineChart.getData().add(series);
+            lineChart.applyCss();
+            lineChart.layout();
 
 
 
