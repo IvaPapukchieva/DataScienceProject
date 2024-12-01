@@ -34,11 +34,10 @@ import java.util.ResourceBundle;
 
 public class SeparateQuestions extends Controller implements Initializable {
     // Track selected phases (if needed)
-    private CurrentGradeLoaderNG currentGradeLoaderNG = new CurrentGradeLoaderNG();
-    private CurrentGradeLoader currentGradeLoader=new CurrentGradeLoader();
-    private GraduatingGradesLoader graduatingGradesLoader= new GraduatingGradesLoader();
-    //     CurrentGradeLoaderRemoveNG currentGradeLoaderRemoveNG=new CurrentGradeLoaderRemoveNG();
-    private WeightedBootstrapping weightedBootstrapping= new WeightedBootstrapping();
+    private final CurrentGradeLoaderNG currentGradeLoaderNG = new CurrentGradeLoaderNG();
+    private final CurrentGradeLoader currentGradeLoader = new CurrentGradeLoader();
+    private final GraduatingGradesLoader graduatingGradesLoader = new GraduatingGradesLoader();
+    private final WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
 
 
     public ArrayList<String> sequence = new ArrayList<>();
@@ -87,8 +86,8 @@ public class SeparateQuestions extends Controller implements Initializable {
     private final ArrayList<VBox> pages = new ArrayList<>(); // List to hold page content
     @FXML
 
-    private  Button createButton ;
-    private int pagenum = 0 ;
+    private Button createButton;
+    private int pagenum = 0;
 
     public SeparateQuestions() throws FileNotFoundException {
     }
@@ -109,29 +108,29 @@ public class SeparateQuestions extends Controller implements Initializable {
             }
         });
 
+
         // Set default styles
         resetButtonStyles();
 
 
         addNewPage();
         pagination.setPageCount(pages.size());
-        pagination.setPageFactory(this::createPageContent) ;
-
-
+        pagination.setPageFactory(this::createPageContent);
 
 
     }
-    private boolean isFilled(ArrayList<String> arrayList){
-        for( int i = 0  ; i<=4; i++){
-            if(arrayList.get(i).equals(" ")|| Objects.equals(arrayList.get(3), " ")){
-                return false ;
-            }
-            else{
-                return true ;
+
+    private boolean isFilled(ArrayList<String> arrayList) {
+        for (int i = 0; i <= 4; i++) {
+            if (arrayList.get(i).equals(" ") || Objects.equals(arrayList.get(3), " ")) {
+                return false;
+            } else {
+                return true;
             }
         }
-        return true ;
+        return true;
     }
+
     private void addNewPage() {
         // Create a new VBox for the page
         VBox pageBox = new VBox(10); // 10px spacing
@@ -154,42 +153,42 @@ public class SeparateQuestions extends Controller implements Initializable {
 
         // Button action to add a new page
         createButton.setOnAction(event -> {
-            if(sequence.get(0).trim().equalsIgnoreCase("STEP 1")){
+            if (sequence.get(0).trim().equalsIgnoreCase("STEP 1")) {
                 System.out.println("STEP 1 ");
 
-                    if( sequence.get(1).trim().equalsIgnoreCase("Average Grades")) {
+                if (sequence.get(1).trim().equalsIgnoreCase("Average Grades")) {
 
-                        System.out.println("Step 1 Average Grades ");
-                        if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
-                            try {
-                                AverageGrades obj = new AverageGrades(graduatingGradesLoader.readAllStudents());
-                                Map<String, Integer> AverageList = obj.getAverageGradesMap();
-                                System.out.println("Graduating Grades");
+                    System.out.println("Step 1 Average Grades ");
+                    if (sequence.get(3).trim().equalsIgnoreCase("Graduating Grades")) {
+                        try {
+                            AverageGrades obj = new AverageGrades(graduatingGradesLoader.readAllStudents());
+                            Map<String, Integer> AverageList = obj.getAverageGradesMap();
+                            System.out.println("Graduating Grades");
 
-                                AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
-                                areaChartController.setChartData(AverageList);
-                                Scene chartScene = scenes.get("Area Chart");
-                                Parent newroot = chartScene.getRoot();
+                            AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
+                            areaChartController.setChartData(AverageList);
+                            Scene chartScene = scenes.get("Area Chart");
+                            Parent newroot = chartScene.getRoot();
 
-                                VBox chartVbox = new VBox();
-                                chartVbox.setStyle("-fx-padding: 10; -fx-alignment: LEFT;"); // Optional styling
-                                chartVbox.getChildren().add(newroot);
+                            VBox chartVbox = new VBox();
+                            chartVbox.setStyle("-fx-padding: 10; -fx-alignment: LEFT;"); // Optional styling
+                            chartVbox.getChildren().add(newroot);
 
-                                // Add chart to a new VBox and include it in pagination
-                                pages.add(chartVbox);
-                                pagination.setPageCount(pages.size());
-                                pagination.setCurrentPageIndex(pages.size() - 2);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            // Add chart to a new VBox and include it in pagination
+                            pages.add(chartVbox);
+                            pagination.setPageCount(pages.size());
+                            pagination.setCurrentPageIndex(pages.size() - 2);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                     }
+                }
 
             }
-            if( sequence.get(0).trim().equalsIgnoreCase("STEP 2")){
-                switch (sequence.get(1)){
+            if (sequence.get(0).trim().equalsIgnoreCase("STEP 2")) {
+                switch (sequence.get(1)) {
                     case "Which Students Are Graduating Soon ":
-                         break ;
+                        break;
 
                     case "Graduating Soon ":
                         break;
@@ -204,17 +203,17 @@ public class SeparateQuestions extends Controller implements Initializable {
                 }
 
             }
-            if( sequence.get(0).trim().equalsIgnoreCase("STEP 3")){
+            if (sequence.get(0).trim().equalsIgnoreCase("STEP 3")) {
                 System.out.println("STEP 3");
 
 
             }
 
-            if( sequence.get(0).trim().equalsIgnoreCase("STEP 4")){
+            if (sequence.get(0).trim().equalsIgnoreCase("STEP 4")) {
                 System.out.println("STEP 4");
 
                 try {
-                    FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("STUDENTCV.fxml"));
+                    FXMLLoader separateLoader = new FXMLLoader(Main.class.getResource("StudentCV.fxml"));
                     Node studentCVNode = separateLoader.load();
 
                     VBox studentCVPage = new VBox();
@@ -223,7 +222,7 @@ public class SeparateQuestions extends Controller implements Initializable {
                     // Add the new page to the pagination
                     pages.add(studentCVPage);
                     pagination.setPageCount(pages.size()); // Update the total page count
-                    pagination.setCurrentPageIndex(pages.size()-2); // Navigate to the newly added page
+                    pagination.setCurrentPageIndex(pages.size() - 2); // Navigate to the newly added page
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -231,8 +230,6 @@ public class SeparateQuestions extends Controller implements Initializable {
 
             }
             // add your chart here
-
-
 
 
             sequence.clear();
@@ -244,8 +241,8 @@ public class SeparateQuestions extends Controller implements Initializable {
             // Add a new page and navigate to it
             addNewPage(); // Add the new page
             pagination.setPageCount(pages.size()); // Update the total page count
-            pagination.setCurrentPageIndex(pages.size() -2);
-            pagenum = pages.size()-2;// Go to the new page
+            pagination.setCurrentPageIndex(pages.size() - 2);
+            pagenum = pages.size() - 2;// Go to the new page
         });
 
         // Add the button to the page
@@ -258,7 +255,7 @@ public class SeparateQuestions extends Controller implements Initializable {
     // Method to add a new page with a graph or button
 
 
-   // Page factory to display content for the current page
+    // Page factory to display content for the current page
     private VBox createPageContent(int pageIndex) {
         if (pageIndex >= 0 && pageIndex < pages.size()) {
             return pages.get(pageIndex); // Return the corresponding page content
@@ -339,15 +336,12 @@ public class SeparateQuestions extends Controller implements Initializable {
     }
 
 
-
     private String getParentMenuText(MenuItem menuItem) {
         if (menuItem.getParentMenu() != null) {
             return menuItem.getParentMenu().getText(); // Direct parent is the Menu (Property)
         }
         return "Unknown";
     }
-
-
 
 
 }
