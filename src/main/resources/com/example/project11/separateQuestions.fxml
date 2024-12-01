@@ -39,6 +39,7 @@
             <items>
                 <Menu mnemonicParsing="false" text="STEP 1 ">
                     <items>
+                  <MenuItem mnemonicParsing="false" text="Average Grades" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Easiest Classes" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Hardest Classes" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuSelection" text="Similar Classes" />

@@ -69,10 +69,5 @@ public class BestAndWorstStudent {
 	}
 
 	// Method to print all students' GPAs
-	public void printAllGPA() {
-		System.out.println("All Students' GPAs:");
-		for (int studentID : studentGPA.keySet()) {
-			System.out.println("Student " + studentID + " -> GPA: " + String.format("%.2f", studentGPA.get(studentID)));
-		}
-	}
+
 }

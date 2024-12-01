@@ -7,13 +7,14 @@ import java.util.Map;
 public class AverageGrades{
 
     private Map<String, Double> courseAvargeMap;
+    private double[][] allStudents;
 
-    public AverageGrades() {
-
+    public AverageGrades(double[][]allStudent) {
+        this.allStudents = allStudent;
         this.courseAvargeMap = new LinkedHashMap<>();
     }
 
-    public Map<String, Double> findEasiestClasses(double[][] allStudents) {
+    public Map<String, Double> getAverageGradesMap(double[][] allStudents) {
         try {
             double[] averageCourse = calculateCourseAverages(allStudents);
 

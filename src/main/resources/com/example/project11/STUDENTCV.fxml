@@ -5,9 +5,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="415.0" prefWidth="360.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
+<AnchorPane prefHeight="386.0" prefWidth="357.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SeparateQuestions">
    <children>
-      <Circle layoutX="258.0" layoutY="342.0" radius="73.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Circle layoutX="214.0" layoutY="287.0" radius="73.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <LinearGradient endX="0.4444444444444445" endY="0.2458628841607565" startX="0.75177304964539" startY="1.0">
                <stops>

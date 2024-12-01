@@ -1,17 +1,10 @@
 package com.example.project11;
-import java.util.Arrays;
 
 import com.example.project11.ProjectInfo.loaders.*;
-import com.example.project11.ProjectInfo.Filters.*;
 import com.example.project11.ProjectInfo.STEP1.*;
-import com.example.project11.ProjectInfo.STEP2.*;
-import com.example.project11.ProjectInfo.STEP3.*;
-
 
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class MainData {
  public static void main(String[] args) throws FileNotFoundException {
@@ -57,9 +50,9 @@ public class MainData {
  * This class analyzes the grades of students and identifies which classes have the highest average grades
  * or the least difficulty based on some criteria.
  */
-     EasiestClasses findEasiestClassesMeanLoader = new EasiestClasses();
-     EasiestClasses findEasiestClassesGraduateLoader = new EasiestClasses();
-     EasiestClasses findEasiestClassesBootstrappingLoader = new EasiestClasses();
+     EasiestClasses findEasiestClassesMeanLoader = new EasiestClasses(currentGradeLoader.readAllStudents());
+     EasiestClasses findEasiestClassesGraduateLoader = new EasiestClasses(currentGradeLoader.readAllStudents());
+     EasiestClasses findEasiestClassesBootstrappingLoader = new EasiestClasses(currentGradeLoader.readAllStudents());
 
 
 
@@ -116,8 +109,8 @@ public class MainData {
 //     System.out.println(gradeDistribution);
 
 
-  AverageGrades easy=new AverageGrades();
-     System.out.println(easy.findEasiestClasses(bootstrappingLoader));
+  AverageGrades easy=new AverageGrades(currentGradeLoaderNG.readAllStudents());
+     System.out.println(easy.getAverageGradesMap(bootstrappingLoader));
 
 
 }}

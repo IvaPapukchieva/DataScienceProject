@@ -5,24 +5,23 @@ import java.util.HashMap;
 public class EasiestClasses {
 
     private HashMap<Integer, Double> easiestClassesMap; // Map to store course indices and their average scores
-
+    private double[][] allStudents ;
     // Constructor to set up file details
-    public EasiestClasses() {
+    public EasiestClasses(double[][] allStudents) {
+        this.allStudents = allStudents;
         this.easiestClassesMap = new HashMap<>();
     }
 
     // Main method to calculate and store the three easiest classes
     public HashMap<Integer, Double> findEasiestClasses(double[][] allStudents) {
-        try {
+
             // Calculate average scores for each course
             double[] averageCourse = calculateCourseAverages(allStudents);
 
             // Identify the top three easiest courses
             findTopThreeEasiestCourses(averageCourse);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+
         return easiestClassesMap; // Return the map with the easiest classes
     }
 
