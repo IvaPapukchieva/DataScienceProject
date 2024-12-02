@@ -114,7 +114,6 @@ public class SeparateQuestions extends Controller implements Initializable {
         Button createButton = new Button("Create Graph");
         createButton.setVisible(false);
         setupDynamicButtonVisibility(createButton);
-        createButton.setOnAction(this::handle);
 
         pageBox.getChildren().add(createButton);
         pages.add(pageBox);
@@ -169,12 +168,14 @@ public class SeparateQuestions extends Controller implements Initializable {
         return menuItem.getParentMenu() != null ? menuItem.getParentMenu().getText() : "Unknown";
     }
 
-    private void handle(ActionEvent event) {
+    private void handle(ActionEvent event) throws FileNotFoundException {
         List<String> sequence = sequenceManager.getSequence();
 
         // Validate that STEP 1 is the first sequence item
         if (!"STEP 1".equalsIgnoreCase(sequence.get(0).trim()) &&
-                !"STEP 2".equalsIgnoreCase(sequence.get(0).trim())) {
+                !"STEP 2".equalsIgnoreCase(sequence.get(0).trim())&
+                        !"STEP 3".equalsIgnoreCase(sequence.get(0).trim())&
+                        !"STEP 4".equalsIgnoreCase(sequence.get(0).trim())) {
             return;
         }
 
@@ -190,7 +191,6 @@ public class SeparateQuestions extends Controller implements Initializable {
                 handleCumLaude(sequence);
                 break;
             case "What Year Come for Which class" :
-
                 handleWhatYearWhatClass(sequence);
                 break;
             case "Predicting Passing Percentages":
@@ -207,27 +207,26 @@ public class SeparateQuestions extends Controller implements Initializable {
         }
     }
 
-    private void handleEasiestClasses(List<String> sequence) {
-        try {
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
-                System.out.println("Easiest Classes only supports Current Grades.");
-                return;
-            }
+    private void handleEasiestClasses(List<String> sequence) throws FileNotFoundException {
+        EasiestClassesController easiestClassesController = (EasiestClassesController) controllers.get("Easiest Hardest");
+        String gradesType = sequence.get(3).trim();
 
-            EasiestClasses easiestClasses = new EasiestClasses(currentGradeLoader.readAllStudents());
-            Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
 
-            List<String> keys = new ArrayList<>(easiestClassesMap.keySet());
-
-            // Pass keys to dynamically update labels and add to pagination
-            displayChartOnCurrentPage("Easiest Hardest");
-
-            sequenceManager.reset();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
+            System.out.println("Easiest Classes only supports Current Grades.");
+        } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+            EasiestClasses easiestClassesObject = new EasiestClasses(currentGradeLoader.readAllStudents());
+        } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+            EasiestClasses easiestClassesObject = new EasiestClasses(weightedBootstrapping.readAllStudents());
+        } else {
+            System.out.println("Invalid grades type for CumLaude.");
+            return;
         }
+
+            // Load easiest classes data
+
     }
+
 
     private void handleCumLaude(List<String> sequence) {
         try {
