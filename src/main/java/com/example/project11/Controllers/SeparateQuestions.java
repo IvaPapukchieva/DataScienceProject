@@ -3,10 +3,12 @@ package com.example.project11.Controllers;
 import com.example.project11.Controllers.Charts.AreaChartController;
 import com.example.project11.Controllers.Charts.BarChartController;
 import com.example.project11.Controllers.Charts.PieChartController;
+import com.example.project11.Controllers.Charts.ScatterChartController;
 import com.example.project11.Main;
 import com.example.project11.ProjectInfo.STEP1.CumLaude;
 import com.example.project11.ProjectInfo.STEP1.EasiestClasses;
 import com.example.project11.ProjectInfo.STEP1.AverageGrades;
+import com.example.project11.ProjectInfo.STEP2.GraduatePassingGradePredictionThreshold;
 import com.example.project11.ProjectInfo.STEP2.GraduatingSoon;
 import com.example.project11.ProjectInfo.STEP2.PredictPercentage;
 import com.example.project11.ProjectInfo.STEP2.WhatYearWhatclass;
@@ -188,7 +190,7 @@ public class SeparateQuestions extends Controller implements Initializable {
                 handleCumLaude(sequence);
                 break;
             case "What Year Come for Which class" :
-                System.out.println("What Year Come for Which class");
+
                 handleWhatYearWhatClass(sequence);
                 break;
             case "Predicting Passing Percentages":
@@ -197,6 +199,9 @@ public class SeparateQuestions extends Controller implements Initializable {
             case "Graduating Soon":
                 handleGraduatingSoon(sequence);
                 break;
+             case "Which Students Are Graduating Soon":
+                 handleGraduatePassingGradesPredictionThreshold(sequence);
+                 break;
             default:
                 System.out.println("Unknown function: " + sequence.get(1));
         }
@@ -204,7 +209,7 @@ public class SeparateQuestions extends Controller implements Initializable {
 
     private void handleEasiestClasses(List<String> sequence) {
         try {
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) &&!"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
             }
@@ -212,27 +217,18 @@ public class SeparateQuestions extends Controller implements Initializable {
             EasiestClasses easiestClasses = new EasiestClasses(currentGradeLoader.readAllStudents());
             Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
 
-
             List<String> keys = new ArrayList<>(easiestClassesMap.keySet());
-            String firstKey = keys.get(0);
-            String secondKey = keys.get(1);
-            String thirdKey = keys.get(2);
-//            double[][]allStudents = currentGradeLoader.readAllStudents();
-//            LABEL1.setText(String.valueOf(allStudents[Integer.parseInt(firstKey)][0]));
-//            System.out.println(allStudents[Integer.parseInt(firstKey)][0]);
-//            LABEL2.setText(String.valueOf(allStudents[Integer.parseInt(secondKey)][0]));
-//            System.out.println(allStudents[Integer.parseInt(secondKey)][0]);
-//            LABEL3.setText(String.valueOf(allStudents[Integer.parseInt(thirdKey)][0]));
-//            System.out.println(allStudents[Integer.parseInt(thirdKey)][0]);
 
+            // Pass keys to dynamically update labels and add to pagination
             displayChartOnCurrentPage("Easiest Hardest");
-            //addNewPage();
+
             sequenceManager.reset();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     private void handleCumLaude(List<String> sequence) {
         try {
             CumLaude cumLaude;
@@ -341,17 +337,18 @@ public class SeparateQuestions extends Controller implements Initializable {
     }
     private void handleGraduatingSoon(List<String> sequence) {
         try {
-            GraduatingSoon graduatingSoon;
-            String gradesType = sequence.get(3).trim();
 
-            if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
-                graduatingSoon = new GraduatingSoon(graduatingGradesLoader.readAllStudents());
-            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+            GraduatingSoon  graduatingSoon;
+            String gradesType = sequence.get(3).trim();
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
+                System.out.println("Easiest Classes only supports Current Grades.");
+                return;
+            }
+
+            else if ("Current Grades".equalsIgnoreCase(gradesType)) {
                 graduatingSoon = new GraduatingSoon(currentGradeLoader.readAllStudents());
-            } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
-                graduatingSoon = new GraduatingSoon(weightedBootstrapping.readAllStudents());
             } else {
-                System.out.println("Invalid grades type for Average Grades.");
+                System.out.println("Invalid grades type for CumLaude.");
                 return;
             }
 
@@ -365,20 +362,125 @@ public class SeparateQuestions extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
+    private void handleGraduatePassingGradesPredictionThreshold(List<String> sequence) {
+        try {
 
-    private void displayChartOnCurrentPage(String chartSceneKey) throws IOException {
-        Scene chartScene = scenes.get(chartSceneKey);
+            GraduatePassingGradePredictionThreshold GrPaPredictionThreshold;
+
+            String gradesType = sequence.get(3).trim();
+            if (!"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())&&!"Graduating Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
+                System.out.println("Easiest Classes only supports Current Grades.");
+                return;
+            }
+            else if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
+                GrPaPredictionThreshold = new GraduatePassingGradePredictionThreshold(currentGradeLoader.readAllStudents());
+            }
+            else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+                GrPaPredictionThreshold = new GraduatePassingGradePredictionThreshold(currentGradeLoader.readAllStudents());
+            } else {
+                System.out.println("Invalid grades type for CumLaude.");
+                return;
+            }
+
+            Map<String, Integer> averageGradesMap = GrPaPredictionThreshold.getCoursePassingMap();
+            ScatterChartController ScatterChartController = (ScatterChartController) controllers.get("Scatter Chart");
+            ScatterChartController.setChartData(averageGradesMap);
+
+            displayChartOnCurrentPage("Scatter Chart");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displayChartOnCurrentPage(String chartSceneKey) {
+        // Retrieve the preloaded scene from the cache
+        Scene chartScene = Controller.getScene(chartSceneKey);
+
+        // Check if the scene exists in the cache
+        if (chartScene == null) {
+            System.out.println("Scene not found in cache for key: " + chartSceneKey);
+            return; // Exit if the scene is not found
+        }
+
+        // Get the root of the scene
         Parent newRoot = chartScene.getRoot();
 
-        VBox currentPage = pages.get(pagination.getCurrentPageIndex());
-        currentPage.setAlignment(Pos.CENTER);
-        currentPage.getChildren().add(newRoot);
-        currentPage.getChildren().remove(createButton);
+        // Get the current page index
+        int currentPageIndex = pagination.getCurrentPageIndex();
 
+        // Ensure the pages list has enough pages
+        while (pages.size() <= currentPageIndex) {
+            addNewPage();
+        }
 
-        addNewPage();
+        // Get or initialize the current page
+        VBox currentPage = pages.get(currentPageIndex);
+        if (currentPage == null) {
+            currentPage = new VBox(10);
+            pages.set(currentPageIndex, currentPage);
+        }
+
+        // Check if the chart is already displayed to avoid duplicates
+        if (!currentPage.getChildren().contains(newRoot)) {
+            currentPage.getChildren().add(newRoot);
+        }
+
+        // Ensure the "Create Graph" button remains at the bottom
+        if (currentPage.getChildren().contains(createButton)) {
+            currentPage.getChildren().remove(createButton);
+        }
+        //currentPage.getChildren().add(createButton);
+
+        // Ensure there's always a new page available for future additions
+        if (currentPageIndex == pages.size() - 1) {
+            addNewPage();
+        }
+
+        // Reset the sequence manager after adding the chart
         sequenceManager.reset();
     }
+
+
+    private VBox cloneVBox(VBox original) {
+        if (original == null) {
+            // If the original VBox is null, return a new empty VBox
+            return new VBox(10);
+        }
+
+        VBox clonedVBox = new VBox(10);
+        if (original.getStyle() != null) {
+            clonedVBox.setStyle(original.getStyle());
+        }
+        if (original.getAlignment() != null) {
+            clonedVBox.setAlignment(original.getAlignment());
+        }
+
+        for (Node child : original.getChildren()) {
+            if (child instanceof Button) {
+                Button originalButton = (Button) child;
+                Button clonedButton = new Button(originalButton.getText() != null ? originalButton.getText() : "");
+                if (originalButton.getOnAction() != null) {
+                    clonedButton.setOnAction(originalButton.getOnAction());
+                }
+                clonedVBox.getChildren().add(clonedButton);
+            } else if (child instanceof Label) {
+                Label originalLabel = (Label) child;
+                Label clonedLabel = new Label(originalLabel.getText() != null ? originalLabel.getText() : "");
+                clonedVBox.getChildren().add(clonedLabel);
+            } else if (child != null) {
+                // Add other non-null node types directly
+                clonedVBox.getChildren().add(child);
+            }
+        }
+
+        return clonedVBox;
+    }
+
+
+
+
+
 }
 
 
