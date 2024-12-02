@@ -15,6 +15,7 @@ import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -35,21 +36,10 @@ import java.util.ResourceBundle;
 public class SeparateQuestions extends Controller implements Initializable {
     private static final SequenceManager sequenceManager = new SequenceManager();
 
-    private static final CurrentGradeLoaderNG currentGradeLoaderNG;
-    private static final CurrentGradeLoader currentGradeLoader;
-    private static final GraduatingGradesLoader graduatingGradesLoader;
-    private static final WeightedBootstrapping weightedBootstrapping;
-
-    static {
-        try {
-            currentGradeLoaderNG = loadLoader(new CurrentGradeLoaderNG());
-            currentGradeLoader = loadLoader(new CurrentGradeLoader());
-            graduatingGradesLoader = loadLoader(new GraduatingGradesLoader());
-            weightedBootstrapping = loadLoader(new WeightedBootstrapping());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private CurrentGradeLoaderNG currentGradeLoaderNG;
+    private CurrentGradeLoader currentGradeLoader;
+    private GraduatingGradesLoader graduatingGradesLoader;
+    private WeightedBootstrapping weightedBootstrapping;
 
     @FXML private Slider mySlider;
     @FXML private Button button, createButton;
@@ -57,17 +47,25 @@ public class SeparateQuestions extends Controller implements Initializable {
     @FXML private VBox childComboBox;
     @FXML private Pagination pagination;
     @FXML private MenuItem step1MenuItem, step2MenuItem, step3MenuItem, step4MenuItem;
-    @FXML private Label LABEL1;
-    @FXML private Label LABEL2;
-    @FXML private Label LABEL3;
-    private ToggleGroup toggleGroup = new ToggleGroup();
+    @FXML private ToggleGroup toggleGroup;
     private final List<VBox> pages = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setupToggleGroup();
-        setupPagination();
+        try {
+            initializeLoaders();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         addNewPage();
+        setUpToggleGroup();
+        setUpPagination();
+    }
+    private void initializeLoaders() throws FileNotFoundException {
+        currentGradeLoaderNG = loadLoader(new CurrentGradeLoaderNG());
+        currentGradeLoader = loadLoader(new CurrentGradeLoader());
+        graduatingGradesLoader = loadLoader(new GraduatingGradesLoader());
+        weightedBootstrapping = loadLoader(new WeightedBootstrapping());
     }
 
     private static <T> T loadLoader(T loader) {
@@ -77,22 +75,17 @@ public class SeparateQuestions extends Controller implements Initializable {
             throw new RuntimeException("Error initializing loader", e);
         }
     }
-
-    private void setupToggleGroup() {
-        graduatingGradesButton.setToggleGroup(toggleGroup);
-        currentGradesButton.setToggleGroup(toggleGroup);
-        bootstrappedGradesButton.setToggleGroup(toggleGroup);
-
-        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+    private void setUpToggleGroup() {
+        toggleGroup.selectedToggleProperty().addListener((newValue) -> {
             resetButtonStyles();
-            if (newValue instanceof ToggleButton) {
-                ToggleButton selectedButton = (ToggleButton) newValue;
-                selectedButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
+            if(newValue instanceof ToggleButton) {
+                ToggleButton toggleButton = (ToggleButton) newValue;
+                toggleButton.setStyle("-fx-background-color: #555555; -fx-text-fill: white;");
             }
         });
     }
 
-    private void setupPagination() {
+    private void setUpPagination() {
         pagination.setPageFactory(this::getPageContent);
     }
 
@@ -107,6 +100,15 @@ public class SeparateQuestions extends Controller implements Initializable {
         Button createButton = new Button("Create Graph");
         createButton.setVisible(false);
         setupDynamicButtonVisibility(createButton);
+        createButton.setOnAction(actionEvent -> {
+            try {
+                handle(actionEvent);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
 
         pageBox.getChildren().add(createButton);
         pages.add(pageBox);
@@ -174,9 +176,6 @@ public class SeparateQuestions extends Controller implements Initializable {
             case "Average Grades":
                 handleAverageGrades(sequence);
                 break;
-            case "Easiest Classes":
-                handleEasiestClasses(sequence);
-                break;
             case "CumLaude":
                 handleCumLaude(sequence);
                 break;
@@ -195,26 +194,6 @@ public class SeparateQuestions extends Controller implements Initializable {
             default:
                 System.out.println("Unknown function: " + sequence.get(1));
         }
-    }
-
-    private void handleEasiestClasses(List<String> sequence) throws FileNotFoundException {
-        EasiestClassesController easiestClassesController = (EasiestClassesController) controllers.get("Easiest Hardest");
-        String gradesType = sequence.get(3).trim();
-
-
-        if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
-            System.out.println("Easiest Classes only supports Current Grades.");
-        } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
-            EasiestClasses easiestClassesObject = new EasiestClasses(currentGradeLoader.readAllStudents());
-        } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
-            EasiestClasses easiestClassesObject = new EasiestClasses(weightedBootstrapping.readAllStudents());
-        } else {
-            System.out.println("Invalid grades type for CumLaude.");
-            return;
-        }
-
-            // Load easiest classes data
-
     }
 
 
@@ -279,7 +258,6 @@ public class SeparateQuestions extends Controller implements Initializable {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
             }
-
             else if ("Current Grades".equalsIgnoreCase(gradesType)) {
                 whatyearclass = new WhatYearWhatclass(currentGradeLoader.readAllStudents());
            } else {
@@ -333,7 +311,6 @@ public class SeparateQuestions extends Controller implements Initializable {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
             }
-
             else if ("Current Grades".equalsIgnoreCase(gradesType)) {
                 graduatingSoon = new GraduatingSoon(currentGradeLoader.readAllStudents());
             } else {

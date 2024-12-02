@@ -102,10 +102,12 @@ public abstract class Controller {
             scenes.put("Area Chart", new Scene(areaChartRoot, 380, 250));
             controllers.put("Area Chart", areaChartLoader.getController());
 
-            FXMLLoader EasiestHardest = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
-            scenes.put("Easiest Hardest", new Scene(EasiestHardest.load(), 320, 480));
-            controllers.put("Easiest Hardest", EasiestHardest.getController());
+            System.out.println(Main.class.getResource("EasiestHardest.fxml"));
 
+            FXMLLoader easiestHardest = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
+            AnchorPane easiestHardestRoot = easiestHardest.load();
+            scenes.put("Easiest Hardest", new Scene(easiestHardestRoot, 320, 480));
+            controllers.put("Easiest Hardest", easiestHardest.getController());
 
 
         } catch (IOException e) {
