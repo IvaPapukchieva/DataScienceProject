@@ -71,49 +71,38 @@ public abstract class Controller {
             scenes.put("Chart Window", new Scene(chartWindowFilterLoader.load(), 320, 480));
             controllers.put("Chart Window",  chartWindowFilterLoader.getController());
 
+            // LOAD THE CHARTS -------------------------------------
             FXMLLoader barChartLoader = new FXMLLoader(Main.class.getResource("Charts/BarChart.fxml"));
             AnchorPane barChartRoot = barChartLoader.load();
-            BarChart<?, ?> barChart = (BarChart<?, ?>) barChartRoot.lookup("#barChart");
-            BarChartController barChartController = barChartLoader.getController();
             scenes.put("Bar Chart", new Scene(barChartRoot, 380, 250));
-            controllers.put("Bar Chart", barChartController);
+            controllers.put("Bar Chart", barChartLoader.getController());
 
             FXMLLoader bubbleChartLoader = new FXMLLoader(Main.class.getResource("Charts/BubbleChart.fxml"));
             AnchorPane bubbleChartRoot = bubbleChartLoader.load();
-            BubbleChart<?, ?> bubbleChart = (BubbleChart<?, ?>) bubbleChartRoot.lookup("#bubbleChart");
-            BubbleChartController bubbleChartController = bubbleChartLoader.getController();
             scenes.put("Bubble Chart", new Scene(bubbleChartRoot, 380, 250));
-            controllers.put("Bubble Chart", bubbleChartController);
+            controllers.put("Bubble Chart", bubbleChartLoader.getController());
 
             FXMLLoader lineChartLoader = new FXMLLoader(Main.class.getResource("Charts/LineChart.fxml"));
             AnchorPane lineChartRoot = lineChartLoader.load();
-            LineChart<?, ?> lineChart = (LineChart<?, ?>) lineChartRoot.lookup("#lineChart");
-            LineChartController lineChartController = lineChartLoader.getController();
             scenes.put("Line Chart", new Scene(lineChartRoot, 380, 250));
-            controllers.put("Line Chart", lineChartController);
+            controllers.put("Line Chart", lineChartLoader.getController());
 
             FXMLLoader pieChartLoader = new FXMLLoader(Main.class.getResource("Charts/PieChart.fxml"));
             AnchorPane pieChartRoot = pieChartLoader.load();
-            PieChart pieChart = (PieChart) pieChartRoot.lookup("#pieChart");
-            PieChartController pieChartController = pieChartLoader.getController();
             scenes.put("Pie Chart", new Scene(pieChartRoot, 380, 250));
-            controllers.put("Pie Chart", pieChartController);
+            controllers.put("Pie Chart", pieChartLoader.getController());
 
             FXMLLoader scatterChartLoader = new FXMLLoader(Main.class.getResource("Charts/ScatterChart.fxml"));
             AnchorPane scatterChartRoot = scatterChartLoader.load();
-            ScatterChart<?, ?> scatterChart = (ScatterChart<?, ?>) scatterChartRoot.lookup("#scatterChart");
-            ScatterChartController scatterChartController = scatterChartLoader.getController();
             scenes.put("Scatter Chart", new Scene(scatterChartRoot, 380, 250));
-            controllers.put("Scatter Chart", scatterChartController);
+            controllers.put("Scatter Chart", scatterChartLoader.getController());
 
             FXMLLoader areaChartLoader = new FXMLLoader(Main.class.getResource("Charts/AreaChart.fxml"));
             AnchorPane areaChartRoot = areaChartLoader.load();
-            AreaChart<?, ?> areaChart = (AreaChart<?, ?>) areaChartRoot.lookup("#areaChart");
-            AreaChartController areaChartController=  areaChartLoader.getController();
             scenes.put("Area Chart", new Scene(areaChartRoot, 380, 250));
-            controllers.put("Area Chart", areaChartController);
+            controllers.put("Area Chart", areaChartLoader.getController());
 
-            FXMLLoader EasiestHardest = new FXMLLoader(Main.class.getResource("STEP1/EasiestHardest.fxml"));
+            FXMLLoader EasiestHardest = new FXMLLoader(Main.class.getResource("EasiestHardest.fxml"));
             scenes.put("Easiest Hardest", new Scene(EasiestHardest.load(), 320, 480));
             controllers.put("Easiest Hardest", EasiestHardest.getController());
 
