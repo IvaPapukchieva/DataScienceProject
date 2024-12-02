@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class SeparateQuestions extends Controller implements Initializable {
-    private static final SequenceManager sequenceManager = new SequenceManager();
+    private final SequenceManager sequenceManager = new SequenceManager();
 
     private static final CurrentGradeLoaderNG currentGradeLoaderNG;
     private static final CurrentGradeLoader currentGradeLoader;
@@ -51,15 +51,24 @@ public class SeparateQuestions extends Controller implements Initializable {
         }
     }
 
-    @FXML private Slider mySlider;
-    @FXML private Button button, createButton;
-    @FXML private ToggleButton graduatingGradesButton, currentGradesButton, bootstrappedGradesButton;
-    @FXML private VBox childComboBox;
-    @FXML private Pagination pagination;
-    @FXML private MenuItem step1MenuItem, step2MenuItem, step3MenuItem, step4MenuItem;
-    @FXML private Label LABEL1;
-    @FXML private Label LABEL2;
-    @FXML private Label LABEL3;
+    @FXML
+    private Slider mySlider;
+    @FXML
+    private Button button, createButton;
+    @FXML
+    private ToggleButton graduatingGradesButton, currentGradesButton, bootstrappedGradesButton;
+    @FXML
+    private VBox childComboBox;
+    @FXML
+    private Pagination pagination;
+    @FXML
+    private MenuItem step1MenuItem, step2MenuItem, step3MenuItem, step4MenuItem;
+    @FXML
+    private Label LABEL1;
+    @FXML
+    private Label LABEL2;
+    @FXML
+    private Label LABEL3;
     private ToggleGroup toggleGroup = new ToggleGroup();
     private final List<VBox> pages = new ArrayList<>();
 
@@ -107,6 +116,7 @@ public class SeparateQuestions extends Controller implements Initializable {
         Button createButton = new Button("Create Graph");
         createButton.setVisible(false);
         setupDynamicButtonVisibility(createButton);
+        createButton.setOnAction(this::handle);
 
         pageBox.getChildren().add(createButton);
         pages.add(pageBox);
@@ -158,14 +168,12 @@ public class SeparateQuestions extends Controller implements Initializable {
         return menuItem.getParentMenu() != null ? menuItem.getParentMenu().getText() : "Unknown";
     }
 
-    private void handle(ActionEvent event) throws FileNotFoundException {
+    private void handle(ActionEvent event) {
         List<String> sequence = sequenceManager.getSequence();
 
         // Validate that STEP 1 is the first sequence item
         if (!"STEP 1".equalsIgnoreCase(sequence.get(0).trim()) &&
-                !"STEP 2".equalsIgnoreCase(sequence.get(0).trim())&
-                        !"STEP 3".equalsIgnoreCase(sequence.get(0).trim())&
-                        !"STEP 4".equalsIgnoreCase(sequence.get(0).trim())) {
+                !"STEP 2".equalsIgnoreCase(sequence.get(0).trim())) {
             return;
         }
 
@@ -180,7 +188,8 @@ public class SeparateQuestions extends Controller implements Initializable {
             case "CumLaude":
                 handleCumLaude(sequence);
                 break;
-            case "What Year Come for Which class" :
+            case "What Year Come for Which class":
+
                 handleWhatYearWhatClass(sequence);
                 break;
             case "Predicting Passing Percentages":
@@ -189,34 +198,36 @@ public class SeparateQuestions extends Controller implements Initializable {
             case "Graduating Soon":
                 handleGraduatingSoon(sequence);
                 break;
-             case "Which Students Are Graduating Soon":
-                 handleGraduatePassingGradesPredictionThreshold(sequence);
-                 break;
+            case "Which Students Are Graduating Soon":
+                handleGraduatePassingGradesPredictionThreshold(sequence);
+                break;
             default:
                 System.out.println("Unknown function: " + sequence.get(1));
         }
     }
 
-    private void handleEasiestClasses(List<String> sequence) throws FileNotFoundException {
-        EasiestClassesController easiestClassesController = (EasiestClassesController) controllers.get("Easiest Hardest");
-        String gradesType = sequence.get(3).trim();
+    private void handleEasiestClasses(List<String> sequence) {
+        try {
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
+                System.out.println("Easiest Classes only supports Current Grades.");
+                return;
+            }
+
+            EasiestClasses easiestClasses = new EasiestClasses(currentGradeLoader.readAllStudents());
+            Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
+
+            List<String> keys = new ArrayList<>(easiestClassesMap.keySet());
+
+            // Pass keys to dynamically update labels and add to pagination
+            displayChartOnCurrentPage("Easiest Hardest");
 
 
-        if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
-            System.out.println("Easiest Classes only supports Current Grades.");
-        } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
-            EasiestClasses easiestClassesObject = new EasiestClasses(currentGradeLoader.readAllStudents());
-        } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
-            EasiestClasses easiestClassesObject = new EasiestClasses(weightedBootstrapping.readAllStudents());
-        } else {
-            System.out.println("Invalid grades type for CumLaude.");
-            return;
+            sequenceManager.reset();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-            // Load easiest classes data
-
     }
-
 
     private void handleCumLaude(List<String> sequence) {
         try {
@@ -237,6 +248,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             Map<String, Integer> honorsMap = cumLaude.getHonorsMap();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
             barChartController.setChartData(honorsMap);
+            barChartController.setChartLabels("", "");
 
             displayChartOnCurrentPage(" Chart");
 
@@ -244,6 +256,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void handlePredictionPercentage(List<String> sequence) {
         try {
             PredictPercentage predictPercentage;
@@ -263,6 +276,8 @@ public class SeparateQuestions extends Controller implements Initializable {
             Map<String, Integer> honorsMap = predictPercentage.getCoursePassingMap();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
             barChartController.setChartData(honorsMap);
+            barChartController.setChartLabels("", "");
+
 
             displayChartOnCurrentPage("Bar Chart");
 
@@ -273,23 +288,22 @@ public class SeparateQuestions extends Controller implements Initializable {
 
     private void handleWhatYearWhatClass(List<String> sequence) {
         try {
-            WhatYearWhatclass  whatyearclass;
+            WhatYearWhatclass whatyearclass;
             String gradesType = sequence.get(3).trim();
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim())) {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
-            }
-
-            else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
                 whatyearclass = new WhatYearWhatclass(currentGradeLoader.readAllStudents());
-           } else {
+            } else {
                 System.out.println("Invalid grades type for CumLaude.");
                 return;
-           }
+            }
 
             Map<String, Integer> courseYearMap = whatyearclass.getCourseYearMap();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
             barChartController.setChartData(courseYearMap);
+            barChartController.setChartLabels("", "");
 
             displayChartOnCurrentPage("Bar Chart");
 
@@ -317,6 +331,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             Map<String, Integer> averageGradesMap = averageGrades.getAverageGradesMap();
             AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
             areaChartController.setChartData(averageGradesMap);
+            areaChartController.setChartLabels("", "");
 
             displayChartOnCurrentPage("Area Chart");
 
@@ -324,17 +339,16 @@ public class SeparateQuestions extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void handleGraduatingSoon(List<String> sequence) {
         try {
 
-            GraduatingSoon  graduatingSoon;
+            GraduatingSoon graduatingSoon;
             String gradesType = sequence.get(3).trim();
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim())) {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
-            }
-
-            else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
                 graduatingSoon = new GraduatingSoon(currentGradeLoader.readAllStudents());
             } else {
                 System.out.println("Invalid grades type for CumLaude.");
@@ -344,6 +358,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             Map<String, Integer> averageGradesMap = graduatingSoon.getStudentGroups();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
             barChartController.setChartData(averageGradesMap);
+            barChartController.setChartLabels("", "");
 
             displayChartOnCurrentPage("Bar Chart");
 
@@ -351,20 +366,19 @@ public class SeparateQuestions extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void handleGraduatePassingGradesPredictionThreshold(List<String> sequence) {
         try {
 
             GraduatePassingGradePredictionThreshold GrPaPredictionThreshold;
 
             String gradesType = sequence.get(3).trim();
-            if (!"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())&&!"Graduating Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
+            if (!"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim()) && !"Graduating Grades".equalsIgnoreCase(sequence.get(3).trim())) {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
-            }
-            else if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
+            } else if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
                 GrPaPredictionThreshold = new GraduatePassingGradePredictionThreshold(currentGradeLoader.readAllStudents());
-            }
-            else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+            } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
                 GrPaPredictionThreshold = new GraduatePassingGradePredictionThreshold(currentGradeLoader.readAllStudents());
             } else {
                 System.out.println("Invalid grades type for CumLaude.");
@@ -372,8 +386,10 @@ public class SeparateQuestions extends Controller implements Initializable {
             }
 
             Map<String, Integer> averageGradesMap = GrPaPredictionThreshold.getCoursePassingMap();
-            ScatterChartController ScatterChartController = (ScatterChartController) controllers.get("Scatter Chart");
-            ScatterChartController.setChartData(averageGradesMap);
+            ScatterChartController scatterChartController = (ScatterChartController) controllers.get("Scatter Chart");
+            scatterChartController.setChartData(averageGradesMap);
+            scatterChartController.setChartLabels("", "");
+
 
             displayChartOnCurrentPage("Scatter Chart");
 
@@ -467,46 +483,39 @@ public class SeparateQuestions extends Controller implements Initializable {
     }
 
 
+    // Helper Class to Manage Sequence
+    class SequenceManager {
+        private final List<String> sequence = new ArrayList<>(List.of(" ", " ", " ", " "));
 
-
-
-}
-
-
-
-
-// Helper Class to Manage Sequence
-class SequenceManager {
-    private final List<String> sequence = new ArrayList<>(List.of(" ", " ", " ", " "));
-
-    public void update(String step, String function) {
-        sequence.set(0, step);
-        sequence.set(1, function);
-    }
-
-    public void updateSliderValue(double value) {
-        sequence.set(2, String.valueOf(value));
-    }
-
-    public void updateGradeType(String gradeType) {
-        sequence.set(3, gradeType);
-    }
-
-    public boolean isFilled() {
-        return sequence.stream().noneMatch(String::isBlank);
-    }
-
-    public void reset() {
-        for (int i = 0; i < sequence.size(); i++) {
-            sequence.set(i, " ");
+        public void update(String step, String function) {
+            sequence.set(0, step);
+            sequence.set(1, function);
         }
-    }
 
-    public String getStep() {
-        return sequence.get(0);
-    }
+        public void updateSliderValue(double value) {
+            sequence.set(2, String.valueOf(value));
+        }
 
-    public List<String> getSequence() {
-        return new ArrayList<>(sequence);
+        public void updateGradeType(String gradeType) {
+            sequence.set(3, gradeType);
+        }
+
+        public boolean isFilled() {
+            return sequence.stream().noneMatch(String::isBlank);
+        }
+
+        public void reset() {
+            for (int i = 0; i < sequence.size(); i++) {
+                sequence.set(i, " ");
+            }
+        }
+
+        public String getStep() {
+            return sequence.get(0);
+        }
+
+        public List<String> getSequence() {
+            return new ArrayList<>(sequence);
+        }
     }
 }

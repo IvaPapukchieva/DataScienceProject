@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class GraduatePassingGradePredictionThreshold {
     // Creating a hash map
-    private Map<String, Double> coursePassingMap;
+    private Map<String, Integer> coursePassingMap;
     private double[][] allStudents ;
 
     public GraduatePassingGradePredictionThreshold(double[][] allstudents) {
@@ -21,7 +21,7 @@ public class GraduatePassingGradePredictionThreshold {
     public void calculatePassingPercentagesArray() {
         coursePassingMap = new HashMap<>();
         // Calculate passing percentages
-            double[] passingPercentages = calculatePassingPercentagesArray(allStudents);
+            int[] passingPercentages = calculatePassingPercentagesArray(allStudents);
 
             for (int i = 0; i < passingPercentages.length; i++) {
                 coursePassingMap.put(Integer.toString(i), passingPercentages[i]); // Course numbers start at 1
@@ -30,13 +30,13 @@ public class GraduatePassingGradePredictionThreshold {
 
     }
     // a method for calculating a passing percentage
-    private double[] calculatePassingPercentagesArray(double[][] matrix) {
+    private int[] calculatePassingPercentagesArray(double[][] matrix) {
         // we have determined that a passing student is one that has a 6 or higher based on the graduating grades
-        double[]passingPercentages = new double[matrix[0].length];
+        int[]passingPercentages = new int[matrix[0].length];
 
         for( int j = 0 ; j< allStudents[0].length ; j++) {
-            double sum =  0 ;
-            double count = 0 ;
+            int sum =  0 ;
+            int count = 0 ;
             for( int i = 0 ; i< allStudents.length ; i++) {
                 count++;
                 if(allStudents[i][j]>= 6.0){
@@ -51,7 +51,7 @@ public class GraduatePassingGradePredictionThreshold {
 
 
     // a getter for the hash map
-    public Map<String, Double> getCoursePassingMap() {
+    public Map<String, Integer> getCoursePassingMap() {
         calculatePassingPercentagesArray();
 
 
