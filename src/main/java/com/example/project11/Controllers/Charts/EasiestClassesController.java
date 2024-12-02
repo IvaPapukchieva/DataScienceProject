@@ -1,5 +1,6 @@
-package com.example.project11.Controllers;
+package com.example.project11.Controllers.Charts;
 
+import com.example.project11.Controllers.SeparateQuestions;
 import com.example.project11.ProjectInfo.loaders.CurrentGradeLoader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,10 +1,6 @@
 package com.example.project11.Controllers;
 
-import com.example.project11.Controllers.Charts.AreaChartController;
-import com.example.project11.Controllers.Charts.BarChartController;
-import com.example.project11.Controllers.Charts.PieChartController;
-import com.example.project11.Controllers.Charts.ScatterChartController;
-import com.example.project11.Main;
+import com.example.project11.Controllers.Charts.*;
 import com.example.project11.ProjectInfo.STEP1.CumLaude;
 import com.example.project11.ProjectInfo.STEP1.EasiestClasses;
 import com.example.project11.ProjectInfo.STEP1.AverageGrades;
@@ -20,9 +16,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,7 +30,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SeparateQuestions extends Controller implements Initializable {
@@ -118,9 +111,6 @@ public class SeparateQuestions extends Controller implements Initializable {
         pageBox.getChildren().add(createButton);
         pages.add(pageBox);
         pagination.setPageCount(pages.size());
-
-
-
 
     }
 
@@ -248,7 +238,7 @@ public class SeparateQuestions extends Controller implements Initializable {
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
             barChartController.setChartData(honorsMap);
 
-            displayChartOnCurrentPage("Bar Chart");
+            displayChartOnCurrentPage(" Chart");
 
         } catch (IOException e) {
             e.printStackTrace();
