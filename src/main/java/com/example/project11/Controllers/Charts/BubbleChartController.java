@@ -69,6 +69,17 @@ public class BubbleChartController {
                 }
             }
         }
-    }}
 
+
+    }
+
+    public void setChartLabels(String xAxisLabel, String yAxisLabel) {
+        if (xAxisLabel != null && yAxisLabel != null) {
+            bubbleChart.getXAxis().setLabel(xAxisLabel);
+            bubbleChart.getYAxis().setLabel(yAxisLabel);
+        }
+
+
+    }
+}
 

@@ -9,11 +9,9 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 public class LineChartController {
     @FXML
     private LineChart<String, Number> lineChart;
-
 
     public void setChartData(Map<String, Integer> gradeDistribution) {
         lineChart.getData().clear();
@@ -23,8 +21,13 @@ public class LineChartController {
         for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
             series.getData().add(data);
+        }
+
         lineChart.getData().add(series);
-
-
     }
+    public void setChartLabels(String xAxisLabel, String yAxisLabel) {
+        if (xAxisLabel != null && yAxisLabel != null) {
+            lineChart.getXAxis().setLabel(xAxisLabel);
+            lineChart.getYAxis().setLabel(yAxisLabel);
+        }
 }}

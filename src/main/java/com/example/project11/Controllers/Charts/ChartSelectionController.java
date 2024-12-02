@@ -22,6 +22,7 @@ public class ChartSelectionController extends Controller {
     }
 
     public void setFilteredData(double[][] allStudents) {
+
         this.filteredData = allStudents;
     }
 
@@ -37,35 +38,37 @@ public class ChartSelectionController extends Controller {
 
         String chartId = ((ImageView) mouseEvent.getSource()).getId();
 
-        if (chartId.equals("AreaChart")) {
-            AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
-            areaChartController.setChartData(chartData);
-            openNewChartWindow("Area Chart");
-
-        } else if (chartId.equals("PieChart")) {
-            PieChartController pieChartController = (PieChartController) controllers.get("Pie Chart");
-            pieChartController.setChartData(chartData);
-            openNewChartWindow("Pie Chart");
-
-        } else if (chartId.equals("BarChart")) {
-            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-            barChartController.setChartData(chartData);
-            openNewChartWindow("Bar Chart");
-
-        } else if (chartId.equals("ScatterChart")) {
-            ScatterChartController scatterChartController = (ScatterChartController) controllers.get("Scatter Chart");
-            scatterChartController.setChartData(chartData);
-            openNewChartWindow("Scatter Chart");
-
-        } else if (chartId.equals("BubbleChart")) {
-            BubbleChartController bubbleChartController = (BubbleChartController) controllers.get("Bubble Chart");
-            bubbleChartController.setChartData(chartData);
-            openNewChartWindow("Bubble Chart");
-
-        } else if (chartId.equals("LineChart")) {
-            LineChartController lineChartController = (LineChartController) controllers.get("Line Chart");
-            lineChartController.setChartData(chartData);
-            openNewChartWindow("Line Chart");
+        switch (chartId) {
+            case "AreaChart" -> {
+                AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
+                areaChartController.setChartData(chartData);
+                openNewChartWindow("Area Chart");
+            }
+            case "PieChart" -> {
+                PieChartController pieChartController = (PieChartController) controllers.get("Pie Chart");
+                pieChartController.setChartData(chartData);
+                openNewChartWindow("Pie Chart");
+            }
+            case "BarChart" -> {
+                BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
+                barChartController.setChartData(chartData);
+                openNewChartWindow("Bar Chart");
+            }
+            case "ScatterChart" -> {
+                ScatterChartController scatterChartController = (ScatterChartController) controllers.get("Scatter Chart");
+                scatterChartController.setChartData(chartData);
+                openNewChartWindow("Scatter Chart");
+            }
+            case "BubbleChart" -> {
+                BubbleChartController bubbleChartController = (BubbleChartController) controllers.get("Bubble Chart");
+                bubbleChartController.setChartData(chartData);
+                openNewChartWindow("Bubble Chart");
+            }
+            case "LineChart" -> {
+                LineChartController lineChartController = (LineChartController) controllers.get("Line Chart");
+                lineChartController.setChartData(chartData);
+                openNewChartWindow("Line Chart");
+            }
         }
     }
 
