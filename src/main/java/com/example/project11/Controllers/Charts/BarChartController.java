@@ -69,4 +69,9 @@ public class BarChartController {
             }
         }
     }
-}
+    public void setChartLabels(String xAxisLabel, String yAxisLabel) {
+        if (xAxisLabel != null && yAxisLabel != null) {
+            barChart.getXAxis().setLabel(xAxisLabel);
+            barChart.getYAxis().setLabel(yAxisLabel);
+        }
+}}
