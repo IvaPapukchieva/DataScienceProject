@@ -2,10 +2,14 @@ package com.example.project11.Controllers;
 
 import com.example.project11.Controllers.Charts.AreaChartController;
 import com.example.project11.Controllers.Charts.BarChartController;
+import com.example.project11.Controllers.Charts.PieChartController;
 import com.example.project11.Main;
 import com.example.project11.ProjectInfo.STEP1.CumLaude;
 import com.example.project11.ProjectInfo.STEP1.EasiestClasses;
 import com.example.project11.ProjectInfo.STEP1.AverageGrades;
+import com.example.project11.ProjectInfo.STEP2.GraduatingSoon;
+import com.example.project11.ProjectInfo.STEP2.PredictPercentage;
+import com.example.project11.ProjectInfo.STEP2.WhatYearWhatclass;
 import com.example.project11.ProjectInfo.loaders.CurrentGradeLoader;
 import com.example.project11.ProjectInfo.loaders.CurrentGradeLoaderNG;
 import com.example.project11.ProjectInfo.loaders.GraduatingGradesLoader;
@@ -58,7 +62,9 @@ public class SeparateQuestions extends Controller implements Initializable {
     @FXML private VBox childComboBox;
     @FXML private Pagination pagination;
     @FXML private MenuItem step1MenuItem, step2MenuItem, step3MenuItem, step4MenuItem;
-
+    @FXML private Label LABEL1;
+    @FXML private Label LABEL2;
+    @FXML private Label LABEL3;
     private ToggleGroup toggleGroup = new ToggleGroup();
     private final List<VBox> pages = new ArrayList<>();
 
@@ -165,7 +171,8 @@ public class SeparateQuestions extends Controller implements Initializable {
         List<String> sequence = sequenceManager.getSequence();
 
         // Validate that STEP 1 is the first sequence item
-        if (!"STEP 1".equalsIgnoreCase(sequence.get(0).trim())) {
+        if (!"STEP 1".equalsIgnoreCase(sequence.get(0).trim()) &&
+                !"STEP 2".equalsIgnoreCase(sequence.get(0).trim())) {
             return;
         }
 
@@ -180,6 +187,16 @@ public class SeparateQuestions extends Controller implements Initializable {
             case "CumLaude":
                 handleCumLaude(sequence);
                 break;
+            case "What Year Come for Which class" :
+                System.out.println("What Year Come for Which class");
+                handleWhatYearWhatClass(sequence);
+                break;
+            case "Predicting Passing Percentages":
+                handlePredictionPercentage(sequence);
+                break;
+            case "Graduating Soon":
+                handleGraduatingSoon(sequence);
+                break;
             default:
                 System.out.println("Unknown function: " + sequence.get(1));
         }
@@ -187,7 +204,7 @@ public class SeparateQuestions extends Controller implements Initializable {
 
     private void handleEasiestClasses(List<String> sequence) {
         try {
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim())) {
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) &&!"Bootstrapped Grades".equalsIgnoreCase(sequence.get(3).trim())) {
                 System.out.println("Easiest Classes only supports Current Grades.");
                 return;
             }
@@ -196,11 +213,20 @@ public class SeparateQuestions extends Controller implements Initializable {
             Map<String, Integer> easiestClassesMap = easiestClasses.getEasiestClassesMap();
 
 
+            List<String> keys = new ArrayList<>(easiestClassesMap.keySet());
+            String firstKey = keys.get(0);
+            String secondKey = keys.get(1);
+            String thirdKey = keys.get(2);
+//            double[][]allStudents = currentGradeLoader.readAllStudents();
+//            LABEL1.setText(String.valueOf(allStudents[Integer.parseInt(firstKey)][0]));
+//            System.out.println(allStudents[Integer.parseInt(firstKey)][0]);
+//            LABEL2.setText(String.valueOf(allStudents[Integer.parseInt(secondKey)][0]));
+//            System.out.println(allStudents[Integer.parseInt(secondKey)][0]);
+//            LABEL3.setText(String.valueOf(allStudents[Integer.parseInt(thirdKey)][0]));
+//            System.out.println(allStudents[Integer.parseInt(thirdKey)][0]);
 
             displayChartOnCurrentPage("Easiest Hardest");
-
-
-            addNewPage();
+            //addNewPage();
             sequenceManager.reset();
 
         } catch (IOException e) {
@@ -233,6 +259,59 @@ public class SeparateQuestions extends Controller implements Initializable {
             e.printStackTrace();
         }
     }
+    private void handlePredictionPercentage(List<String> sequence) {
+        try {
+            PredictPercentage predictPercentage;
+            String gradesType = sequence.get(3).trim();
+
+            if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
+                predictPercentage = new PredictPercentage(graduatingGradesLoader.readAllStudents());
+            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+                predictPercentage = new PredictPercentage(currentGradeLoader.readAllStudents());
+            } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+                predictPercentage = new PredictPercentage(weightedBootstrapping.readAllStudents());
+            } else {
+                System.out.println("Invalid grades type for CumLaude.");
+                return;
+            }
+
+            Map<String, Integer> honorsMap = predictPercentage.getCoursePassingMap();
+            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
+            barChartController.setChartData(honorsMap);
+
+            displayChartOnCurrentPage("Bar Chart");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleWhatYearWhatClass(List<String> sequence) {
+        try {
+            WhatYearWhatclass  whatyearclass;
+            String gradesType = sequence.get(3).trim();
+            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
+                System.out.println("Easiest Classes only supports Current Grades.");
+                return;
+            }
+
+            else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+                whatyearclass = new WhatYearWhatclass(currentGradeLoader.readAllStudents());
+           } else {
+                System.out.println("Invalid grades type for CumLaude.");
+                return;
+           }
+
+            Map<String, Integer> courseYearMap = whatyearclass.getCourseYearMap();
+            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
+            barChartController.setChartData(courseYearMap);
+
+            displayChartOnCurrentPage("Bar Chart");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void handleAverageGrades(List<String> sequence) {
         try {
@@ -255,6 +334,32 @@ public class SeparateQuestions extends Controller implements Initializable {
             areaChartController.setChartData(averageGradesMap);
 
             displayChartOnCurrentPage("Area Chart");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void handleGraduatingSoon(List<String> sequence) {
+        try {
+            GraduatingSoon graduatingSoon;
+            String gradesType = sequence.get(3).trim();
+
+            if ("Graduating Grades".equalsIgnoreCase(gradesType)) {
+                graduatingSoon = new GraduatingSoon(graduatingGradesLoader.readAllStudents());
+            } else if ("Current Grades".equalsIgnoreCase(gradesType)) {
+                graduatingSoon = new GraduatingSoon(currentGradeLoader.readAllStudents());
+            } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
+                graduatingSoon = new GraduatingSoon(weightedBootstrapping.readAllStudents());
+            } else {
+                System.out.println("Invalid grades type for Average Grades.");
+                return;
+            }
+
+            Map<String, Integer> averageGradesMap = graduatingSoon.getStudentGroups();
+            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
+            barChartController.setChartData(averageGradesMap);
+
+            displayChartOnCurrentPage("Bar Chart");
 
         } catch (IOException e) {
             e.printStackTrace();
