@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class GraduatePassingGradePredictionThreshold {
     // Creating a hash map
-    private Map<String, Integer> coursePassingMap;
+    private Map<String, Double> coursePassingMap;
     private double[][] allStudents ;
 
     public GraduatePassingGradePredictionThreshold(double[][] allstudents) {
@@ -24,7 +24,7 @@ public class GraduatePassingGradePredictionThreshold {
             double[] passingPercentages = calculatePassingPercentagesArray(allStudents);
 
             for (int i = 0; i < passingPercentages.length; i++) {
-                coursePassingMap.put(Integer.toString(i), (int)passingPercentages[i]); // Course numbers start at 1
+                coursePassingMap.put(Integer.toString(i), passingPercentages[i]); // Course numbers start at 1
             }
 
 
@@ -51,8 +51,10 @@ public class GraduatePassingGradePredictionThreshold {
 
 
     // a getter for the hash map
-    public Map<String, Integer> getCoursePassingMap() {
+    public Map<String, Double> getCoursePassingMap() {
         calculatePassingPercentagesArray();
+
+
         return coursePassingMap;
     }
 }

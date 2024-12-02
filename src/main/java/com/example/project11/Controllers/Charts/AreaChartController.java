@@ -37,5 +37,14 @@ public class AreaChartController {
 
 
         }
+
+    public void setChartLabels(String xAxisLabel, String yAxisLabel) {
+        if (xAxisLabel != null && yAxisLabel != null) {
+            areaChart.getXAxis().setLabel(xAxisLabel);
+            areaChart.getYAxis().setLabel(yAxisLabel);
+        }
     }
+
+        }
+
 

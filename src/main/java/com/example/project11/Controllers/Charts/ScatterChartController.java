@@ -32,5 +32,11 @@ public class ScatterChartController {
         scatterChart.applyCss();
         scatterChart.layout();
     }
-}
 
+    public void setChartLabels(String xAxisLabel, String yAxisLabel) {
+        if (xAxisLabel != null && yAxisLabel != null) {
+            scatterChart.getXAxis().setLabel(xAxisLabel);
+            scatterChart.getYAxis().setLabel(yAxisLabel);
+        }
+    }
+}
