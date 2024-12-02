@@ -3,6 +3,7 @@ package com.example.project11.ProjectInfo.STEP2;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The program counts how many grades are 6.0 and above (assuming 6.0 is the passing grade)
@@ -10,7 +11,7 @@ import java.util.HashMap;
  */
 public class PredictPercentage {
 
-    private static HashMap<String, Integer> coursePassingMap;
+    private static Map<String, Integer> coursePassingMap;
     private double[][] allStudents;
 
     public PredictPercentage(double[][] allStudents) {
@@ -69,7 +70,7 @@ public class PredictPercentage {
     }
 
     // Getter for the HashMap to be used in a GUI
-    public HashMap<String, Integer> getCoursePassingMap() {
+    public Map<String, Integer> getCoursePassingMap() {
         calculatePassingPercentages();
         return coursePassingMap;
     }
