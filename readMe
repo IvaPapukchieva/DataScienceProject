@@ -1,0 +1,12 @@
+Project 1.1: Alien Grades Analysis
+
+Welcome to Project 1.1, a JavaFX application to analyze alien grades through interactive statistics and graphs.
+How to Run the Project:
+	1.	Open the Project:
+	•	Open the project in a working Java IDE (e.g., IntelliJ IDEA).
+	2.	Run the Application:
+	•	Locate the main GUI class in the project structure.
+	•	Press the Run button in your IDE.
+	3.	Explore the Windows:
+	•	Filters Window: Apply filters to refine data visualization.
+	•	Separate Questions Window: View detailed grade statistics for specific queries.

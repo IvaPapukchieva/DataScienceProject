@@ -1,14 +1,13 @@
 package com.example.project11;
 
 import com.example.project11.Controllers.Controller;
-import com.example.project11.ProjectInfo.loaders.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class GUI extends Application {
 
     public static void main(String[] args) {
         launch();
