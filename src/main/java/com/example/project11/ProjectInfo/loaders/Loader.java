@@ -4,4 +4,6 @@ import java.io.FileNotFoundException;
 
 public interface Loader {
     double[][] readAllStudents()throws FileNotFoundException;
-}
+
+    }
+

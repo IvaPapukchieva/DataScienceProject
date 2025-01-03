@@ -8,14 +8,16 @@ public class StudentInfoLoader extends CurrentGradeLoader  {
 
   public String[][] infoInStrings;
   private String fileName;
+public String [] StudentIDStrings;
 
 
     public StudentInfoLoader() throws FileNotFoundException {
         this.fileName="src/main/resources/csv/StudentInfo.csv";
         this.infoInStrings=readInfoString();
+//        StudentID=getStudentID();
+        
 
     }
-
 
 
     public String[][] readInfoString() throws FileNotFoundException {
@@ -55,4 +57,14 @@ public class StudentInfoLoader extends CurrentGradeLoader  {
     }
         return infoInStrings ;
 }
+    public String[] getStudentID() {
+        String[] studentID = new String[infoInStrings.length];
+
+        for (int i = 0; i < infoInStrings.length; i++) {
+            studentID[i] = infoInStrings[i][0];
+        }
+
+        return studentID;
+    }
+
 }

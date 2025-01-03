@@ -25,7 +25,7 @@ public class BubbleChartController {
             "#89CFF0"
     };
 
-    public void setChartData(Map<String, Integer> gradeDistribution) {
+    public void setChartData(Map<String, Double> gradeDistribution) {
         bubbleChart.getData().clear();
 
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -35,8 +35,8 @@ public class BubbleChartController {
         List<String> colorList = new ArrayList<>();
         int index = 0;
 
-        for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
-            double xValue = Integer.parseInt(entry.getKey());
+        for (Map.Entry<String, Double> entry : gradeDistribution.entrySet()) {
+            double xValue = Double.parseDouble(entry.getKey());
             double yValue = entry.getValue();
             double size = 5 + (yValue);
 

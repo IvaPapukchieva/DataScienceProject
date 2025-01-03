@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class ChartSelectionController extends Controller {
 
-    private Map<String, Integer> chartData;
+    private Map<String, Double> chartData;
     private static double[][] filteredData;
 
     public ChartSelectionController() {
@@ -34,6 +34,7 @@ public class ChartSelectionController extends Controller {
         }
 
         GradeDistributionCalculator gradeDistributionCalculator = new GradeDistributionCalculator();
+
         chartData = gradeDistributionCalculator.calculateGradeDistribution(filteredData);
 
         String chartId = ((ImageView) mouseEvent.getSource()).getId();

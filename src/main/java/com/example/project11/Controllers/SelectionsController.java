@@ -44,7 +44,7 @@ public class SelectionsController extends Controller implements Initializable {
         filters = new ArrayList<>();
 
         if (ngSelect != null) {
-            ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs");
+            ngSelect.getItems().addAll("Weighted Randomization", "Replace With Average", "Remove NGs", "Data with NG values");
         } else {
             System.out.println("ngSelect is null! Check FXML and Controller association.");
         }
@@ -74,6 +74,7 @@ public class SelectionsController extends Controller implements Initializable {
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Weighted Randomization")) {filterData = new FilterData(filters, "weightedBootstrappingLoader");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Replace With Average")) {filterData = new FilterData(filters, "currentGradeLoaderNG");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Remove NGs")) {filterData = new FilterData(filters, "currentGradeLoaderRemoveNG");}
+        else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Data with NG values")) {filterData = new FilterData(filters, "currentGradeLoader");}
 
         double [][]filteredData = filterData.applyFilters();
 

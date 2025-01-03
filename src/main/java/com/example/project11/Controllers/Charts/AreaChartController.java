@@ -16,15 +16,15 @@ public class AreaChartController {
     @FXML
     private NumberAxis yAxis;
 
-    public void setChartData(Map<String, Integer> gradeDistribution) {
+    public void setChartData(Map<String, Double> gradeDistribution) {
 
         areaChart.getData().clear();
         XYChart.Series<Number, Number> series = new XYChart.Series<>();
         series.setName("Grade Distribution");
 //       the container for data points in a chart.
 
-        for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
-            double xValue = Integer.parseInt(entry.getKey());
+        for (Map.Entry<String, Double> entry : gradeDistribution.entrySet()) {
+            double xValue = Double.parseDouble(entry.getKey());
             double yValue = entry.getValue();
             // Add each entry as a new Data point in the series
             XYChart.Data<Number, Number> data = new XYChart.Data<>(xValue, yValue);

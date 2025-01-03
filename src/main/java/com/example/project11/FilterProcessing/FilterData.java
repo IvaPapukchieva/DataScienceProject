@@ -84,6 +84,7 @@ public class FilterData {
             case "weightedBootstrappingLoader":
                 currentLoader = new WeightedBootstrapping();
                 break;
+
         }
 
         double[][] result = currentLoader.readAllStudents();

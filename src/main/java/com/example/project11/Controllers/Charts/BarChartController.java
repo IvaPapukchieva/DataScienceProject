@@ -27,7 +27,7 @@ public class BarChartController {
             "#89CFF0"
     };
 
-    public void setChartData(Map<String, Integer> gradeDistribution) {
+    public void setChartData(Map<String, Double> gradeDistribution) {
 
         barChart.getData().clear();
 
@@ -35,7 +35,7 @@ public class BarChartController {
         series.setName(" Grade Distribution");
 
         List<String> colorList = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
+        for (Map.Entry<String, Double> entry : gradeDistribution.entrySet()) {
             // Add each entry as a new Data point in the series
             series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
             colorList.add(colors[colorList.size() % colors.length]); // Cycles through colors

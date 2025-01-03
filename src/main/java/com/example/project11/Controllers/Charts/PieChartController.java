@@ -20,11 +20,11 @@ public class PieChartController {
             "#89CFF0"
     };
 
-    public void setChartData(Map<String, Integer> gradeDistribution) {
+    public void setChartData(Map<String, Double> gradeDistribution) {
         pieChart.getData().clear();
 
         List<String> colorList = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : gradeDistribution.entrySet()) {
+        for (Map.Entry<String, Double> entry : gradeDistribution.entrySet()) {
             PieChart.Data data = new PieChart.Data(entry.getKey(), entry.getValue());
             pieChart.getData().add(data);
             colorList.add(colors[colorList.size() % colors.length]); // Cycles through colors

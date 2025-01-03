@@ -25,6 +25,7 @@ public class WhatYearWhatclass {
 			courseYearMap = new HashMap<>();
 
 			double[] arrayOfNumGrade = new double[AllStudents[0].length];
+//			counts how many NG's each course has
 			double count = 0;
 
 			for (int i = 0; i < AllStudents[0].length; i++) {
