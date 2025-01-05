@@ -1,12 +1,14 @@
 package com.example.project11.ProjectInfo.Filters;
 
-import com.example.project11.ProjectInfo.loaders.StudentInfoLoader;
+import com.example.project11.ProjectInfo.loaders.CurrentGradeLoader;
+
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FilterByStudentNG extends StudentInfoLoader  implements Filter{
+public class FilterByStudentNG extends CurrentGradeLoader implements Filter{
+//    the student id + the ng
 
     private final double[][] allStudents;
     private double[] numberOfNG;
@@ -16,6 +18,61 @@ public class FilterByStudentNG extends StudentInfoLoader  implements Filter{
         this.allStudents = allStudents;
         numberOfNG = getAllTheNGByStudent();
     }
+
+
+    public double[][] filterStudents(int amountNG) {
+        double[][] filteredStudents = new double[numberOfNG.length][2];
+        for (int i = 0; i < numberOfNG.length; i++) {
+            filteredStudents[i][0] = StudentID[i];
+            if (numberOfNG[i] == amountNG) {
+                filteredStudents[i][1] = amountNG;
+            } else {
+                filteredStudents[i][1] = -1;
+            }
+        }
+        return filteredStudents;
+    }
+    public double[][] filterStudents(int lowerBound, int upperBound) {
+        if (lowerBound > upperBound) {
+            int temp = lowerBound;
+            lowerBound = upperBound;
+            upperBound = temp;
+        }
+
+        double[][] filteredStudents = new double[numberOfNG.length][2];
+
+        for (int i = 0; i < numberOfNG.length; i++) {
+            filteredStudents[i][0] = StudentID[i];
+            if (numberOfNG[i] >= lowerBound && numberOfNG[i] <= upperBound) {
+                filteredStudents[i][1] = numberOfNG[i];
+            } else {
+                filteredStudents[i][1] = -1;
+            }
+        }
+
+        return filteredStudents;
+    }
+
+    public double[][] filterStudents(int[] amountNGs) {
+        double[][] filteredStudents = new double[numberOfNG.length][2];
+        for (int i = 0; i < numberOfNG.length; i++) {
+            filteredStudents[i][0] = StudentID[i];
+            boolean matchFound = false;
+            for (int amountNG: amountNGs) {
+                if (numberOfNG[i] == amountNG) {
+                    filteredStudents[i][1] = amountNG;
+                    matchFound = true;
+                    break;
+                }
+            }
+
+            if (!matchFound) {filteredStudents[i][1] = -1;
+            }
+        }
+
+        return filteredStudents;
+    }
+
 
     public double[] getAllTheNGByStudent() {
         numberOfNG = new double[allStudents.length];
@@ -33,60 +90,5 @@ public class FilterByStudentNG extends StudentInfoLoader  implements Filter{
         return numberOfNG;
     }
 
-    public Map<String, Double> getFilterByStudentNG(double NG) {
-        Map<String, Double> validCourses = new HashMap<>();
 
-        for (int i = 0; i < numberOfNG.length; i++) {
-            if (NG == numberOfNG[i]) {
-                validCourses.put(StudentIDStrings[i], numberOfNG[i]);
-            }
-        }
-        return validCourses;
-    }
-
-    public Map<String, Double> getFilterByStudentNG(int lowerBound, int upperBound) {
-        if (lowerBound > upperBound) {
-            int temp = lowerBound;
-            lowerBound = upperBound;
-            upperBound = temp;
-        }
-        Map<String, Double> validCourses = new HashMap<>();
-
-        for (int i = 0; i < numberOfNG.length; i++) {
-            if (numberOfNG[i] >= lowerBound && numberOfNG[i] <= upperBound) {
-                validCourses.put(StudentIDStrings[i], numberOfNG[i]);
-            }
-        }
-        return validCourses;
-    }
-
-    public Map<String, Double> getFilterByStudentNG(double[] NGs) {
-        Map<String, Double> validCourses = new HashMap<>();
-
-        for (int i = 0; i < numberOfNG.length; i++) {
-            for (double NG : NGs) {
-                if (NG == numberOfNG[i]) {
-                    validCourses.put(StudentIDStrings[i], numberOfNG[i]);
-                    break;
-                }
-            }
-        }
-
-        return validCourses;
-    }
-
-    @Override
-    public double[][] filterStudents(int value) {
-        return new double[0][];
-    }
-
-    @Override
-    public double[][] filterStudents(int lowerBound, int upperBound) {
-        return new double[0][];
-    }
-
-    @Override
-    public double[][] filterStudents(int[] value) {
-        return new double[0][];
-    }
 }

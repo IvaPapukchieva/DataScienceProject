@@ -6,7 +6,7 @@ import java.util.Map;
 public class PrepareChartData {
 
 //    3 ways to display the data/ grade distribution/ course GPA/ Amount of NGs
-
+//this can be tricky when I save the id, which can be also from 1-10 and the course indexes
 
     public Map<String, Double> calculateGradeDistribution(double [][] allStudents) {
 
@@ -73,6 +73,36 @@ public class PrepareChartData {
 
 
     }
+
+
+//    this Map will work for the filters that we save the ID
+//    index zero is the id and the want to save the next thing
+//    it will display the student id and the amount
+public Map<String, Double> displayNGByStudentID(double[][] studentData) {
+    Map<String, Double> studentNGs = new HashMap<>();
+
+    for (double[] student : studentData) {
+        if(student[1]==-1){
+            continue;
+        }
+        String studentID = String.valueOf(student[0]);
+        double ngCount = student[1];
+        studentNGs.put(studentID, ngCount);
+    }
+
+    return studentNGs;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

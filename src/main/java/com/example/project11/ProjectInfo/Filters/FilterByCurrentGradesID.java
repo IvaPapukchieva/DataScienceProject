@@ -22,7 +22,7 @@ private double [][]allStudents;
 
     }
 
-        public double[] filterStudents(int id) {
+        public double[]filterStudents(int id) {
             // Find the index of the student ID
             return IntStream.range(0, StudentID.length)
                     .filter(i -> StudentID[i] == id)
