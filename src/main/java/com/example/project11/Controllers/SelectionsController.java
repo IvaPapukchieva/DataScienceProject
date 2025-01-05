@@ -1,11 +1,9 @@
 package com.example.project11.Controllers;
 
 
-import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.Controllers.FilterControllers.*;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
-import com.example.project11.ProjectInfo.GradeDistributionCalculator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -78,13 +76,14 @@ public class SelectionsController extends Controller implements Initializable {
 
         double [][]filteredData = filterData.applyFilters();
 
-//        System.out.println(Arrays.deepToString(filteredData));
+
+    System.out.println(Arrays.deepToString(filteredData));
 //
 //        System.out.println("Reached end of method");
-ChartSelectionController data=new ChartSelectionController();
-data.setFilteredData(filteredData);
-        Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
-        stage1.setScene(getScene("Chart Window"));
+//ChartSelectionController data=new ChartSelectionController();
+//data.setFilteredData(filteredData);
+//        Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
+//        stage1.setScene(getScene("Chart Window"));
 
     }
 

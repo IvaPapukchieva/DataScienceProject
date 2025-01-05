@@ -8,7 +8,7 @@ import javafx.scene.chart.XYChart;
 
 import java.util.Map;
 
-public class ScatterChartController {
+public class ScatterChartController  implements ChartController{
     @FXML
     private ScatterChart<String, Number> scatterChart;
     @FXML

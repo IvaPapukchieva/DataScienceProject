@@ -6,109 +6,90 @@ import java.util.Map;
 public class FilterByCourseGPA {
 
     private final double [][] allStudents;
-    private double []  averageByCourse;
+    private final int []  averageByCourse;
 
 
     public FilterByCourseGPA(double[][] allStudents){
         this.allStudents=allStudents;
-        this.averageByCourse=calculateCourseAverages();
+        this.averageByCourse=calculateCourseGPA();
     }
 
-    public double[] calculateCourseAverages() {
-        int numRows = allStudents.length;
-        int numCols = allStudents[0].length;
-        double[] averageByCourse = new double[numCols];
 
-        for (int j = 0; j < numCols; j++) {
-            double sum = 0;
-            for (int i = 0; i < numRows; i++) {
-                sum += allStudents[i][j];
-            }
-            averageByCourse[j] = sum / numRows;
-        }
-        return averageByCourse;
-    }
-
-    public Map<String,Double> getValidCourses(double grade){
-        Map<String,Double> validCourses=new HashMap<>();
-        for(int i=0;i<averageByCourse.length;i++){
-            if(grade==averageByCourse[i]){
-                validCourses.put(courses[i],grade);
+    public double[][] filterStudents(int grade) {
+        double[][] filteredStudents = new double[averageByCourse.length][2];
+        for (int i = 0; i < averageByCourse.length; i++) {
+            filteredStudents[i][0] = i;
+            if (averageByCourse[i] == grade) {
+                filteredStudents[i][1] = grade;
+            } else {
+                filteredStudents[i][1] = -1;
             }
         }
-        return validCourses;
-
+        return filteredStudents;
     }
 
-    public Map<String,Double> getValidCourses(int lowerBound,int upperBound){
+    public double[][] filterStudents(int lowerBound, int upperBound) {
         if (lowerBound > upperBound) {
             int temp = lowerBound;
             lowerBound = upperBound;
             upperBound = temp;
         }
-        Map<String,Double> validCourses=new HashMap<>();
 
-        for(int i=0;i<averageByCourse.length;i++){
-            if(averageByCourse[i]>=lowerBound&& averageByCourse[i]<=upperBound){
-                validCourses.put(courses[i],averageByCourse[i]);
-            }
-        }
-        return validCourses;
-
-    }
-
-    public Map<String, Double> getValidCourses(int[] grades) {
-        Map<String, Double> validCourses = new HashMap<>();
+        double[][] filteredStudents = new double[averageByCourse.length][2];
 
         for (int i = 0; i < averageByCourse.length; i++) {
+            filteredStudents[i][0] = i;
+            if (averageByCourse[i] >= lowerBound && averageByCourse[i] <= upperBound) {
+                filteredStudents[i][1] = averageByCourse[i];
+            } else {
+                filteredStudents[i][1] = -1;
+            }
+        }
+
+        return filteredStudents;
+    }
+
+
+    public double[][] filterStudents(int[] grades) {
+        double[][] filteredStudents = new double[averageByCourse.length][2];
+        for (int i = 0; i < averageByCourse.length; i++) {
+            filteredStudents[i][0] = i;
+            boolean matchFound = false;
             for (int grade : grades) {
-                if (grade == (int) averageByCourse[i]) {
-                    validCourses.put(courses[i], averageByCourse[i]);
+                if (averageByCourse[i] == grade) {
+                    filteredStudents[i][1] = grade;
+                    matchFound = true;
                     break;
                 }
             }
+
+            if (!matchFound) {filteredStudents[i][1] = -1;
+            }
         }
 
-        return validCourses;
+        return filteredStudents;
     }
 
 
+    public int[] calculateCourseGPA() {
+        int[] averageByCourse = new int[allStudents[0].length];
 
+        for (int j = 0; j < allStudents[0].length; j++) {
+            double sum = 0;
+            for (int i = 0; i < allStudents.length; i++) {
+                sum += allStudents[i][j];
+            }
 
-    private final String[] courses = {
-            "Arkonian Warfare Tactics",
-            "ExoGenetics Evolution",
-            "Transdimensional Navigation",
-            "Warp Field Theory",
-            "Dark Matter Biophysics",
-            "Zarnithian Philosophy",
-            "Drakthon Linguistics",
-            "Xynthium Material Sciences",
-            "Hyperspace Topology",
-            "Helio-Bio Interface",
-            "Luminarian Art Theory",
-            "Stellar Cartography",
-            "Chrono-Kinetics",
-            "Technotronic Linguistic Fusion",
-            "Cybernetic Ethics",
-            "Nebulon Astrophysics",
-            "Quasar Dynamics",
-            "Glacial Holo-Architecture",
-            "Aether Resonance",
-            "Gravix Planetary Studies",
-            "Vortex Quantum Mechanics",
-            "Holo-Temporal Engineering",
-            "Psi-Energy Manipulation",
-            "Plasmawave Analysis",
-            "Neutronia Metallurgy",
-            "Syntho-Chemical Engineering",
-            "Sublight Propulsion Systems",
-            "Krythos Biomechanics",
-            "Flux Capacitor Management",
-            "Xyloprax Computation",
-            "Yridium Power Systems",
-            "Quantum Neuro-Hacking",
-            "Zyglon Neurology"
-    };
+            double average = sum / allStudents.length;
+
+            if (average - (int) average >= 0.5) {
+                averageByCourse[j] = (int) average + 1;
+            } else {
+                averageByCourse[j] = (int) average;
+            }
+        }
+
+        return averageByCourse;
+    }
 
 }

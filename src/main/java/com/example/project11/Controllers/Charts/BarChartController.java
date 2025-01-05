@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BarChartController {
+public class BarChartController  implements ChartController{
     @FXML
     private BarChart<String, Number> barChart;
     @FXML

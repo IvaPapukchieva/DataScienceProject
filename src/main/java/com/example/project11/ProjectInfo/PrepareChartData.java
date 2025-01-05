@@ -3,7 +3,9 @@ package com.example.project11.ProjectInfo;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GradeDistributionCalculator {
+public class PrepareChartData {
+
+//    3 ways to display the data/ grade distribution/ course GPA/ Amount of NGs
 
 
     public Map<String, Double> calculateGradeDistribution(double [][] allStudents) {
@@ -71,4 +73,46 @@ public class GradeDistributionCalculator {
 
 
     }
+
+
+
+    private final String[] courses = {
+            "Arkonian Warfare Tactics",
+            "ExoGenetics Evolution",
+            "Transdimensional Navigation",
+            "Warp Field Theory",
+            "Dark Matter Biophysics",
+            "Zarnithian Philosophy",
+            "Drakthon Linguistics",
+            "Xynthium Material Sciences",
+            "Hyperspace Topology",
+            "Helio-Bio Interface",
+            "Luminarian Art Theory",
+            "Stellar Cartography",
+            "Chrono-Kinetics",
+            "Technotronic Linguistic Fusion",
+            "Cybernetic Ethics",
+            "Nebulon Astrophysics",
+            "Quasar Dynamics",
+            "Glacial Holo-Architecture",
+            "Aether Resonance",
+            "Gravix Planetary Studies",
+            "Vortex Quantum Mechanics",
+            "Holo-Temporal Engineering",
+            "Psi-Energy Manipulation",
+            "Plasmawave Analysis",
+            "Neutronia Metallurgy",
+            "Syntho-Chemical Engineering",
+            "Sublight Propulsion Systems",
+            "Krythos Biomechanics",
+            "Flux Capacitor Management",
+            "Xyloprax Computation",
+            "Yridium Power Systems",
+            "Quantum Neuro-Hacking",
+            "Zyglon Neurology"
+    };
+
+
+
+
 }

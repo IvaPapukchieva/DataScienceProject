@@ -9,7 +9,7 @@ import java.lang.reflect.Array;
 
 import static java.util.Collections.swap;
 
-public class FilterByCourse {
+public class FilterByCourse implements Filter{
 
     private double [][] allStudents;
 

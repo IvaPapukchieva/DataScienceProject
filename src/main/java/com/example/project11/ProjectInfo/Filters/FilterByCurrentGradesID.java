@@ -12,16 +12,15 @@ import java.util.stream.IntStream;
 
 public class FilterByCurrentGradesID  extends CurrentGradeLoader {
 
-private int id;
-private int[] ID;
+private double [][]allStudents;
 
-    public FilterByCurrentGradesID(int id, double [][] allStudents ) throws FileNotFoundException {
+    public FilterByCurrentGradesID(double [][] allStudents ) throws FileNotFoundException {
         super();
-        this.id = id;
+        this.allStudents=allStudents;
 
     }
 
-        public double[] getStudentGradesById() {
+        public double[] filterStudents(int id) {
             // Find the index of the student ID
             return IntStream.range(0, StudentID.length)
                     .filter(i -> StudentID[i] == id)
@@ -30,8 +29,7 @@ private int[] ID;
                     .orElse(new double[0]);
         }
 
-        public double[][] getStudentsGradesById(int[] ID) {
-            this.ID = ID;
+        public double[][] filterStudents(int[] ID) {
             double[][] results = new double[ID.length][33];
 
             for (int j = 0; j < ID.length; j++) {
@@ -47,6 +45,20 @@ private int[] ID;
 
 
         }
+
+    public double[][] filterStudents(int lowerBound, int upperBound) {
+        List<double[]> resultsList = IntStream.range(0, StudentID.length)
+                .filter(i -> StudentID[i] >= lowerBound && StudentID[i] <= upperBound)
+                .mapToObj(i -> allStudents[i])
+                .toList();
+
+        double[][] results = new double[resultsList.size()][];
+        for (int i = 0; i < resultsList.size(); i++) {
+            results[i] = resultsList.get(i);
+        }
+
+        return results;
+    }
 
 }
 

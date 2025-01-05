@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PieChartController {
+public class PieChartController  implements ChartController{
     @FXML
     private PieChart pieChart;
 
@@ -49,6 +49,11 @@ public class PieChartController {
                 n.setStyle("-fx-pie-color: " + color + ";");
             }
         }
+
+    }
+
+    @Override
+    public void setChartLabels(String xAxisLabel, String yAxisLabel) {
 
     }
 

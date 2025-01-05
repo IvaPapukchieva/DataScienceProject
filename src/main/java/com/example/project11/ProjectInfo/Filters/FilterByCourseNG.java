@@ -28,84 +28,51 @@ public class FilterByCourseNG {
             count = 0;
         }
         return numberOfNG;
-    }
+    }}
 
-    public Map<String, Double> getFilterByCourseNG(double NG) {
-        Map<String, Double> validCourses = new HashMap<>();
-
-        for (int i = 0; i < numberOfNG.length; i++) {
-            if (NG == numberOfNG[i]) {
-                validCourses.put(courses[i], numberOfNG[i]);
-            }
-        }
-        return validCourses;
-    }
-
-    public Map<String, Double> getFilterByCourseNG(int lowerBound, int upperBound) {
-        if (lowerBound > upperBound) {
-            int temp = lowerBound;
-            lowerBound = upperBound;
-            upperBound = temp;
-        }
-        Map<String, Double> validCourses = new HashMap<>();
-
-        for (int i = 0; i < numberOfNG.length; i++) {
-            if (numberOfNG[i] >= lowerBound && numberOfNG[i] <= upperBound) {
-                validCourses.put(courses[i], numberOfNG[i]);
-            }
-        }
-        return validCourses;
-    }
-
-    public Map<String, Double> getFilterByCourseNG(double[] NGs) {
-        Map<String, Double> validCourses = new HashMap<>();
-
-        for (int i = 0; i < numberOfNG.length; i++) {
-            for (double NG : NGs) {
-                if (NG == numberOfNG[i]) {
-                    validCourses.put(courses[i], numberOfNG[i]);
-                    break;
-                }
-            }
-        }
-
-        return validCourses;
-    }
-
-    private final String[] courses = {
-            "Arkonian Warfare Tactics",
-            "ExoGenetics Evolution",
-            "Transdimensional Navigation",
-            "Warp Field Theory",
-            "Dark Matter Biophysics",
-            "Zarnithian Philosophy",
-            "Drakthon Linguistics",
-            "Xynthium Material Sciences",
-            "Hyperspace Topology",
-            "Helio-Bio Interface",
-            "Luminarian Art Theory",
-            "Stellar Cartography",
-            "Chrono-Kinetics",
-            "Technotronic Linguistic Fusion",
-            "Cybernetic Ethics",
-            "Nebulon Astrophysics",
-            "Quasar Dynamics",
-            "Glacial Holo-Architecture",
-            "Aether Resonance",
-            "Gravix Planetary Studies",
-            "Vortex Quantum Mechanics",
-            "Holo-Temporal Engineering",
-            "Psi-Energy Manipulation",
-            "Plasmawave Analysis",
-            "Neutronia Metallurgy",
-            "Syntho-Chemical Engineering",
-            "Sublight Propulsion Systems",
-            "Krythos Biomechanics",
-            "Flux Capacitor Management",
-            "Xyloprax Computation",
-            "Yridium Power Systems",
-            "Quantum Neuro-Hacking",
-            "Zyglon Neurology"
-    };
-
-}
+//    public double[][] filterStudents(int amountNG) {
+//        double[][] filteredStudents = new double[averageByCourse.length][2];
+//        for (int i = 0; i < averageByCourse.length; i++) {
+//            filteredStudents[i][0] = i;
+//            if (averageByCourse[i] == grade) {
+//                filteredStudents[i][1] = grade;
+//            } else {
+//                filteredStudents[i][1] = -1;
+//            }
+////        }
+////        return filteredStudents;
+////    }
+//
+//    public Map<String, Double> getFilterByCourseNG(int lowerBound, int upperBound) {
+//        if (lowerBound > upperBound) {
+//            int temp = lowerBound;
+//            lowerBound = upperBound;
+//            upperBound = temp;
+//        }
+//        Map<String, Double> validCourses = new HashMap<>();
+//
+////        for (int i = 0; i < numberOfNG.length; i++) {
+////            if (numberOfNG[i] >= lowerBound && numberOfNG[i] <= upperBound) {
+////                validCourses.put(courses[i], numberOfNG[i]);
+////            }
+////        }
+////        return validCourses;
+////    }
+////
+////    public Map<String, Double> getFilterByCourseNG(double[] NGs) {
+////        Map<String, Double> validCourses = new HashMap<>();
+////
+////        for (int i = 0; i < numberOfNG.length; i++) {
+////            for (double NG : NGs) {
+////                if (NG == numberOfNG[i]) {
+////                    validCourses.put(courses[i], numberOfNG[i]);
+////                    break;
+////                }
+////            }
+////        }
+////
+////        return validCourses;
+////    }
+//
+//
+//    }}

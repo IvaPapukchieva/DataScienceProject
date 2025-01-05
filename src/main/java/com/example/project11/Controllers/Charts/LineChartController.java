@@ -9,7 +9,7 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-public class LineChartController {
+public class LineChartController implements ChartController {
     @FXML
     private LineChart<String, Number> lineChart;
 

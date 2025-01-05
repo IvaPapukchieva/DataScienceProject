@@ -1,12 +1,10 @@
 package com.example.project11.Controllers.Charts;
 
 import com.example.project11.Controllers.Controller;
-import com.example.project11.ProjectInfo.GradeDistributionCalculator;
-import javafx.fxml.FXML;
+import com.example.project11.ProjectInfo.PrepareChartData;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -33,7 +31,7 @@ public class ChartSelectionController extends Controller {
             return;
         }
 
-        GradeDistributionCalculator gradeDistributionCalculator = new GradeDistributionCalculator();
+        PrepareChartData gradeDistributionCalculator = new PrepareChartData();
 
         chartData = gradeDistributionCalculator.calculateGradeDistribution(filteredData);
 
