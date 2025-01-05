@@ -43,7 +43,12 @@ public class FilterData {
 
                 case "By GPA":
                     FilterByStudentGPA filterByStudentGPA = new FilterByStudentGPA(result);
-                    result = filterByStudentGPA.filterStudents((double) inputs.getFirst(), (double) inputs.getLast());
+                    switch (filter.getSubType()) {
+                        case "Number" -> result = filterByStudentGPA.filterStudents((int) (double) inputs.getFirst());
+                        case "Range" ->
+                                result = filterByStudentGPA.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Multiple" -> result = filterByStudentGPA.filterStudents((int[]) inputs.getFirst());
+                    }
                     break;
                 case "By Property":
                     FilterByProperty filterByProperty = new FilterByProperty((String) filter.getValues().getLast(), (String) filter.getValues().getFirst(), result);

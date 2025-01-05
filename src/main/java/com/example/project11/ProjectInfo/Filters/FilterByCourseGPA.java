@@ -3,7 +3,7 @@ package com.example.project11.ProjectInfo.Filters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FilterByCourseGPA {
+public class FilterByCourseGPA  implements Filter{
 
     private final double [][] allStudents;
     private final int []  averageByCourse;

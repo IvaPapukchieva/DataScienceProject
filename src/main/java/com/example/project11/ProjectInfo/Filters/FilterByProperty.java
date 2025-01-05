@@ -10,6 +10,8 @@ import java.util.stream.IntStream;
 
 public class FilterByProperty extends StudentInfoLoader {
 
+//do I use empty methods or just keep it like that?
+
     private List<Integer> StudentIDByProperty;
     private String Category;
     private String SubCategory;

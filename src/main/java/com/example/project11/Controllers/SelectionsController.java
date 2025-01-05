@@ -1,6 +1,7 @@
 package com.example.project11.Controllers;
 
 
+import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.Controllers.FilterControllers.*;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
@@ -78,12 +79,12 @@ public class SelectionsController extends Controller implements Initializable {
 
 
     System.out.println(Arrays.deepToString(filteredData));
-//
-//        System.out.println("Reached end of method");
-//ChartSelectionController data=new ChartSelectionController();
-//data.setFilteredData(filteredData);
-//        Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
-//        stage1.setScene(getScene("Chart Window"));
+
+        System.out.println("Reached end of method");
+ChartSelectionController data=new ChartSelectionController();
+data.setFilteredData(filteredData);
+        Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
+        stage1.setScene(getScene("Chart Window"));
 
     }
 

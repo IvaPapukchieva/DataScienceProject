@@ -3,7 +3,7 @@ package com.example.project11.ProjectInfo.Filters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FilterByGrade {
+public class FilterByGrade  implements Filter{
 
     private final double[][] allStudents;
 

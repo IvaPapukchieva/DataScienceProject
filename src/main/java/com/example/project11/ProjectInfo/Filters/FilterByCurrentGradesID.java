@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 
-public class FilterByCurrentGradesID  extends CurrentGradeLoader {
+public class FilterByCurrentGradesID  extends CurrentGradeLoader  {
+
+//    this returns 1D array
 
 private double [][]allStudents;
 

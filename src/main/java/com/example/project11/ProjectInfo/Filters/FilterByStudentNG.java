@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FilterByStudentNG extends StudentInfoLoader {
+public class FilterByStudentNG extends StudentInfoLoader  implements Filter{
 
     private final double[][] allStudents;
     private double[] numberOfNG;
@@ -75,4 +75,18 @@ public class FilterByStudentNG extends StudentInfoLoader {
         return validCourses;
     }
 
+    @Override
+    public double[][] filterStudents(int value) {
+        return new double[0][];
+    }
+
+    @Override
+    public double[][] filterStudents(int lowerBound, int upperBound) {
+        return new double[0][];
+    }
+
+    @Override
+    public double[][] filterStudents(int[] value) {
+        return new double[0][];
+    }
 }

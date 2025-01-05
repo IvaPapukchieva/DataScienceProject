@@ -3,7 +3,7 @@ package com.example.project11.ProjectInfo.Filters;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FilterByCourseNG {
+public class FilterByCourseNG  implements Filter{
 
     private final double[][] allStudents;
     private double[] numberOfNG;
@@ -28,51 +28,64 @@ public class FilterByCourseNG {
             count = 0;
         }
         return numberOfNG;
-    }}
+    }
 
-//    public double[][] filterStudents(int amountNG) {
-//        double[][] filteredStudents = new double[averageByCourse.length][2];
-//        for (int i = 0; i < averageByCourse.length; i++) {
-//            filteredStudents[i][0] = i;
-//            if (averageByCourse[i] == grade) {
-//                filteredStudents[i][1] = grade;
-//            } else {
-//                filteredStudents[i][1] = -1;
-//            }
-////        }
-////        return filteredStudents;
-////    }
-//
-//    public Map<String, Double> getFilterByCourseNG(int lowerBound, int upperBound) {
-//        if (lowerBound > upperBound) {
-//            int temp = lowerBound;
-//            lowerBound = upperBound;
-//            upperBound = temp;
-//        }
-//        Map<String, Double> validCourses = new HashMap<>();
-//
-////        for (int i = 0; i < numberOfNG.length; i++) {
-////            if (numberOfNG[i] >= lowerBound && numberOfNG[i] <= upperBound) {
-////                validCourses.put(courses[i], numberOfNG[i]);
-////            }
-////        }
-////        return validCourses;
-////    }
-////
-////    public Map<String, Double> getFilterByCourseNG(double[] NGs) {
-////        Map<String, Double> validCourses = new HashMap<>();
-////
-////        for (int i = 0; i < numberOfNG.length; i++) {
-////            for (double NG : NGs) {
-////                if (NG == numberOfNG[i]) {
-////                    validCourses.put(courses[i], numberOfNG[i]);
-////                    break;
-////                }
-////            }
-////        }
-////
-////        return validCourses;
-////    }
-//
-//
-//    }}
+    public double[][] filterStudents(int amountNG) {
+        double[][] filteredStudents = new double[numberOfNG.length][2];
+        for (int i = 0; i < numberOfNG.length; i++) {
+            filteredStudents[i][0] = i;
+            if (numberOfNG[i] == amountNG) {
+                filteredStudents[i][1] = amountNG;
+            } else {
+                filteredStudents[i][1] = -1;
+            }
+        }
+        return filteredStudents;
+    }
+    public double[][] filterStudents(int lowerBound, int upperBound) {
+        if (lowerBound > upperBound) {
+            int temp = lowerBound;
+            lowerBound = upperBound;
+            upperBound = temp;
+        }
+
+        double[][] filteredStudents = new double[numberOfNG.length][2];
+
+        for (int i = 0; i < numberOfNG.length; i++) {
+            filteredStudents[i][0] = i;
+            if (numberOfNG[i] >= lowerBound && numberOfNG[i] <= upperBound) {
+                filteredStudents[i][1] = numberOfNG[i];
+            } else {
+                filteredStudents[i][1] = -1;
+            }
+        }
+
+        return filteredStudents;
+    }
+
+    public double[][] filterStudents(int[] amountNGs) {
+        double[][] filteredStudents = new double[numberOfNG.length][2];
+        for (int i = 0; i < numberOfNG.length; i++) {
+            filteredStudents[i][0] = i;
+            boolean matchFound = false;
+            for (int amountNG: amountNGs) {
+                if (numberOfNG[i] == amountNG) {
+                    filteredStudents[i][1] = amountNG;
+                    matchFound = true;
+                    break;
+                }
+            }
+
+            if (!matchFound) {filteredStudents[i][1] = -1;
+            }
+        }
+
+        return filteredStudents;
+    }
+
+
+
+
+
+
+}
