@@ -58,21 +58,6 @@ public class PrepareChartData {
         return gradeCounts;
     }
 
-    private String getGradeRange(double grade) {
-        if (grade == 10) return "10";
-        if (grade >= 9) return "9";
-        if (grade >= 8) return "8";
-        if (grade >= 7) return "7";
-        if (grade >= 6) return "6";
-        if (grade >= 5) return "5";
-        if (grade >= 4) return "4";
-        if (grade >= 3) return "3";
-        if (grade >= 2) return "2";
-        if (grade >= 1) return "1";
-        return "0";
-
-
-    }
 
 
 //    this Map will work for the filters that we save the ID
@@ -99,11 +84,21 @@ public Map<String, Double> displayNGByStudentID(double[][] studentData) {
 
 
 
+    private String getGradeRange(double grade) {
+        if (grade == 10) return "10";
+        if (grade >= 9) return "9";
+        if (grade >= 8) return "8";
+        if (grade >= 7) return "7";
+        if (grade >= 6) return "6";
+        if (grade >= 5) return "5";
+        if (grade >= 4) return "4";
+        if (grade >= 3) return "3";
+        if (grade >= 2) return "2";
+        if (grade >= 1) return "1";
+        return "0";
 
 
-
-
-
+    }
 
 
     private final String[] courses = {
