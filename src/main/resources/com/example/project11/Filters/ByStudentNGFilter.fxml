@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project11.Controllers.FilterControllers.ByStudentNGFilterController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.FilterControllers.ByStudentNGFilterController">
 
 
     <fx:define>
@@ -22,7 +16,7 @@
         <font>
             <Font name="System Bold" size="12.0" />
         </font></Label>
-    <Slider fx:id="slider" layoutX="14.0" layoutY="112.0" majorTickUnit="1" max="10" minorTickCount="0" prefHeight="37.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+    <Slider fx:id="slider" layoutX="14.0" layoutY="112.0" majorTickUnit="1" max="33.0" minorTickCount="0" prefHeight="37.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
     <Slider fx:id="sliderRange1" layoutX="14.0" layoutY="112.0" majorTickUnit="1" max="10" minorTickCount="0" prefHeight="37.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" visible="false" />
     <Slider fx:id="sliderRange2" layoutX="14.0" layoutY="172.0" majorTickUnit="1" max="10" minorTickCount="0" prefHeight="37.0" prefWidth="350.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" visible="false" />
 
