@@ -60,13 +60,14 @@ public class PrepareChartData {
 
 
 
-//    this Map will work for the filters that we save the ID
+//    this Map will work for FilterByStudentNG
 //    index zero is the id and the want to save the next thing
 //    it will display the student id and the amount
-public Map<String, Double> displayNGByStudentID(double[][] studentData) {
+
+public Map<String, Double> displayNGByStudentID(double[][] allStudents) {
     Map<String, Double> studentNGs = new HashMap<>();
 
-    for (double[] student : studentData) {
+    for (double[] student :allStudents) {
         if(student[1]==-1){
             continue;
         }
@@ -79,12 +80,66 @@ public Map<String, Double> displayNGByStudentID(double[][] studentData) {
 }
 
 
+//this Map will work for FilterByCourseNG
+public Map<String, Double> calculateNGsByYear(double[][] courseData) {
+        Map<String, Double> yearNGs = new HashMap<>();
 
+        double firstYearNGs = 0;
+        double secondYearNGs = 0;
+        double thirdYearNGs = 0;
+        double fourthYearNGs = 0;
+        double fifthYearNGs = 0;
 
+        for (double[] course : courseData) {
+            double courseIndex = course[0];
 
+            if (courseIndex >= 0.0 && courseIndex <= 12.0) {
+                firstYearNGs ++;
+            } else if (courseIndex >= 583.0 && courseIndex <= 595.0) {
+                secondYearNGs ++;
+            } else if (courseIndex >= 599.0 && courseIndex <= 622.0) {
+                thirdYearNGs ++;
+            } else if (courseIndex >= 985.0 && courseIndex <= 1058.0) {
+                fourthYearNGs ++;
+            } else if (courseIndex >= 1317.0 && courseIndex <= 1339.0) {
+                fifthYearNGs ++;
+            }
+        }
 
+        yearNGs.put("First Year", firstYearNGs);
+        yearNGs.put("Second Year", secondYearNGs);
+        yearNGs.put("Third Year", thirdYearNGs);
+        yearNGs.put("Fourth Year", fourthYearNGs);
+        yearNGs.put("Fifth Year", fifthYearNGs);
 
-    private String getGradeRange(double grade) {
+        return yearNGs;
+    }
+
+//    This map should display GPA by course
+//    works with FilterByCourseGPA
+    public Map<String, Double> calculateNGByYear(double[][] courseData) {
+        Map<String,Double> courses = new HashMap<>();
+
+        for(double[] course : courseData){
+            double  courseIndex = course[0];
+            double GPA= course[1];
+            String courseName=getCourseIndex(courseIndex);
+            courses.put(courseName,GPA);
+
+        }
+        return courses;
+
+    }
+
+    private String getCourseIndex(double courseIndex) {
+        int index =  (int)courseIndex;
+        if (index >= 0 && index < courses.length) {
+            return courses[index];
+        }
+        return "Unknown Course";
+    }
+
+        private String getGradeRange(double grade) {
         if (grade == 10) return "10";
         if (grade >= 9) return "9";
         if (grade >= 8) return "8";

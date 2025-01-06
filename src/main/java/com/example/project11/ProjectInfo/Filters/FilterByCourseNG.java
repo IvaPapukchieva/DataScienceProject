@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FilterByCourseNG  implements Filter{
+//    saves course index and the amount of NG in it
 
     private final double[][] allStudents;
     private double[] numberOfNG;

@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class PredictPercentage {
 
-    private static Map<String, Integer> coursePassingMap;
+    private static Map<String, Double> coursePassingMap;
     private double[][] allStudents;
 
     public PredictPercentage(double[][] allStudents) {
@@ -63,14 +63,14 @@ public class PredictPercentage {
                 }
             }
 
-            int passingPercentage = (totalGrades > 0) ? (int) (((double) passingGrades / totalGrades) * 100) : 0;
+            double passingPercentage = (totalGrades > 0) ? (int) (((double) passingGrades / totalGrades) * 100) : 0;
             // Store the passing percentage in the map
             coursePassingMap.put("Course " + (col + 1), passingPercentage);
         }
     }
 
     // Getter for the HashMap to be used in a GUI
-    public Map<String, Integer> getCoursePassingMap() {
+    public Map<String, Double> getCoursePassingMap() {
         calculatePassingPercentages();
         return coursePassingMap;
     }

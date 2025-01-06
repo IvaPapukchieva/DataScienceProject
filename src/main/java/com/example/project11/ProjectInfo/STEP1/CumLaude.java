@@ -14,7 +14,7 @@ public class CumLaude {
     private double SummaCumLaude;
     private double MagnaCumLaude;
     protected double[][] allStudents;
-    private Map<String,Integer>honorsMap;
+    private Map<String,Double>honorsMap;
 
     public CumLaude(double[][] allStudents) {
 
@@ -22,7 +22,7 @@ public class CumLaude {
         this.allStudents = allStudents;
         this.honorsMap = new HashMap<>();
     }
-    public Map<String, Integer> getHonorsMap() {
+    public Map<String, Double> getHonorsMap() {
         FindCumLaudeStudents();
         return honorsMap;
     }
@@ -48,9 +48,9 @@ public class CumLaude {
         double magnaCumLaude=summaCumLaudeList.size();
         double summaCumLaude=summaCumLaudeList.size();
 
-        honorsMap.put("Cum-Laude",(int)cumLaude);
-        honorsMap.put("Magna Cum-Laude",(int)magnaCumLaude);
-        honorsMap.put("Summa Cum-Laude",(int)summaCumLaude);
+        honorsMap.put("Cum-Laude",cumLaude);
+        honorsMap.put("Magna Cum-Laude",magnaCumLaude);
+        honorsMap.put("Summa Cum-Laude",summaCumLaude);
 
 
     }

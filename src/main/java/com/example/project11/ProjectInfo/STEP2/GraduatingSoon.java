@@ -2,10 +2,6 @@ package com.example.project11.ProjectInfo.STEP2;
 
 import java.util.*;
 
-/**
- * This program identifies students nearing graduation by counting the number of "No Grade" (NG) values
- * in their academic records and grouping them into sets based on the NG counts.
- */
 public class GraduatingSoon {
 	private static double[][] allStudents;
 
@@ -13,9 +9,8 @@ public class GraduatingSoon {
 		this.allStudents = allStudents;
 	}
 
-
-	public Map<String, Integer> getStudentGroups() {
-		Map<String, Integer> studentGroups = new LinkedHashMap<>();
+	public Map<String, Double> getStudentGroups() {
+		Map<String, Double> studentGroups = new LinkedHashMap<>();
 		Map<Integer, Integer> ngCounts = new HashMap<>();
 
 		// Count NG values for each student
@@ -36,7 +31,7 @@ public class GraduatingSoon {
 		int groupNumber = 1;
 		for (int ngCount : sortedNgKeys) {
 			String groupLabel = "StudentGroup" + Integer.toString(groupNumber);
-			studentGroups.put(groupLabel, ngCounts.get(ngCount));
+			studentGroups.put(groupLabel, (double) ngCounts.get(ngCount));
 			groupNumber++;
 		}
 

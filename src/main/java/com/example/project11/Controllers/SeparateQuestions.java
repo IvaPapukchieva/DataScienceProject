@@ -213,9 +213,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 return;
             }
 
-            Map<String, Integer> honorsMap = cumLaude.getHonorsMap();
+            Map<String, Double> honorsMap = cumLaude.getHonorsMap();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-//            barChartController.setChartData(honorsMap);
+            barChartController.setChartData(honorsMap);
             barChartController.setChartLabels("Types of CumLaude","Amounts of Students");
 
             displayChartOnCurrentPage("Bar Chart");
@@ -240,9 +240,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 return;
             }
 
-            Map<String, Integer> honorsMap = predictPercentage.getCoursePassingMap();
+            Map<String, Double> honorsMap = predictPercentage.getCoursePassingMap();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-//            barChartController.setChartData(honorsMap);
+            barChartController.setChartData(honorsMap);
             barChartController.setChartLabels("Courses","Percentage of Passing Students");
 
 
@@ -296,9 +296,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 return;
             }
 
-            Map<String, Integer> averageGradesMap = averageGrades.getAverageGradesMap();
+            Map<String, Double> averageGradesMap = averageGrades.getAverageGradesMap();
             AreaChartController areaChartController = (AreaChartController) controllers.get("Area Chart");
-//            areaChartController.setChartData(averageGradesMap);
+            areaChartController.setChartData(averageGradesMap);
             areaChartController.setChartLabels("Courses","Average Grade");
 
 
@@ -324,9 +324,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 return;
             }
 
-            Map<String, Integer> averageGradesMap = graduatingSoon.getStudentGroups();
+            Map<String, Double> averageGradesMap = graduatingSoon.getStudentGroups();
             BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-//            barChartController.setChartData(averageGradesMap);
+            barChartController.setChartData(averageGradesMap);
             barChartController.setChartLabels("Year","Amount of Students");
 
             displayChartOnCurrentPage("Bar Chart");
@@ -355,9 +355,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 return;
             }
 
-            Map<String, Integer> averageGradesMap = GrPaPredictionThreshold.getCoursePassingMap();
+            Map<String, Double> averageGradesMap = GrPaPredictionThreshold.getCoursePassingMap();
             ScatterChartController ScatterChartController = (ScatterChartController) controllers.get("Scatter Chart");
-//            ScatterChartController.setChartData(averageGradesMap);
+            ScatterChartController.setChartData(averageGradesMap);
             ScatterChartController.setChartLabels("Course","Passing Threshold");
 
 

@@ -29,7 +29,6 @@ public abstract class Controller {
             controllers.put("start", startLoader.getController());
 
 
-
             FXMLLoader separateLoader = new FXMLLoader(GUI.class.getResource("separateQuestions.fxml"));
             scenes.put("separateQuestions", new Scene(separateLoader.load(), 720, 482));
             controllers.put("separateQuestions", separateLoader.getController());
