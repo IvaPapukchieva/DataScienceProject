@@ -81,10 +81,10 @@ public class SelectionsController extends Controller implements Initializable {
     System.out.println(Arrays.deepToString(filteredData));
 
         System.out.println("Reached end of method");
-//ChartSelectionController data=new ChartSelectionController();
-//data.setFilteredData(filteredData);
-//        Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
-//        stage1.setScene(getScene("Chart Window"));
+ChartSelectionController data=new ChartSelectionController();
+data.setFilteredData(filteredData);
+        Stage stage1 = (Stage) submit.getParent().getScene().getWindow();
+        stage1.setScene(getScene("Chart Window"));
 
     }
 
