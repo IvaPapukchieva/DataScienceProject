@@ -1,9 +1,6 @@
 package com.example.project11.FilterProcessing;
 
-import com.example.project11.ProjectInfo.Filters.FilterByCourse;
-import com.example.project11.ProjectInfo.Filters.FilterByStudentGPA;
-import com.example.project11.ProjectInfo.Filters.FilterByGrade;
-import com.example.project11.ProjectInfo.Filters.FilterByProperty;
+import com.example.project11.ProjectInfo.Filters.*;
 import com.example.project11.ProjectInfo.loaders.*;
 
 import java.io.FileNotFoundException;
@@ -58,8 +55,35 @@ public class FilterData {
                     }
                     result = filterByProperty.filterStudents();
                     break;
-                case "By Student ID":
+                case "By Course GPA":
+                    FilterByCourseGPA filterByCourseGPA = new FilterByCourseGPA(result);
+                    switch (filter.getSubType()) {
+                        case "Number" -> result = filterByCourseGPA.filterStudents((int) (double) inputs.getFirst());
+                        case "Range" ->
+                                result = filterByCourseGPA.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Multiple" -> result = filterByCourseGPA.filterStudents((int[]) inputs.getFirst());
+                    }
+                    break;
 
+                case "By Course NG":
+                    FilterByCourseGPA filterByCourseNG = new FilterByCourseGPA(result);
+                    switch (filter.getSubType()) {
+                        case "Number" -> result = filterByCourseNG.filterStudents((int) (double) inputs.getFirst());
+                        case "Range" ->
+                                result = filterByCourseNG.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Multiple" -> result = filterByCourseNG.filterStudents((int[]) inputs.getFirst());
+                    }
+                    break;
+
+
+                case "By Student NG":
+                    FilterByStudentNG filterByStudentNG = new FilterByStudentNG(result);
+                    switch (filter.getSubType()) {
+                        case "Number" -> result = filterByStudentNG.filterStudents((int) (double) inputs.getFirst());
+                        case "Range" ->
+                                result = filterByStudentNG.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
+                        case "Multiple" -> result = filterByStudentNG.filterStudents((int[]) inputs.getFirst());
+                    }
                     break;
             }
         }

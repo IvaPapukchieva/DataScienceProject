@@ -21,7 +21,7 @@ public class FilterByStudentNG extends CurrentGradeLoader implements Filter{
 
 
     public double[][] filterStudents(int amountNG) {
-        double[][] filteredStudents = new double[numberOfNG.length][2];
+        double[][] filteredStudents = new double[numberOfNG.length+1][2];
         for (int i = 0; i < numberOfNG.length; i++) {
             filteredStudents[i][0] = StudentID[i];
             if (numberOfNG[i] == amountNG) {
@@ -39,7 +39,7 @@ public class FilterByStudentNG extends CurrentGradeLoader implements Filter{
             upperBound = temp;
         }
 
-        double[][] filteredStudents = new double[numberOfNG.length][2];
+        double[][] filteredStudents = new double[numberOfNG.length+1][2];
 
         for (int i = 0; i < numberOfNG.length; i++) {
             filteredStudents[i][0] = StudentID[i];
@@ -54,7 +54,7 @@ public class FilterByStudentNG extends CurrentGradeLoader implements Filter{
     }
 
     public double[][] filterStudents(int[] amountNGs) {
-        double[][] filteredStudents = new double[numberOfNG.length][2];
+        double[][] filteredStudents = new double[numberOfNG.length+1][2];
         for (int i = 0; i < numberOfNG.length; i++) {
             filteredStudents[i][0] = StudentID[i];
             boolean matchFound = false;

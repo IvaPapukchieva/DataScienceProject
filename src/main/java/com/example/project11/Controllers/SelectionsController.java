@@ -49,7 +49,7 @@ public class SelectionsController extends Controller implements Initializable {
         }
 
         if (addFilter != null) {
-            addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property", "By Student ID");
+            addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property","By Student NG","By Course GPA","By Course NG");
         }
 
         ngButton.setSelected(true);
@@ -118,7 +118,14 @@ data.setFilteredData(filteredData);
             case "By Course" -> (ByCourseFilterController) getController(selectedFilter);
             case "By GPA" -> (ByGPAFilterController) getController(selectedFilter);
             case "By Property" -> (ByPropertyFilterController) getController(selectedFilter);
-            case "By Student ID" -> (ByStudentIdFilterController) getController(selectedFilter);
+
+//this does not work ;)
+            case "By Student NG"->(ByStudentNGFilterController) getController(selectedFilter);
+            case "By Course GPA"->(ByCourseGPAFilterController) getController(selectedFilter);
+            case "By Course NG"->(ByCourseNGFilterController) getController(selectedFilter);
+
+
+
             default -> null;
         };
         controller.setDataCallback(nodes -> {

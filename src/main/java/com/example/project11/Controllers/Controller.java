@@ -58,6 +58,18 @@ public abstract class Controller {
             scenes.put("By Property", new Scene(propertyFilterLoader.load(), 380, 250));
             controllers.put("By Property", propertyFilterLoader.getController());
 
+            FXMLLoader courseGpaFilterLoader = new FXMLLoader(GUI.class.getResource("Filters/ByCourseGPAFilter.fxml"));
+            scenes.put("By Course GPA", new Scene(courseGpaFilterLoader.load(), 380, 250));
+            controllers.put("By Course GPA", courseGpaFilterLoader.getController());
+
+            FXMLLoader courseNGFilterLoader = new FXMLLoader(GUI.class.getResource("Filters/ByCourseNGFilter.fxml"));
+            scenes.put("By Course NG", new Scene(courseNGFilterLoader.load(), 380, 250));
+            controllers.put("By Course NG", courseNGFilterLoader.getController());
+
+            FXMLLoader studentNGFilterLoader = new FXMLLoader(GUI.class.getResource("Filters/ByStudentNGFilter.fxml"));
+            scenes.put("By Student NG", new Scene(studentNGFilterLoader.load(), 380, 250));
+            controllers.put("By Student NG", studentNGFilterLoader.getController());
+
             //cache "propertyFilter" scene and Controller
             FXMLLoader studentIdFilterLoader = new FXMLLoader(GUI.class.getResource("Filters/ByStudentIdFilter.fxml"));
             scenes.put("By Student ID", new Scene(studentIdFilterLoader.load(), 380, 250));
