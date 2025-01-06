@@ -59,7 +59,6 @@ public class PrepareChartData {
     }
 
 
-
 //    this Map will work for FilterByStudentNG
 //    index zero is the id and the want to save the next thing
 //    it will display the student id and the amount
