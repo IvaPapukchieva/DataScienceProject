@@ -93,15 +93,15 @@ public Map<String, Double> calculateNGsByYear(double[][] courseData) {
             double courseIndex = course[0];
 
             if (courseIndex >= 0.0 && courseIndex <= 12.0) {
-                firstYearNGs ++;
+                fifthYearNGs ++;
             } else if (courseIndex >= 583.0 && courseIndex <= 595.0) {
-                secondYearNGs ++;
+                fourthYearNGs ++;
             } else if (courseIndex >= 599.0 && courseIndex <= 622.0) {
                 thirdYearNGs ++;
             } else if (courseIndex >= 985.0 && courseIndex <= 1058.0) {
-                fourthYearNGs ++;
+                secondYearNGs ++;
             } else if (courseIndex >= 1317.0 && courseIndex <= 1339.0) {
-                fifthYearNGs ++;
+                firstYearNGs ++;
             }
         }
 
@@ -156,39 +156,39 @@ public Map<String, Double> calculateNGsByYear(double[][] courseData) {
 
 
     private final String[] courses = {
-            "Arkonian Warfare Tactics",
-            "ExoGenetics Evolution",
-            "Transdimensional Navigation",
-            "Warp Field Theory",
-            "Dark Matter Biophysics",
-            "Zarnithian Philosophy",
-            "Drakthon Linguistics",
-            "Xynthium Material Sciences",
-            "Hyperspace Topology",
-            "Helio-Bio Interface",
-            "Luminarian Art Theory",
-            "Stellar Cartography",
-            "Chrono-Kinetics",
-            "Technotronic Linguistic Fusion",
-            "Cybernetic Ethics",
-            "Nebulon Astrophysics",
-            "Quasar Dynamics",
-            "Glacial Holo-Architecture",
-            "Aether Resonance",
-            "Gravix Planetary Studies",
-            "Vortex Quantum Mechanics",
-            "Holo-Temporal Engineering",
-            "Psi-Energy Manipulation",
-            "Plasmawave Analysis",
-            "Neutronia Metallurgy",
-            "Syntho-Chemical Engineering",
-            "Sublight Propulsion Systems",
-            "Krythos Biomechanics",
-            "Flux Capacitor Management",
-            "Xyloprax Computation",
-            "Yridium Power Systems",
-            "Quantum Neuro-Hacking",
-            "Zyglon Neurology"
+            "AWT",  // Arkonian Warfare Tactics
+            "ExoGen",  // ExoGenetics Evolution
+            "TransNav",  // Transdimensional Navigation
+            "WarpField",  // Warp Field Theory
+            "DMB",  // Dark Matter Biophysics
+            "ZarnPhilo",  // Zarnithian Philosophy
+            "DrakLing",  // Drakthon Linguistics
+            "XynMat",  // Xynthium Material Sciences
+            "HypTop",  // Hyperspace Topology
+            "HelioBio",  // Helio-Bio Interface
+            "LumArt",  // Luminarian Art Theory
+            "StellCarto",  // Stellar Cartography
+            "ChronoKin",  // Chrono-Kinetics
+            "TechLing",  // Technotronic Linguistic Fusion
+            "CyberEthics",  // Cybernetic Ethics
+            "NebAstro",  // Nebulon Astrophysics
+            "QuasDyn",  // Quasar Dynamics
+            "GlacArch",  // Glacial Holo-Architecture
+            "AetherRes",  // Aether Resonance
+            "Gravix",  // Gravix Planetary Studies
+            "VortexQM",  // Vortex Quantum Mechanics
+            "HoloTemp",  // Holo-Temporal Engineering
+            "PsiEner",  // Psi-Energy Manipulation
+            "Plasma",  // Plasmawave Analysis
+            "NeutronMeta",  // Neutronia Metallurgy
+            "SynthChem",  // Syntho-Chemical Engineering
+            "Sublight",  // Sublight Propulsion Systems
+            "Krythos",  // Krythos Biomechanics
+            "FluxCap",  // Flux Capacitor Management
+            "Xyloprax",  // Xyloprax Computation
+            "Yridium",  // Yridium Power Systems
+            "QuantumNeuro",  // Quantum Neuro-Hacking
+            "Zyglon",  // Zyglon Neurology
     };
 
 
