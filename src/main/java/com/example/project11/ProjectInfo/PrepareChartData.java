@@ -116,7 +116,7 @@ public Map<String, Double> calculateNGsByYear(double[][] courseData) {
 
 //    This map should display GPA by course
 //    works with FilterByCourseGPA
-    public Map<String, Double> calculateNGByYear(double[][] courseData) {
+    public Map<String, Double> displayCourseGPA(double[][] courseData) {
         Map<String,Double> courses = new HashMap<>();
 
         for(double[] course : courseData){

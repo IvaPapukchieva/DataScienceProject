@@ -19,10 +19,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class SelectionsController extends Controller implements Initializable {
 
@@ -75,10 +72,10 @@ public class SelectionsController extends Controller implements Initializable {
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Remove NGs")) {filterData = new FilterData(filters, "currentGradeLoaderRemoveNG");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Data with NG values")) {filterData = new FilterData(filters, "currentGradeLoader");}
 
-        double [][]filteredData = filterData.applyFilters();
+        Map<String,Double>filteredData = filterData.applyFilters();
 
 
-    System.out.println(Arrays.deepToString(filteredData));
+    System.out.println(filteredData);
 
         System.out.println("Reached end of method");
 ChartSelectionController data=new ChartSelectionController();

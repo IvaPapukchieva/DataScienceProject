@@ -1,10 +1,13 @@
 package com.example.project11.FilterProcessing;
 
 import com.example.project11.ProjectInfo.Filters.*;
+import com.example.project11.ProjectInfo.PrepareChartData;
 import com.example.project11.ProjectInfo.loaders.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FilterData {
     ArrayList<Filter> filterData;
@@ -15,8 +18,10 @@ public class FilterData {
         this.selectedDataSet = selectedDataSet;
     }
 
-    public double[][] applyFilters() throws FileNotFoundException {
+    public Map<String,Double> applyFilters() throws FileNotFoundException {
         double[][] result = getDataSet();
+        Map<String,Double> chartData=new HashMap<>();
+        PrepareChartData prepareChartData=new PrepareChartData();
 
         for(Filter filter : filterData ){
             ArrayList<?> inputs = (ArrayList) filter.getValues();
@@ -27,7 +32,9 @@ public class FilterData {
                         case "Number" -> result = filterByGrade.filterStudents((int) (double) inputs.getFirst());
                         case "Range" -> result = filterByGrade.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByGrade.filterStudents((int[]) inputs.getFirst());
+
                     }
+                    chartData=  prepareChartData.calculateGradeDistribution(result);
                     break;
                 case "By Course":
                     FilterByCourse filterByCourse = new FilterByCourse(result);
@@ -36,6 +43,7 @@ public class FilterData {
                         case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByCourse.filterStudents((int[]) inputs.getFirst());
                     }
+                    chartData=  prepareChartData.calculateGradeDistribution(result);
                     break;
 
                 case "By GPA":
@@ -46,6 +54,7 @@ public class FilterData {
                                 result = filterByStudentGPA.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByStudentGPA.filterStudents((int[]) inputs.getFirst());
                     }
+                    chartData= prepareChartData.calculateGradeDistribution(result);
                     break;
                 case "By Property":
                     FilterByProperty filterByProperty = new FilterByProperty((String) filter.getValues().getLast(), (String) filter.getValues().getFirst(), result);
@@ -53,6 +62,7 @@ public class FilterData {
                         case "Categorical" -> result = filterByProperty.filterStudents();
                         case "Numerical" -> result = filterByProperty.filterStudents();
                     }
+                    chartData= prepareChartData.calculateGradeDistribution(result);
                     result = filterByProperty.filterStudents();
                     break;
                 case "By Course GPA":
@@ -63,6 +73,7 @@ public class FilterData {
                                 result = filterByCourseGPA.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByCourseGPA.filterStudents((int[]) inputs.getFirst());
                     }
+                    chartData=  prepareChartData.displayCourseGPA(result);
                     break;
 
                 case "By Course NG":
@@ -73,6 +84,7 @@ public class FilterData {
                                 result = filterByCourseNG.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByCourseNG.filterStudents((int[]) inputs.getFirst());
                     }
+                    chartData=  prepareChartData.calculateNGsByYear(result);
                     break;
 
 
@@ -84,11 +96,12 @@ public class FilterData {
                                 result = filterByStudentNG.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByStudentNG.filterStudents((int[]) inputs.getFirst());
                     }
+                    chartData=  prepareChartData.displayNGByStudentID(result);
                     break;
             }
         }
 
-        return result;
+        return chartData ;
     }
 
     private double[][] getDataSet() throws FileNotFoundException {

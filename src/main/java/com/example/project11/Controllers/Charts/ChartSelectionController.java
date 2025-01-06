@@ -12,28 +12,24 @@ import java.util.Map;
 
 public class ChartSelectionController extends Controller {
 
-    private Map<String, Double> chartData;
-    private static double[][] filteredData;
+    private static Map<String, Double> chartData;
+
 
     public ChartSelectionController() {
         // Constructor
     }
 
-    public void setFilteredData(double[][] allStudents) {
-
-        this.filteredData = allStudents;
+    public void setFilteredData(Map<String, Double> chartData) {
+        this.chartData=chartData;
     }
 
     @Override
     public void mouseClickedComponent(MouseEvent mouseEvent) throws IOException {
-        if (filteredData == null || filteredData.length == 0) {
+        if (chartData == null || chartData.isEmpty()) {
             System.out.println("Filtered data is null or empty!");
             return;
         }
 
-        PrepareChartData gradeDistributionCalculator = new PrepareChartData();
-
-        chartData = gradeDistributionCalculator.calculateGradeDistribution(filteredData);
 
         String chartId = ((ImageView) mouseEvent.getSource()).getId();
 
