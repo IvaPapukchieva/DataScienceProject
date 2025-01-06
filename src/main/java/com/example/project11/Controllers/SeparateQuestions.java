@@ -4,6 +4,7 @@ import com.example.project11.Controllers.Charts.*;
 import com.example.project11.ProjectInfo.STEP1.CumLaude;
 import com.example.project11.ProjectInfo.STEP1.EasiestClasses;
 import com.example.project11.ProjectInfo.STEP1.AverageGrades;
+import com.example.project11.ProjectInfo.STEP1.SimilarClasses;
 import com.example.project11.ProjectInfo.STEP2.GraduatePassingGradePredictionThreshold;
 import com.example.project11.ProjectInfo.STEP2.GraduatingSoon;
 import com.example.project11.ProjectInfo.STEP2.PredictPercentage;
@@ -43,7 +44,7 @@ public class SeparateQuestions extends Controller implements Initializable {
 
     @FXML private Slider mySlider;
     @FXML private Button button, createButton;
-    @FXML private ToggleButton graduatingGradesButton, currentGradesButton, bootstrappedGradesButton;
+    @FXML private ToggleButton graduatingGradesButton, currentGradesButton, bootstrappedGradesButton, FilledNGgrades;
     @FXML private VBox childComboBox;
     @FXML private Pagination pagination;
     @FXML private MenuItem step1MenuItem, step2MenuItem, step3MenuItem, step4MenuItem;
@@ -163,13 +164,7 @@ public class SeparateQuestions extends Controller implements Initializable {
     private void handle(ActionEvent event) throws FileNotFoundException {
         List<String> sequence = sequenceManager.getSequence();
 
-        // Validate that STEP 1 is the first sequence item
-        if (!"STEP 1".equalsIgnoreCase(sequence.get(0).trim()) &&
-                !"STEP 2".equalsIgnoreCase(sequence.get(0).trim())&
-                        !"STEP 3".equalsIgnoreCase(sequence.get(0).trim())&
-                        !"STEP 4".equalsIgnoreCase(sequence.get(0).trim())) {
-            return;
-        }
+
 
         // Perform relevant action based on the selected function
         switch (sequence.get(1).trim()) {
@@ -179,14 +174,8 @@ public class SeparateQuestions extends Controller implements Initializable {
             case "CumLaude":
                 handleCumLaude(sequence);
                 break;
-            case "What Year Come for Which class" :
-                handleWhatYearWhatClass(sequence);
-                break;
             case "Predicting Passing Percentages":
                 handlePredictionPercentage(sequence);
-                break;
-            case "Graduating Soon":
-                handleGraduatingSoon(sequence);
                 break;
              case "Which Students Are Graduating Soon":
                  handleGraduatePassingGradesPredictionThreshold(sequence);
@@ -208,6 +197,8 @@ public class SeparateQuestions extends Controller implements Initializable {
                 cumLaude = new CumLaude(currentGradeLoader.readAllStudents());
             } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
                 cumLaude = new CumLaude(weightedBootstrapping.readAllStudents());
+            } else if ("FilledNG Grades".equalsIgnoreCase(gradesType)){
+                cumLaude = new CumLaude(currentGradeLoaderNG.readAllStudents());
             } else {
                 System.out.println("Invalid grades type for CumLaude.");
                 return;
@@ -235,7 +226,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 predictPercentage = new PredictPercentage(currentGradeLoader.readAllStudents());
             } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
                 predictPercentage = new PredictPercentage(weightedBootstrapping.readAllStudents());
-            } else {
+            }else if ("FilledNG Grades".equalsIgnoreCase(gradesType)){
+                predictPercentage = new PredictPercentage(currentGradeLoaderNG.readAllStudents());
+            }else {
                 System.out.println("Invalid grades type for CumLaude.");
                 return;
             }
@@ -245,33 +238,6 @@ public class SeparateQuestions extends Controller implements Initializable {
             barChartController.setChartData(honorsMap);
             barChartController.setChartLabels("Courses","Percentage of Passing Students");
 
-
-            displayChartOnCurrentPage("Bar Chart");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void handleWhatYearWhatClass(List<String> sequence) {
-        try {
-            WhatYearWhatclass  whatyearclass;
-            String gradesType = sequence.get(3).trim();
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
-                System.out.println("Easiest Classes only supports Current Grades.");
-                return;
-            }
-            else if ("Current Grades".equalsIgnoreCase(gradesType)) {
-                whatyearclass = new WhatYearWhatclass(currentGradeLoader.readAllStudents());
-           } else {
-                System.out.println("Invalid grades type for What Year Class.");
-                return;
-           }
-
-            Map<String, Integer> courseYearMap = whatyearclass.getCourseYearMap();
-            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-//            barChartController.setChartData(courseYearMap);
-            barChartController.setChartLabels("Course","Amount of Passing Students");
 
             displayChartOnCurrentPage("Bar Chart");
 
@@ -291,7 +257,9 @@ public class SeparateQuestions extends Controller implements Initializable {
                 averageGrades = new AverageGrades(currentGradeLoader.readAllStudents());
             } else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
                 averageGrades = new AverageGrades(weightedBootstrapping.readAllStudents());
-            } else {
+            } else if ("FilledNG Grades".equalsIgnoreCase(gradesType)) {
+                averageGrades = new AverageGrades(currentGradeLoaderNG.readAllStudents());
+            }else {
                 System.out.println("Invalid grades type for Average Grades.");
                 return;
             }
@@ -303,33 +271,6 @@ public class SeparateQuestions extends Controller implements Initializable {
 
 
             displayChartOnCurrentPage("Area Chart");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void handleGraduatingSoon(List<String> sequence) {
-        try {
-
-            GraduatingSoon  graduatingSoon;
-            String gradesType = sequence.get(3).trim();
-            if (!"Current Grades".equalsIgnoreCase(sequence.get(3).trim()) ) {
-                System.out.println("Easiest Classes only supports Current Grades.");
-                return;
-            }
-            else if ("Current Grades".equalsIgnoreCase(gradesType)) {
-                graduatingSoon = new GraduatingSoon(currentGradeLoader.readAllStudents());
-            } else {
-                System.out.println("Invalid grades type for CumLaude.");
-                return;
-            }
-
-            Map<String, Double> averageGradesMap = graduatingSoon.getStudentGroups();
-            BarChartController barChartController = (BarChartController) controllers.get("Bar Chart");
-            barChartController.setChartData(averageGradesMap);
-            barChartController.setChartLabels("Year","Amount of Students");
-
-            displayChartOnCurrentPage("Bar Chart");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -350,7 +291,10 @@ public class SeparateQuestions extends Controller implements Initializable {
             }
             else if ("Bootstrapped Grades".equalsIgnoreCase(gradesType)) {
                 GrPaPredictionThreshold = new GraduatePassingGradePredictionThreshold(currentGradeLoader.readAllStudents());
-            } else {
+            }else if ("FilledNG Grades".equalsIgnoreCase(gradesType)) {
+                GrPaPredictionThreshold = new GraduatePassingGradePredictionThreshold(currentGradeLoaderNG.readAllStudents());
+            }
+            else {
                 System.out.println("Invalid grades type for CumLaude.");
                 return;
             }
