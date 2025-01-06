@@ -1,14 +1,23 @@
 package com.example.project11.ProjectInfo.STEP4;
 
+import com.example.project11.ProjectInfo.loaders.StudentInfoLoader;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 class Main{
         public static void main(String[] args) throws Exception{
 
-            prediction effPrediction = new prediction(26 , "210333");
-     
+            StudentInfoLoader STL = new StudentInfoLoader();
+            String[][] studentPropertyArray  = STL.readInfoString();
 
-            System.out.println((effPrediction.getPrediction()));
+                    prediction effPrediction = new prediction(0, "210333");
+                    System.out.println((effPrediction.getPrediction()));
+
+
+
+
+
 
             
         }
