@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -31,6 +32,7 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
+    @FXML private ImageView backButtonImage;
     private ArrayList<Filter> filters;
     private String selectedSubType;
 
@@ -99,6 +101,8 @@ data.setFilteredData(filteredData);
             if (!isUndergraduateGrades) {
                 ngSelect.getSelectionModel().clearSelection();
                 ngSelect.setValue(null);
+            } else {
+                ngSelect.getSelectionModel().selectFirst();
             }
         }
     }

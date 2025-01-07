@@ -157,7 +157,9 @@ public abstract class Controller {
             }
             if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage")) {
                 changeScene(mouseEvent, "start");
-
+            }
+            if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage2")) {
+                changeScene(mouseEvent, "selections");
             }
 
 
