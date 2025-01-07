@@ -26,7 +26,7 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private Button submit;
     @FXML private ComboBox<String> ngSelect;
     @FXML private ToggleGroup dataSets;
-    @FXML private ToggleButton ngButton;
+    @FXML private Label dataSetLabel;
     @FXML private AnchorPane container;
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
@@ -49,7 +49,6 @@ public class SelectionsController extends Controller implements Initializable {
             addFilter.getItems().addAll("By Grade", "By Course", "By GPA", "By Property","By Student NG","By Course GPA","By Course NG");
         }
 
-        ngButton.setSelected(true);
         // Center the submit button
         centerButtonInAnchorPane();
     }
@@ -62,11 +61,14 @@ public class SelectionsController extends Controller implements Initializable {
 
     public void submitButton() throws FileNotFoundException {
 //        System.out.println(filters.toString());
-        if(dataSets.getSelectedToggle() == null) return;
+        if(dataSets.getSelectedToggle() == null) {
+            dataSetLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
         RadioButton radioButton = (RadioButton) dataSets.getSelectedToggle();
         FilterData filterData = null;
         if(radioButton.getText().equals("Graduate Grades")) {filterData = new FilterData(filters, "graduatingGradesLoader");}
-        else if(radioButton.getText().equals("Undergraduate Grades") && !ngButton.isSelected()) {filterData = new FilterData(filters, "currentGradeLoader");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Weighted Randomization")) {filterData = new FilterData(filters, "weightedBootstrappingLoader");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Replace With Average")) {filterData = new FilterData(filters, "currentGradeLoaderNG");}
         else if(radioButton.getText().equals("Undergraduate Grades") && ngSelect.getSelectionModel().getSelectedItem().equals("Remove NGs")) {filterData = new FilterData(filters, "currentGradeLoaderRemoveNG");}
@@ -87,14 +89,14 @@ data.setFilteredData(filteredData);
 //    hey
 
     public void handleDataSetsToggle() {
+        dataSetLabel.setStyle("-fx-text-fill: white;");
+
         Toggle selectedToggle = dataSets.getSelectedToggle();
         if (selectedToggle != null) {
             RadioButton radioButton = (RadioButton) selectedToggle;
             boolean isUndergraduateGrades = radioButton.getText().equals("Undergraduate Grades");
-            ngButton.setVisible(isUndergraduateGrades);
             ngSelect.setVisible(isUndergraduateGrades);
             if (!isUndergraduateGrades) {
-                ngButton.setSelected(false);
                 ngSelect.getSelectionModel().clearSelection();
                 ngSelect.setValue(null);
             }
