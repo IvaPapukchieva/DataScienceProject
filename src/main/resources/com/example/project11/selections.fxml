@@ -5,7 +5,6 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane fx:id="container" prefWidth="200.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SelectionsController">
 
     <padding>
@@ -20,12 +19,11 @@
                 <ToggleGroup fx:id="dataSets" />
             </fx:define>
 
-            <Label text="Data Set:" textFill="#f2f2f2" />
+            <Label fx:id="dataSetLabel" text="Data Set:" textFill="#f2f2f2" />
             <RadioButton onAction="#handleDataSetsToggle" text="Graduate Grades" textFill="#f2f2f2" toggleGroup="${dataSets}" />
             <RadioButton onAction="#handleDataSetsToggle" text="Undergraduate Grades" textFill="#f2f2f2" toggleGroup="${dataSets}" />
 
             <HBox prefWidth="256.0" spacing="5.0">
-                <ToggleButton fx:id="ngButton" onAction="#createDropDown" text="Deal With NGs?" visible="false" />
                 <ComboBox fx:id="ngSelect" layoutX="50.0" layoutY="100.0" prefHeight="25.0" prefWidth="104.0" visible="false" />
             </HBox>
 
@@ -39,9 +37,7 @@
          </ScrollPane>
         </VBox>
         <AnchorPane layoutX="20.0" layoutY="357.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="5">
-            <ImageView fx:id="backButtonImage" disable="true" fitHeight="32.0" fitWidth="205.0"
-                       onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent"
-                       onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="backButtonImage" disable="true" fitHeight="32.0" fitWidth="205.0" onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent" onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@../../../images/back.png" />
                 </image>
