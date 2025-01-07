@@ -118,8 +118,6 @@ data.setFilteredData(filteredData);
             case "By Course" -> (ByCourseFilterController) getController(selectedFilter);
             case "By GPA" -> (ByGPAFilterController) getController(selectedFilter);
             case "By Property" -> (ByPropertyFilterController) getController(selectedFilter);
-
-//this does not work ;)
             case "By Student NG"->(ByStudentNGFilterController) getController(selectedFilter);
             case "By Course GPA"->(ByCourseGPAFilterController) getController(selectedFilter);
             case "By Course NG"->(ByCourseNGFilterController) getController(selectedFilter);

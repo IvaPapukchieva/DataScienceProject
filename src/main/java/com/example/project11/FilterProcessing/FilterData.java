@@ -103,7 +103,7 @@ public class FilterData {
 
         return chartData ;
     }
-//    hey
+
 
     private double[][] getDataSet() throws FileNotFoundException {
         Loader currentLoader = null;

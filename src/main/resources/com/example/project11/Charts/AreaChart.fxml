@@ -8,7 +8,7 @@
 
         <AreaChart fx:id="areaChart" layoutY="9.0" prefHeight="298.0" prefWidth="335.0">
             <xAxis>
-                <NumberAxis label="Grade" prefWidth="257.0" side="BOTTOM" fx:id="xAxis" />
+                <CategoryAxis label="Grade" prefWidth="257.0" side="BOTTOM" fx:id="xAxis" />
             </xAxis>
             <yAxis>
                 <NumberAxis fx:id="yAxis" label="Frequency" side="LEFT" />
