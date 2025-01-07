@@ -25,11 +25,13 @@ public class ChartSelectionController extends Controller {
 
     @Override
     public void mouseClickedComponent(MouseEvent mouseEvent) throws IOException {
+        if (((ImageView) mouseEvent.getSource()).getId().equals("backButtonImage2")) {
+            super.mouseClickedComponent(mouseEvent);
+        }
         if (chartData == null || chartData.isEmpty()) {
             System.out.println("Filtered data is null or empty!");
             return;
         }
-
 
         String chartId = ((ImageView) mouseEvent.getSource()).getId();
 

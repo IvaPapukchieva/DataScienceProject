@@ -7,7 +7,7 @@
 
     <children>
 
-        <BarChart fx:id="barChart" layoutX="-8.0" layoutY="14.0" prefHeight="303.0" prefWidth="323.0">
+        <BarChart fx:id="barChart" layoutX="-8.0" layoutY="14.0" prefHeight="320.0" prefWidth="480.0">
             <xAxis>
                 <CategoryAxis label="Grade" fx:id="xAxis" />
             </xAxis>

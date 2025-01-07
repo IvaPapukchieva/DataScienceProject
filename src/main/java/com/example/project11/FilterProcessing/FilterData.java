@@ -23,6 +23,9 @@ public class FilterData {
         Map<String,Double> chartData=new HashMap<>();
         PrepareChartData prepareChartData=new PrepareChartData();
 
+        if(filterData.isEmpty()) {
+            chartData = prepareChartData.calculateGradeDistribution(result);
+        }
         for(Filter filter : filterData ){
             ArrayList<?> inputs = (ArrayList) filter.getValues();
             switch (filter.getType()) {
@@ -39,7 +42,7 @@ public class FilterData {
                 case "By Course":
                     FilterByCourse filterByCourse = new FilterByCourse(result);
                     switch (filter.getSubType()) {
-                        case "Number" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst());
+                         case "Number" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst());
                         case "Range" -> result = filterByCourse.filterStudents((int) (double) inputs.getFirst(), (int) (double) inputs.getLast());
                         case "Multiple" -> result = filterByCourse.filterStudents((int[]) inputs.getFirst());
                     }
@@ -103,7 +106,7 @@ public class FilterData {
 
         return chartData ;
     }
-//    hey
+
 
     private double[][] getDataSet() throws FileNotFoundException {
         Loader currentLoader = null;

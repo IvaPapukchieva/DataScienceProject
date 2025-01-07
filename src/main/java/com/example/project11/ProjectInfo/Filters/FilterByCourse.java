@@ -22,7 +22,7 @@ public class FilterByCourse implements Filter{
         double[][] filteredStudents = new double[allStudents.length][courses.length];
         for (int i = 0; i < allStudents.length; i++) {
             for (int j = 0 ; j < courses.length; j++) {
-                filteredStudents[i][j] = allStudents[i][j];
+                filteredStudents[i][j] = allStudents[i][courses[j]];
 
             }
         }
