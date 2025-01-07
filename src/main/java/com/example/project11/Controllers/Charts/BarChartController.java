@@ -74,4 +74,26 @@ public class BarChartController  implements ChartController{
             barChart.getXAxis().setLabel(xAxisLabel);
             barChart.getYAxis().setLabel(yAxisLabel);
         }
-}}
+    }
+
+    @Override
+    public BarChartController clone() {
+        try {
+            // Shallow copy using Object.clone
+            BarChartController cloned = (BarChartController) super.clone();
+
+            // Deep copy mutable fields
+            cloned.barChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
+            cloned.xAxis = new CategoryAxis();
+            cloned.yAxis = new NumberAxis();
+
+            // Recreate color array (if it were mutable, this would matter)
+            System.arraycopy(this.colors, 0, cloned.colors, 0, this.colors.length);
+
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("Cloning not supported", e);
+        }
+    }
+}
+
