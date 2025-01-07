@@ -12,8 +12,8 @@
             >
 
     <LineChart fx:id="lineChart"
-               prefHeight="250.0"
-               prefWidth="380.0">
+               prefHeight="320.0"
+               prefWidth="480.0">
 
         <xAxis>
             <CategoryAxis fx:id="xAxis" label="Grade"/>

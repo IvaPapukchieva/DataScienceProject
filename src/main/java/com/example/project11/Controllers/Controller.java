@@ -82,32 +82,32 @@ public abstract class Controller {
             // LOAD THE CHARTS -------------------------------------
             FXMLLoader barChartLoader = new FXMLLoader(GUI.class.getResource("Charts/BarChart.fxml"));
             AnchorPane barChartRoot = barChartLoader.load();
-            scenes.put("Bar Chart", new Scene(barChartRoot, 380, 250));
+            scenes.put("Bar Chart", new Scene(barChartRoot, 480, 380));
             controllers.put("Bar Chart", barChartLoader.getController());
 
             FXMLLoader bubbleChartLoader = new FXMLLoader(GUI.class.getResource("Charts/BubbleChart.fxml"));
             AnchorPane bubbleChartRoot = bubbleChartLoader.load();
-            scenes.put("Bubble Chart", new Scene(bubbleChartRoot, 380, 250));
+            scenes.put("Bubble Chart", new Scene(bubbleChartRoot, 480, 380));
             controllers.put("Bubble Chart", bubbleChartLoader.getController());
 
             FXMLLoader lineChartLoader = new FXMLLoader(GUI.class.getResource("Charts/LineChart.fxml"));
             AnchorPane lineChartRoot = lineChartLoader.load();
-            scenes.put("Line Chart", new Scene(lineChartRoot, 380, 250));
+            scenes.put("Line Chart", new Scene(lineChartRoot, 480, 380));
             controllers.put("Line Chart", lineChartLoader.getController());
 
             FXMLLoader pieChartLoader = new FXMLLoader(GUI.class.getResource("Charts/PieChart.fxml"));
             AnchorPane pieChartRoot = pieChartLoader.load();
-            scenes.put("Pie Chart", new Scene(pieChartRoot, 380, 250));
+            scenes.put("Pie Chart", new Scene(pieChartRoot, 480, 380));
             controllers.put("Pie Chart", pieChartLoader.getController());
 
             FXMLLoader scatterChartLoader = new FXMLLoader(GUI.class.getResource("Charts/ScatterChart.fxml"));
             AnchorPane scatterChartRoot = scatterChartLoader.load();
-            scenes.put("Scatter Chart", new Scene(scatterChartRoot, 380, 250));
+            scenes.put("Scatter Chart", new Scene(scatterChartRoot, 480, 380));
             controllers.put("Scatter Chart", scatterChartLoader.getController());
 
             FXMLLoader areaChartLoader = new FXMLLoader(GUI.class.getResource("Charts/AreaChart.fxml"));
             AnchorPane areaChartRoot = areaChartLoader.load();
-            scenes.put("Area Chart", new Scene(areaChartRoot, 380, 250));
+            scenes.put("Area Chart", new Scene(areaChartRoot, 480, 380));
             controllers.put("Area Chart", areaChartLoader.getController());
 
 
