@@ -23,20 +23,56 @@ class DecisionTreeRegressor {
     private Node root;
     private int minSamplesSplit;
     private int maxDepth;
+    private Map<String, Integer> propertyMap = new HashMap<>();
 
-    //MAP TO PRINT CLEARLY WHICH CATEGORY CORRESPONDING TO WHICH INDEX
+    // MAP TO PRINT CLEARLY WHICH CATEGORY CORRESPONDS TO WHICH INDEX
     private Map<Integer, String> featuresMap = new HashMap<>();
-
 
     public DecisionTreeRegressor(int minSamplesSplit, int maxDepth) {
         this.minSamplesSplit = minSamplesSplit;
         this.maxDepth = maxDepth;
 
-        featuresMap.put(0, "Neuro-Synaptic Interface");
-        featuresMap.put(1, "Plasma Conductivity Quotient");
-        featuresMap.put(2, "Chrono Adaptation Rate");
-        featuresMap.put(3, "Telepathic Syncronization Index");
-        featuresMap.put(4, "Aetheric Resonance Cap");
+        featuresMap.put(0, "Category 1");
+        featuresMap.put(1, "Category 2");
+        featuresMap.put(2, "Category 3");
+        featuresMap.put(3, "Category 4");
+        featuresMap.put(4, "Category 5");
+
+        // Initialize the property map for categorical encoding
+        populatePropertyMap();
+    }
+
+    private void populatePropertyMap() {
+        // Category 1
+        propertyMap.put("full", 0);
+        propertyMap.put("medium", 1);
+        propertyMap.put("high", 2);
+        propertyMap.put("low", 3);
+        propertyMap.put("nothing", 4);
+
+        // Category 2
+        for (int i = -42; i <= 147; i++) {
+            propertyMap.put(Integer.toString(i), i);
+        }
+
+        // Category 3
+        propertyMap.put("1 tau", 0);
+        propertyMap.put("2 tau", 1);
+        propertyMap.put("3 tau", 2);
+
+        // Category 4
+        propertyMap.put("A", 0);
+        propertyMap.put("B", 1);
+        propertyMap.put("C", 2);
+        propertyMap.put("D", 3);
+        propertyMap.put("E", 4);
+        propertyMap.put("F", 5);
+
+        // Category 5
+        propertyMap.put("1.0 Hz ", 0);
+        propertyMap.put("5.0 Hz ", 1);
+        propertyMap.put("0.5 Hz ", 2);
+        propertyMap.put("0.1 Hz ", 3);
     }
 
     private Node buildTree(double[][] dataset, int depth) {
@@ -100,17 +136,25 @@ class DecisionTreeRegressor {
         return Arrays.stream(dataset).mapToDouble(row -> row[row.length - 1]).average().orElse(0);
     }
 
-    public void fit(double[][] X, double[] Y) {
+    public void fit(String[][] X, double[] Y) {
         double[][] dataset = new double[X.length][X[0].length + 1];
         for (int i = 0; i < X.length; i++) {
-            System.arraycopy(X[i], 0, dataset[i], 0, X[i].length);
+            for (int j = 0; j < X[i].length; j++) {
+                dataset[i][j] = propertyMap.get(X[i][j]);
+            }
             dataset[i][X[i].length] = Y[i];
         }
         root = buildTree(dataset, 0);
     }
 
-    public double[] predict(double[][] X) {
-        return Arrays.stream(X).mapToDouble(this::predictSingle).toArray();
+    public double[] predict(String[][] X) {
+        double[][] numericalX = new double[X.length][X[0].length];
+        for (int i = 0; i < X.length; i++) {
+            for (int j = 0; j < X[i].length; j++) {
+                numericalX[i][j] = propertyMap.get(X[i][j]);
+            }
+        }
+        return Arrays.stream(numericalX).mapToDouble(this::predictSingle).toArray();
     }
 
     private double predictSingle(double[] row) {
@@ -144,7 +188,6 @@ class DecisionTreeRegressor {
         }
     }
 
-
     static class Split {
         int featureIndex;
         double threshold;
@@ -157,34 +200,5 @@ class DecisionTreeRegressor {
             this.leftDataset = leftDataset;
             this.rightDataset = rightDataset;
         }
-    }
-}
-
-public class ChatGPTTreeAlgorithm {
-    public static void main(String[] args) {
-        // Example data encoded numerically
-        double[][] X = {
-                {4, -42, 1.0, 0, 1},// full, -42, 1.0 Hz, A, 1 tau
-                {3, 20, 5.0, 1, 2},   // medium, 20, 5.0 Hz, B, 2 tau
-                {2, 100, 0.5, 2, 3},  // high, 100, 0.5 Hz, C, 3 tau
-                {1, 50, 0.1, 3, 1},   // low, 50, 0.1 Hz, D, 1 tau
-                {0, 147, 1.0, 4, 2}   // nothing, 147, 1.0 Hz, E, 2 tau
-        };
-        double[] Y = {90, 85, 78, 88, 95};  // Grades
-
-        DecisionTreeRegressor regressor = new DecisionTreeRegressor(2,8);
-        regressor.fit(X, Y);
-
-        // Print the decision tree
-        regressor.printTree();
-
-        // Predict
-        double[][] testX = {
-                {3, 30, 5.0, 1, 2},  // medium, 30, 5.0 Hz, B, 2 tau
-                {1, 60, 0.1, 3, 1}   // low, 60, 0.1 Hz, D, 1 tau
-        };
-        double[] predictions = regressor.predict(testX);
-
-        System.out.println("Predictions: " + Arrays.toString(predictions));
     }
 }
