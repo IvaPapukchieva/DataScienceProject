@@ -5,6 +5,7 @@ import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.Controllers.FilterControllers.*;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -294,5 +295,10 @@ data.setFilteredData(filteredData);
     @Override
     public void mouseClickedComponent(MouseEvent mouseEvent) throws IOException {
         super.mouseClickedComponent(mouseEvent);
+    }
+
+    // TEMP CODE FOR TREE
+    public void tempTreeMaker(ActionEvent actionEvent) throws IOException {
+        super.changeScene(actionEvent, "Tree Visualizer");
     }
 }

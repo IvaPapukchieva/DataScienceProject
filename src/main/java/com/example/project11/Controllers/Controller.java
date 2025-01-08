@@ -2,6 +2,7 @@ package com.example.project11.Controllers;
 
 import com.example.project11.DataCallback;
 import com.example.project11.GUI;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -78,6 +79,10 @@ public abstract class Controller {
             FXMLLoader chartWindowFilterLoader = new FXMLLoader(GUI.class.getResource("Charts/ChartSelection.fxml"));
             scenes.put("Chart Window", new Scene(chartWindowFilterLoader.load(), 320, 480));
             controllers.put("Chart Window",  chartWindowFilterLoader.getController());
+
+            FXMLLoader treeVisualizerLoader = new FXMLLoader(GUI.class.getResource("TreeVisualization.fxml"));
+            scenes.put("Tree Visualizer", new Scene(treeVisualizerLoader.load(), 320, 480));
+            controllers.put("Tree Visualizer", treeVisualizerLoader.getController());
 
             // LOAD THE CHARTS -------------------------------------
             FXMLLoader barChartLoader = new FXMLLoader(GUI.class.getResource("Charts/BarChart.fxml"));
@@ -178,6 +183,18 @@ public abstract class Controller {
         // set the new scene on the stage
         stage.setScene(scene);
     }
+
+    public void changeScene(ActionEvent actionEvent, String sceneName) throws IOException {
+        Scene scene = scenes.get(sceneName);
+        if (scene == null) {
+            throw new IllegalArgumentException("Scene not found: " + sceneName);
+        }
+
+        // get current stage
+        Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+        // set the new scene on the stage
+        stage.setScene(scene);
+    }
     public void setDataCallback(DataCallback dataCallback) {
         this.dataCallback = dataCallback;
     }
@@ -186,4 +203,5 @@ public abstract class Controller {
     public DataCallback getDataCallback() {
         return this.dataCallback;
     }
+
 }

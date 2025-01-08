@@ -29,6 +29,7 @@
 
             <Label text="Filters:" textFill="#f2f2f2" />
             <ComboBox fx:id="addFilter" onAction="#handleAddFilter" prefWidth="150.0" promptText="+ Add Filter" />
+            <Button mnemonicParsing="false" text="TEMPORARY BUTTOn" fx:id="treeButton" onAction="#tempTreeMaker"/>
 
          <ScrollPane fx:id="filtersScrollPane" prefHeight="67.0" prefWidth="200.0" visible="false">
             <content>
@@ -37,7 +38,7 @@
          </ScrollPane>
         </VBox>
         <AnchorPane layoutX="20.0" layoutY="357.0" prefHeight="35.0" prefWidth="200.0" AnchorPane.bottomAnchor="5">
-            <ImageView fx:id="backButtonImage" id="backButtonImage" fitHeight="32.0" fitWidth="205.0" onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent" onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="backButtonImage" fx:id="backButtonImage" fitHeight="32.0" fitWidth="205.0" onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent" onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@../../../images/back.png" />
                 </image>
