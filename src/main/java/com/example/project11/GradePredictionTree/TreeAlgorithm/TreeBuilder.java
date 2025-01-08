@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class TreeBuilder {
     private double VarianceReductionVal ;
     private int Course;
-    private int DepthOfTree;
+    private int DepthOfTree = 4;
 
     private double[][] dataSet ;
     private int[] dataSetOfID ;
@@ -24,7 +24,7 @@ public class TreeBuilder {
         this.Course = Course;
         this.dataSet = dataSet;
         this.dataSetOfID  = dataSetOfID;
-        NodeMap = new ArrayList<>();
+        NodeMap = new ArrayList<>(getLengthOfNodeMap());
 
 
 
@@ -45,7 +45,6 @@ public class TreeBuilder {
                     TestNode.setProperty(CategoryArray[i][j]);
                     TestNode.setVarianceReuctionVal(getVarianceReductionVal(CategoryArray[i][j],i+1));
 
-                    System.out.println(TestNode.getProperty());
                     if (TestNode.getVarianceReductionVal()>BestNode.getVarianceReductionVal()){
 
                         BestNode.setProperty(TestNode.getProperty());
@@ -56,12 +55,16 @@ public class TreeBuilder {
 
                 }
             }
+            System.out.println("Base Case Complete");
             NodeMap.add(BestNode);
-            return NodeMap;
+            return TreeBuilder();
         }
-        else if(NodeMap.size()<DepthOfTree && NodeMap.size()>0){
+        else if(NodeMap.size()<getLengthOfNodeMap() && NodeMap.size()>0){
             // need a stream, that passes through the predefined set, skipping
-
+            Nodes nodeEmpty  = new Nodes(2,"test", 0);
+            System.out.println("recursive step");
+            NodeMap.add(nodeEmpty);
+            return TreeBuilder();
         }
 
 
@@ -74,7 +77,16 @@ public class TreeBuilder {
     //returns array of grades Array of grades
 
 
-
+    //Method that calculates the length that the arraylist has to be based on the depth
+    public int getLengthOfNodeMap(){
+        int length = 0 ;
+        int previousVal = 1;
+        for( int i = 1 ; i<DepthOfTree; i++){
+            previousVal= previousVal*2;
+            length+=previousVal;
+        }
+        return length+1 ;
+    }
 
     // gets the variance reduction for a specific Node  ;
     public double getVarianceReductionVal(String Property , int CategoryIndex) throws FileNotFoundException {

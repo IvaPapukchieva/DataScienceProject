@@ -104,8 +104,7 @@ public class VarianceReduction {
             double weight1 = (double) Count1 / (double)( dataSet.length);
             double weight2 = (double) Count2 / (double)(dataSet.length);
 
-            System.out.println( "average "+ average);
-            System.out.println(" antiAverage "+antiAverage);
+
             // Weighted Variance
             return ((VarianceSpecific * weight1) + (VarianceComplementary * weight2));
         }
@@ -120,7 +119,6 @@ public class VarianceReduction {
 
 //        System.out.println("Variance General : " + VarianceGeneral);
 //        System.out.println("Variance Specific : " + VarianceSpecific);
-        System.out.println("Variance Reduction (before adjustment): " + varianceReduction);
 
 
 
