@@ -11,6 +11,7 @@ module com.example.project11 {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires annotations;
 
     opens com.example.project11 to javafx.fxml;
     exports com.example.project11;
