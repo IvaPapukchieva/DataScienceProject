@@ -1,4 +1,4 @@
-package com.example.project11.GradePredictionTree;
+package com.example.project11.GradePredictionTree.OfficialTreeAlgorithm;
 
 import java.util.*;
 import java.util.stream.Collectors;

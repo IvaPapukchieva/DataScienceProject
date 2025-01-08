@@ -1,4 +1,4 @@
-package com.example.project11.GradePredictionTree.TreeAlgorithm;
+package com.example.project11.GradePredictionTree.OfficialTreeAlgorithm;
 
 public class TreeTester {
     private int amountOfStudents;

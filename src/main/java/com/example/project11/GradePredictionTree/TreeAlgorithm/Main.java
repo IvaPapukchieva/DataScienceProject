@@ -30,6 +30,7 @@ public class Main {
         TreeBuilder tree = new TreeBuilder(dataSet,dataSetOfID,1 );
         System.out.println(tree.TreeBuilder().get(0).getProperty());
 
+
     }
 
 
