@@ -34,5 +34,13 @@ public class Student {
         String cat4 = CategoryArray[3][randomNumber];
         return cat4;
     }
+    public String[] finalValues(){
+        String[]Student = new String[3];
+        Student[0] = Category1RandomValue(CategoryArray);
+        Student[1] = Category2RandomValue(CategoryArray);
+        Student[2] = Category3RandomValue(CategoryArray);
+        Student[3] = Category4RandomValue(CategoryArray);
+
+    }
 
 }
