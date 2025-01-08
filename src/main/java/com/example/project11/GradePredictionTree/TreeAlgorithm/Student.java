@@ -40,6 +40,7 @@ public class Student {
         Student[1] = Category2RandomValue(CategoryArray);
         Student[2] = Category3RandomValue(CategoryArray);
         Student[3] = Category4RandomValue(CategoryArray);
+        return Student;
 
     }
 
