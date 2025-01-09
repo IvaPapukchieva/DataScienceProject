@@ -31,7 +31,7 @@ public abstract class Controller {
 
 
             FXMLLoader separateLoader = new FXMLLoader(GUI.class.getResource("separateQuestions.fxml"));
-            scenes.put("separateQuestions", new Scene(separateLoader.load(), 720, 482));
+            scenes.put("separateQuestions", new Scene(separateLoader.load(), 870, 482));
             controllers.put("separateQuestions", separateLoader.getController());
 
             //cache "selections" scene and Controller

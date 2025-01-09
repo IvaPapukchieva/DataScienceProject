@@ -209,7 +209,6 @@ public class SeparateQuestions extends Controller implements Initializable {
             barChartController.setChartData(honorsMap);
             barChartController.setChartLabels("Types of CumLaude","Amounts of Students");
 
-            barChartController = barChartController.clone();
             displayChartOnCurrentPage("Bar Chart");
 
         } catch (IOException e) {
