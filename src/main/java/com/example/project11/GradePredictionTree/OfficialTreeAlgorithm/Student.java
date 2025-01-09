@@ -17,30 +17,30 @@ public class Student {
         double cat1 = CategoryArray[0][randomNumber];
         return cat1;
     }
-    public String Category2RandomValue(String[][]CategoryArray){
-        Random random = new Random();
-        int randomNumber = random.nextInt(3);
-        String cat2 = CategoryArray[1][randomNumber];
-        return cat2;
-    }
-    public String Category3RandomValue(String[][]CategoryArray){
-        Random random = new Random();
-        int randomNumber = random.nextInt(6);
-        String cat3 = CategoryArray[2][randomNumber];
-        return cat3;
-    }
-    public String Category4RandomValue(String[][]CategoryArray){
+    public double Category2RandomValue(){
         Random random = new Random();
         int randomNumber = random.nextInt(4);
-        String cat4 = CategoryArray[3][randomNumber];
+        double cat2 = CategoryArray[2][randomNumber];
+        return cat2;
+    }
+    public double Category3RandomValue(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(6);
+        double cat3 = CategoryArray[3][randomNumber];
+        return cat3;
+    }
+    public double Category4RandomValue(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(4);
+        double cat4 = CategoryArray[4][randomNumber];
         return cat4;
     }
-    public String[] finalValues(){
-        String[]Student = new String[4];
-        Student[0] = Category1RandomValue(CategoryArray);
-        Student[1] = Category2RandomValue(CategoryArray);
-        Student[2] = Category3RandomValue(CategoryArray);
-        Student[3] = Category4RandomValue(CategoryArray);
+    public double[] finalValues(){
+        double[]Student = new double[4];
+        Student[0] = Category1RandomValue();
+        //Student[1] = Category2RandomValue();
+        Student[2] = Category3RandomValue();
+        Student[3] = Category4RandomValue();
         return Student;
     }
 
