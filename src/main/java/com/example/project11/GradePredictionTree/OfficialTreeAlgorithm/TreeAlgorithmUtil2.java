@@ -9,55 +9,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TreeAlgorithmUtil {
-    public static String[][] studentInfoArray;
-    public static double[][] weightedBootstrappingArray;
-
-    public static int course ;
-
-
-
-
+public class TreeAlgorithmUtil2 {
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
-        course  = 0 ;
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
-        studentInfoArray = studentInfoLoader.readInfoString();
+        String[][] X = formatStudentInfo(studentInfoLoader.readInfoString());
+        System.out.println(Arrays.deepToString(X));
 
-        WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
-        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
-
-        TreeTester treeTester = new TreeTester(100, course, studentInfoLoader.readInfoString(), weightedBootstrapping.readAllStudents());
-
-        double[] Rad80Student = treeTester.getRandom80percent();
-        double[] Rad20Student = treeTester.getRandom20percent();
-
-        System.out.println("80% Grades:" + Arrays.toString(getGradesOf80percentStudents(Rad80Student)));
-        System.out.println("20% Grades:" + Arrays.toString(getGradesOf20percentStudents(Rad20Student)));
-
-        System.out.println("80% Indices:" + Arrays.toString(Rad80Student));
-        System.out.println("20% Indices:" + Arrays.toString(Rad20Student));
-
-
-        // 4,6,
-        //5,
-        System.out.println(getGradesOf80percentStudents(Rad80Student).length);
-        System.out.println(getGradesOf20percentStudents(Rad20Student).length);
-
-        System.out.println("80% properties:" + Arrays.deepToString(getStudentProperty80percent(Rad80Student)));
-        System.out.println("20% properties:" + Arrays.deepToString(getStudentProperty20percent(Rad20Student)));
-
-        System.out.println(getStudentProperty80percent(Rad80Student).length);
-        System.out.println(getStudentProperty20percent(Rad20Student).length);
-
-
+        // Extract the grades
+        Loader loader = new WeightedBootstrapping();
+        double[] Y = gradesExtractor(loader, 0);
 
         DecisionTreeRegressor regressor = new DecisionTreeRegressor(2,4);
-        regressor.fit(getStudentProperty80percent(Rad80Student), getGradesOf80percentStudents(Rad80Student));
+        regressor.fit(X, Y);
 
         // Print the decision tree
         regressor.printTree();
+
+        // Predict
         String[][] testX = {
                 {"high", "86", "3 tau", "A", "0.5 Hz "},
                 {"high", "71", "1 tau", "F", "0.1 Hz "},
@@ -161,55 +131,15 @@ public class TreeAlgorithmUtil {
                 {"high", "120", "1 tau", "B", "0.5 Hz "}
         };
 
-        double[] predictions = regressor.predict(getStudentProperty20percent(Rad20Student));
+
+        double[] predictions = regressor.predict(testX);
+
         System.out.println("Predictions: " + Arrays.toString(predictions));
-    }
 
-    // method that correlates the Indexes of 80 percent with the student properties .
-    public static String[][] getStudentProperty80percent(double[] ArrayOf80percentIndexes){
-        String[][] propertiesOf80Percent = new String[ArrayOf80percentIndexes.length][5];
-        for(int i = 0; i < ArrayOf80percentIndexes.length; i++){
-            for( int j = 1 ; j<6 ; j++){
-                propertiesOf80Percent[i][j-1] = studentInfoArray[(int)(ArrayOf80percentIndexes[i])][j];
-            }
-        }
-        return propertiesOf80Percent;
-    }
-
-    // method that correlates the Indexes of 20 percent with the student properties .
-    public static String[][] getStudentProperty20percent(double[] ArrayOf20percentIndexes){
-        String[][] propertiesOf20Percent = new String[ArrayOf20percentIndexes.length][5];
-        for(int i = 0; i < ArrayOf20percentIndexes.length; i++){
-            for( int j = 1 ; j<6 ; j++){
-                propertiesOf20Percent[i][j-1] = studentInfoArray[(int)(ArrayOf20percentIndexes[i])][j];
-            }
-        }
-        return propertiesOf20Percent;
-    }
-
-    // This method gets the grades of the students in the 80 percent data set
-    public static double[] getGradesOf80percentStudents(double[] ArrayOf80percentIndexes){
-        double[] grades80Percent = new double[ArrayOf80percentIndexes.length];
-
-        for(int i = 0; i < ArrayOf80percentIndexes.length; i++){
-             grades80Percent[i]= weightedBootstrappingArray[(int)ArrayOf80percentIndexes[i]][course];
-        }
-        return grades80Percent;
-    }
-
-    // This method gets the grades of the students in the 20 percent data set
-    public static double[] getGradesOf20percentStudents(double[] ArrayOf20percentIndexes){
-        double[] grades20Percent = new double[ArrayOf20percentIndexes.length];
-
-        for(int i = 0; i < ArrayOf20percentIndexes.length; i++){
-            grades20Percent[i] = weightedBootstrappingArray[(int)ArrayOf20percentIndexes[i]][course] ;
-        }
-        return grades20Percent;
     }
 
     private static String[][] formatStudentInfo(String[][] studentInfo) {
         String[][] formattedStudentInfo = new String[studentInfo.length-1][studentInfo[0].length-1];
-
         for(int i = 1; i < studentInfo.length; i++) {
             for (int j = 1; j < studentInfo[i].length; j++) {
                 formattedStudentInfo[i-1][j-1] = studentInfo[i][j];
@@ -226,5 +156,4 @@ public class TreeAlgorithmUtil {
         }
         return grades;
     }
-
 }
