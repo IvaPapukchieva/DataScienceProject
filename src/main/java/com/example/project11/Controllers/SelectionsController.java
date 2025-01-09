@@ -304,8 +304,10 @@ data.setFilteredData(filteredData);
     public void tempTreeMaker(ActionEvent actionEvent) throws IOException {
 
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five");
-        treeController.passProperties(labels,3);
+        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One");
+        List<String> student=List.of("1 tau","A","17","1 tau","A","17");
+
+        treeController.passProperties(labels,5,student,7);
 
         super.changeScene(actionEvent, "Tree Visualizer");
 

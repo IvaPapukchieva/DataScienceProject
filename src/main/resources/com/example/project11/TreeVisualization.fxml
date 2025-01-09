@@ -3,13 +3,74 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.paint.Color?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
+            fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController"
+            prefHeight="1000.0" prefWidth="1400.0"
+            style="-fx-background-color: #28323D">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 
-    <!-- Define the Pane for tree visualization -->
+
+
+    <StackPane layoutX="100.0" layoutY="60.0">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="150.0"   stroke="#5A7F9E" strokeWidth="2" strokeType="INSIDE" width="150.0" />
+        <VBox fx:id="bulletBox" spacing="5" alignment="TOP_LEFT" style="-fx-padding: 10;">
+            <!-- This Text is static and will not change -->
+            <Text text="Student Features"
+                  style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial';-fx-fill:#5A7F9E; -fx-underline: true;" />
+        </VBox>
+    </StackPane>
     <Pane fx:id="rootPane" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"
           AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" />
+    <HBox spacing="5" alignment="CENTER_LEFT" layoutX="100.0" layoutY="700.0" >
+<!--  grade prediction-->
+        <Text text="Grade Prediction: "
+              style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" />
+        <Text fx:id="prediction" text="8.0"
+              style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" />
+    </HBox>
+
+    <Circle layoutX="-29.0" layoutY="14.0" radius="140.0" strokeMiterLimit="0.0" strokeType="INSIDE">
+        <stroke>
+            <LinearGradient endX="1.0" endY="0.4208037825059102" startY="1.0">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.18619999289512634" green="0.2863300144672394" blue="0.3799999952316284" opacity="0.0" />
+                        </color>
+                    </Stop>
+                </stops>
+            </LinearGradient>
+        </stroke>
+        <fill>
+            <LinearGradient endX="1.0" endY="1.0" startY="0.18203309692671396">
+                <stops>
+                    <Stop>
+                        <color>
+                            <Color />
+                        </color>
+                    </Stop>
+                    <Stop offset="1.0">
+                        <color>
+                            <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
+                        </color>
+                    </Stop>
+                </stops>
+            </LinearGradient>
+        </fill>
+    </Circle>
+
+
 </AnchorPane>
