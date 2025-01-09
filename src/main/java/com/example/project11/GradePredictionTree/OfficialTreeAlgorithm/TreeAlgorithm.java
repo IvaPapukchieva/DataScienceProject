@@ -202,36 +202,3 @@ class DecisionTreeRegressor {
         }
     }
 }
-<<<<<<<< HEAD:src/main/java/com/example/project11/GradePredictionTree/OfficialTreeAlgorithm/TreeBuilding.java
-
-public class TreeBuilding {
-    public static void main(String[] args) {
-        // Example data encoded numerically
-        double[][] X = {
-
-                {4, -42, 1.0, 0, 1},// full, -42, 1.0 Hz, A, 1 tau
-                {3, 20, 5.0, 1, 2},   // medium, 20, 5.0 Hz, B, 2 tau
-                {2, 100, 0.5, 2, 3},  // high, 100, 0.5 Hz, C, 3 tau
-                {1, 50, 0.1, 3, 1},   // low, 50, 0.1 Hz, D, 1 tau
-                {0, 147, 1.0, 4, 2}   // nothing, 147, 1.0 Hz, E, 2 tau
-        };
-        double[] Y = {90, 85, 78, 88, 95};  // Grades
-
-        DecisionTreeRegressor regressor = new DecisionTreeRegressor(2,8);
-        regressor.fit(X, Y);
-
-        // Print the decision tree
-        regressor.printTree();
-
-        // Predict
-        double[][] testX = {
-                {3, 30, 5.0, 1, 2},  // medium, 30, 5.0 Hz, B, 2 tau
-                {1, 60, 0.1, 3, 1}   // low, 60, 0.1 Hz, D, 1 tau
-        };
-        double[] predictions = regressor.predict(testX);
-
-        System.out.println("Predictions: " + Arrays.toString(predictions));
-    }
-}
-========
->>>>>>>> origin/Merge:src/main/java/com/example/project11/GradePredictionTree/OfficialTreeAlgorithm/TreeAlgorithm.java
