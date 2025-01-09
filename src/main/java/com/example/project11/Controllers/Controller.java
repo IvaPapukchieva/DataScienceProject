@@ -81,7 +81,8 @@ public abstract class Controller {
             controllers.put("Chart Window",  chartWindowFilterLoader.getController());
 
             FXMLLoader treeVisualizerLoader = new FXMLLoader(GUI.class.getResource("TreeVisualization.fxml"));
-            scenes.put("Tree Visualizer", new Scene(treeVisualizerLoader.load(), 320, 480));
+            AnchorPane treeVisualizer =  treeVisualizerLoader.load();
+            scenes.put("Tree Visualizer", new Scene(treeVisualizer, 1400, 1000));
             controllers.put("Tree Visualizer", treeVisualizerLoader.getController());
 
             // LOAD THE CHARTS -------------------------------------
@@ -194,6 +195,7 @@ public abstract class Controller {
         Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
         // set the new scene on the stage
         stage.setScene(scene);
+        stage.centerOnScreen();
     }
     public void setDataCallback(DataCallback dataCallback) {
         this.dataCallback = dataCallback;
