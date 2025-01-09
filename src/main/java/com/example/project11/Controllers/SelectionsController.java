@@ -304,8 +304,8 @@ data.setFilteredData(filteredData);
     public void tempTreeMaker(ActionEvent actionEvent) throws IOException {
 
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five");
-        treeController.passProperties(labels,3);
+        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five");
+        treeController.passProperties(labels,4);
 
         super.changeScene(actionEvent, "Tree Visualizer");
 
