@@ -160,10 +160,11 @@ class DecisionTreeRegressor {
     }
 }
 
-public class ChatGPTTreeAlgorithm {
+public class TreeBuilding {
     public static void main(String[] args) {
         // Example data encoded numerically
         double[][] X = {
+
                 {4, -42, 1.0, 0, 1},// full, -42, 1.0 Hz, A, 1 tau
                 {3, 20, 5.0, 1, 2},   // medium, 20, 5.0 Hz, B, 2 tau
                 {2, 100, 0.5, 2, 3},  // high, 100, 0.5 Hz, C, 3 tau

@@ -3,17 +3,18 @@ package com.example.project11.GradePredictionTree.OfficialTreeAlgorithm;
 import java.util.Random;
 
 public class Student {
-    private String[][] CategoryArray  = {{"full", "nothing", "medium","low", "high"},{"1 tau", "2 tau", "3 tau"},{"A","B","C","D","E","F"},{"0.1 Hz ", "0.5 Hz ", "1.0 Hz ","5.0 Hz "}};
+    private double[][] CategoryArray;
 
-    public Student(String[][] CategoryArray){
+    public Student(double[][] CategoryArray){
+
         this.CategoryArray = CategoryArray;
     }
 
     //sets Category 1 to a random value
-    public String Category1RandomValue(String[][]CategoryArray){
+    public double Category1RandomValue(){
         Random random = new Random();
         int randomNumber = random.nextInt(5);
-        String cat1 = CategoryArray[0][randomNumber];
+        double cat1 = CategoryArray[0][randomNumber];
         return cat1;
     }
     public String Category2RandomValue(String[][]CategoryArray){
