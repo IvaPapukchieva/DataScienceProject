@@ -12,6 +12,7 @@ module com.example.project11 {
     requires com.almasb.fxgl.all;
     requires java.desktop;
     requires annotations;
+    requires jdk.compiler;
 
     opens com.example.project11 to javafx.fxml;
     exports com.example.project11;

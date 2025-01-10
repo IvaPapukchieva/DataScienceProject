@@ -93,13 +93,14 @@ public class TreeTester {
     public double[] getRandom80percent(){
         Random random = new Random();
         Set<Integer> uniqueIndices = new HashSet<>();
-        int targetSize = (int) (gradesForOneCourse.length * 0.8);
+        int targetSize = (int) (1063);
         targetSize80 = targetSize;
 
         // Generate unique random values
         while (uniqueIndices.size() < targetSize) {
             int val = random.nextInt(1328)+1; // Random value between 1 and poolSize
-            uniqueIndices.add(val); // Add to the set (ignores duplicates automatically)
+            uniqueIndices.add(val);
+            uniqueIndices.add(1);// Add to the set (ignores duplicates automatically)
         }
 
         // Convert the set to an array
@@ -113,7 +114,7 @@ public class TreeTester {
     // gets the remaining 20 percent of grades for testing - ALWAYS DO RANDOM 80 PERCENT FIRST
     public double[] getRandom20percent(){
 
-        double[] ArrayOf20percent = new double[1328-targetSize80];
+        double[] ArrayOf20percent = new double[1328-ArrayOf80PercentIndex.length];
         int n = 0 ;
         // 1,2,3,5,7,17,21
         for(int i = 0; i <ArrayOf80PercentIndex.length-1; i++){
@@ -124,19 +125,26 @@ public class TreeTester {
                 }
             }
         }
+        for( int i = 0 ; i<1328-ArrayOf80PercentIndex.length ; i++){
+            if(ArrayOf20percent[i] == 0.0 ){
+                ArrayOf20percent[i]+=1328 ;
+
+            }
+        }
+
         return ArrayOf20percent;
     }
 
 
     //Creates a set of imaginary students such that we have a larger data set to test the model.
-    public String[][] getArrayOfImagianryStudents() throws FileNotFoundException {
-        String[][]StudentArray = new String[amountOfStudents][4];
-        for(int i = 0; i < amountOfStudents; i++){
-            Student student = new Student(studentInfoArray);
-            StudentArray[i] = student.finalValues();
-        }
-        return StudentArray;
-    }
+//    public String[][] getArrayOfImagianryStudents() throws FileNotFoundException {
+//        String[][]StudentArray = new String[amountOfStudents][4];
+//        for(int i = 0; i < amountOfStudents; i++){
+//            Student student = new Student(studentInfoArray);
+//            StudentArray[i] = student.finalValues();
+//        }
+//        return StudentArray;
+//    }
 
 
 
