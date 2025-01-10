@@ -5,39 +5,47 @@ import java.util.Arrays;
 public class TreeAnalyser {
 
     private double[] Grades ;
-    private double[][]weightedBootstrappingfull ;
+    private double[]weightedBootstrappingfull ;
     private double[] weightedBootstrappingCourse;
     private  int Course ;
+    private double[] RoundedGrades;
 
 
-    public TreeAnalyser(double[] Grades, double[][] weightedBootstrapping , int Course){
+    public TreeAnalyser(double[] Grades, double[]weightedBootstrapping , int Course){
 
         this.Grades = Grades ;
-        this.weightedBootstrappingfull = weightedBootstrapping;
         this.Course = Course ;
-        this.weightedBootstrappingCourse = new double[weightedBootstrapping.length];
+       // this.weightedBootstrappingCourse = new double[weightedBootstrapping.length];
+        this.weightedBootstrappingCourse = weightedBootstrapping;
+
 
         // rounding all the digits
         // we map the digits
         // we compare the digits to the main distribution
-        for (int i = 0 ; i< weightedBootstrapping.length; i++){
-            weightedBootstrappingCourse[i] = weightedBootstrappingfull[i][Course];
-        }
+//        for (int i = 0 ; i< weightedBootstrapping.length; i++){
+//            weightedBootstrappingCourse[i] = weightedBootstrappingfull[i][Course];
+//        }
 
     }
 
-    public void getMethodRunning(){
+    public double getMethodRunning(){
         getRoundedGrades();
+        RoundedGrades = getRoundedGrades();
+//        System.out.println("Prediction Grades"+ Arrays.toString(RoundedGrades));
+//        System.out.println("Main test set Grades"+ Arrays.toString(weightedBootstrappingCourse));
         // gets the percentage distribution for the  course;
         double[] PercentageDisMain = getPercentageDistribution(weightedBootstrappingCourse);
 
         // gets the percentage distribution for Grades ;
-        double[] GradesPercentageDistribution = getPercentageDistribution(Grades);
-//        System.out.println(Arrays.toString(PercentageDisMain));
-//        System.out.println(Arrays.toString(GradesPercentageDistribution));
-//
+        double[] GradesPercentageDistribution = getPercentageDistribution(RoundedGrades);
+
+        //System.out.println("Distribution of main "+Arrays.toString(PercentageDisMain));
+        //System.out.println("DIstribution of prediction"+Arrays.toString(GradesPercentageDistribution));
+
         double val = getSumOfDifference(PercentageDisMain,GradesPercentageDistribution);
         System.out.println(val);
+
+        return val;
     }
 
     public double[] getRoundedGrades(){
@@ -73,7 +81,7 @@ public class TreeAnalyser {
     public double[] getDifferenceInPercentDistribution(double[] percentageDistribution, double[] realPercentageDistribution){
          double[] differenceInPercentDistribution = new double[percentageDistribution.length];
          for(int i = 0; i < percentageDistribution.length; i++){
-             differenceInPercentDistribution[i] = Math.pow((percentageDistribution[i] - realPercentageDistribution[i]),2);
+             differenceInPercentDistribution[i] = Math.abs((percentageDistribution[i] - realPercentageDistribution[i]));
          }
          return differenceInPercentDistribution;
     }
