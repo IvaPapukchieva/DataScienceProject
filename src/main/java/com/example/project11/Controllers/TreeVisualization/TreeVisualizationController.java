@@ -19,33 +19,60 @@ import java.util.ResourceBundle;
 
 public class TreeVisualizationController extends Controller implements Initializable {
     @FXML
-    private Pane rootPane; // The Pane defined in your FXML for adding tree nodes.
+    private Pane rootPane;
+    // The Pane defined in your FXML for adding tree nodes.
 
+    @FXML
+    private VBox bulletBox;
     private List<String> labels;
     private int levels;
+    @FXML
+    private List<String> studentProperties;
+    private double grade;
+    @FXML
+    private Text prediction;
 
-    public void passProperties(List<String> labels, int levels) {
+    public void passProperties(List<String> labels, int levels,List<String> studentProperties,double grade) {
         this.labels = labels;
         this.levels = levels;
+        this.studentProperties=studentProperties;
+        this.grade=grade;
         if (rootPane != null) {
-            renderTree(); // Re-render the tree after setting properties
+            drawTree();
+            updateBulletPoints();
+            updateGrade(grade);
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Wait for properties to be passed
         if (labels != null && levels > 0) {
-            renderTree();
+            drawTree();
+            updateBulletPoints();
+            updateGrade(grade);
         }
     }
 
-    private void renderTree() {
-        rootPane.getChildren().clear(); // Clear the pane before rendering
+    private void drawTree() {
+        rootPane.getChildren().clear();
         TreeNode tree = new TreeNode();
         Iterator<String> labelIterator = labels.iterator();
-        tree.generateTree(rootPane, labelIterator, 700, 50, 600, 90, levels);
+        tree.generateTree(rootPane, labelIterator, 700, 100, 600, 90, levels);
     }
+    public void updateBulletPoints() {
+        bulletBox.getChildren().remove(1, bulletBox.getChildren().size());
+
+        for (String point : studentProperties) {
+            Text bullet = new Text("• " + point);
+            bullet.setStyle("-fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;");
+            bulletBox.getChildren().add(bullet);
+        }
+    }
+
+    public void updateGrade(double grade) {
+        prediction.setText(String.valueOf(grade));
+    }
+
 
     public class TreeNode {
         public void generateTree(Pane pane, Iterator<String> labelIterator, double x, double y, double xSpacing, double ySpacing, int levels) {
@@ -97,7 +124,7 @@ public class TreeVisualizationController extends Controller implements Initializ
 
         private void connectNodes(Pane pane, double startX, double startY, double endX, double endY, String label) {
             Line line = new Line(startX, startY, endX, endY);
-            line.setStroke(Color.BLACK);
+            line.setStroke(Color. rgb(48, 74, 98) );
             line.setStrokeWidth(1.5);
 
             Text text = new Text(label);
@@ -113,8 +140,8 @@ public class TreeVisualizationController extends Controller implements Initializ
             return new LinearGradient(
                     0, 0, 1, 1,
                     true, CycleMethod.NO_CYCLE,
-                    new Stop(0, Color.web("#6082B6")),
-                    new Stop(1, Color.web("#ADD8E6"))
+                    new Stop(0, Color.web("#3F5A7D")),  // Darker version of #6082B6
+                    new Stop(1, Color.web("#8BB8D6"))   // Darker version of #ADD8E6
             );
         }
     }
