@@ -24,7 +24,7 @@
         <VBox fx:id="bulletBox" spacing="5" alignment="TOP_LEFT" style="-fx-padding: 10;">
             <!-- This Text is static and will not change -->
             <Text text="Student Features"
-                  style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial';-fx-fill:#5A7F9E; -fx-underline: true;" />
+                  style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial';-fx-fill:#ADD8E6; -fx-underline: true;" />
         </VBox>
     </StackPane>
     <Pane fx:id="rootPane" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"

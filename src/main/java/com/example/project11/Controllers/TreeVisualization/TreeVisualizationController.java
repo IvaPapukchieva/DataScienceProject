@@ -66,7 +66,7 @@ public class TreeVisualizationController extends Controller implements Initializ
 
         for (String point : studentProperties) {
             Text bullet = new Text("• " + point);
-            bullet.setStyle("-fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-fill:#5A7F9E");
+            bullet.setStyle("-fx-font-size: 14px; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;");
             bulletBox.getChildren().add(bullet);
         }
     }
