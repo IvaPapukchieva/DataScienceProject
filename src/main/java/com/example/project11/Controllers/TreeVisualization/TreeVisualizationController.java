@@ -44,8 +44,6 @@ public class TreeVisualizationController extends Controller implements Initializ
         }
     }
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (labels != null && levels > 0) {
