@@ -30,7 +30,7 @@ public class TreeAlgorithmUtil {
         studentInfoArray = studentInfoLoader.readInfoString();
 
         WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
-        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
+        weightedBootstrappingArray = weightedBootstrapping.readAllStudents()  ;
 
        ForestCreator forest  = new ForestCreator(amountofTrees , 30, course , studentInfoArray, weightedBootstrappingArray);
         //System.out.println(forest.getFilteredForest());
