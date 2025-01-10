@@ -15,7 +15,7 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Load all the scenes into a cache
+        // Load all the scenes into a cache1
         Controller.cacheScenes();
 
         //Import starting scene

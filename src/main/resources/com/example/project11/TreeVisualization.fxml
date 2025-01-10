@@ -1,62 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="480.0" prefWidth="320.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
-    <children>
-        <Circle layoutX="-19.0" layoutY="14.0" radius="119.0" strokeMiterLimit="0.0" strokeType="INSIDE">
-            <stroke>
-                <LinearGradient endX="1.0" endY="0.4208037825059102" startY="1.0">
-                    <stops>
-                        <Stop>
-                            <color>
-                                <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
-                            </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                            <color>
-                                <Color red="0.18619999289512634" green="0.2863300144672394" blue="0.3799999952316284" opacity="0.0" />
-                            </color>
-                        </Stop>
-                    </stops>
-                </LinearGradient>
-            </stroke>
-            <fill>
-                <LinearGradient endX="1.0" endY="1.0" startY="0.18203309692671396">
-                    <stops>
-                        <Stop>
-                            <color>
-                                <Color />
-                            </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                            <color>
-                                <Color red="0.1882352977991104" green="0.29019609093666077" blue="0.38823530077934265" />
-                            </color>
-                        </Stop>
-                    </stops>
-                </LinearGradient>
-            </fill>
-        </Circle>
-      <VBox prefHeight="31.0" prefWidth="290.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
-         <children>
-               <Label prefHeight="35.0" prefWidth="282.0" text="Tree Visualization" textAlignment="CENTER" textFill="#f2f2f2">
-                   <font>
-                       <Font name="System Bold" size="24.0" />
-                   </font>
-               </Label>
-               <Line endX="100.0" startX="-100.0" stroke="WHITE" strokeWidth="5.0" />
-         </children>
-      </VBox>
-        <VBox fx:id="container" alignment="BASELINE_LEFT" layoutY="68.0" prefHeight="412.0" prefWidth="300.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
-            <padding>
-                <Insets bottom="20" />
-            </padding>
-        </VBox>
-    </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <!-- Define the Pane for tree visualization -->
+    <Pane fx:id="rootPane" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" />
 </AnchorPane>

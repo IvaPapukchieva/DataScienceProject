@@ -4,95 +4,117 @@ import com.example.project11.Controllers.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.*;
 import javafx.scene.paint.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TreeVisualizationController extends Controller implements Initializable {
+    @FXML
+    private Pane rootPane; // The Pane defined in your FXML for adding tree nodes.
 
-    @FXML
-    AnchorPane rootPane;
-    @FXML
-    VBox container;
+    private List<String> labels;
+    private int levels;
+
+    public void passProperties(List<String> labels, int levels) {
+        this.labels = labels;
+        this.levels = levels;
+        if (rootPane != null) {
+            renderTree(); // Re-render the tree after setting properties
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TreeNode root = new TreeNode(20, "1 tau");
-        root.leftChild = new TreeNode(20, "full");
-        root.rightChild = new TreeNode(20, "1.0 Hz");
-        root.leftChild.leftChild = new TreeNode(20, "A");
-        root.leftChild.rightChild = new TreeNode(20, "D");
-        root.rightChild.leftChild = new TreeNode(20, "35");
-        root.rightChild.rightChild = new TreeNode(20, "147");
-        root.drawTree(0);  // Start drawing from level 0 (root level)
+        // Wait for properties to be passed
+        if (labels != null && levels > 0) {
+            renderTree();
+        }
     }
 
-    private class TreeNode {
-        private double radius;
-        private String property;
-        private TreeNode leftChild;
-        private TreeNode rightChild;
+    private void renderTree() {
+        rootPane.getChildren().clear(); // Clear the pane before rendering
+        TreeNode tree = new TreeNode();
+        Iterator<String> labelIterator = labels.iterator();
+        tree.generateTree(rootPane, labelIterator, 700, 50, 600, 90, levels);
+    }
 
-        public TreeNode(double radius, String property) {
-            this.radius = radius;
-            this.property = property;
-        }
-
-        public void drawTree(int level) {
-            // Ensure we have enough HBoxes in container for the current level
-            while (container.getChildren().size() <= level) {
-                container.getChildren().add(new HBox(5*(level) + 20)); // Create new HBox for the next level
+    public class TreeNode {
+        public void generateTree(Pane pane, Iterator<String> labelIterator, double x, double y, double xSpacing, double ySpacing, int levels) {
+            if (levels == 0 || !labelIterator.hasNext()) {
+                return;
             }
 
-            // Get the HBox for the current level
-            HBox currentLevelHBox = (HBox) container.getChildren().get(level);
-            currentLevelHBox.setAlignment(Pos.CENTER);  // Center-align the nodes in the HBox
+            String currentLabel = labelIterator.next();
+            createInteractiveNode(pane, currentLabel, x, y);
 
-            // Create the node for this TreeNode
-            StackPane nodePane = createTreeNode(property, radius);
+            double leftChildX = x - xSpacing / 2;
+            double leftChildY = y + ySpacing;
+            double rightChildX = x + xSpacing / 2;
+            double rightChildY = y + ySpacing;
 
-            // Add this node to the current level's HBox
-            currentLevelHBox.getChildren().add(nodePane);
-
-            // Recursively draw the left and right children (if they exist)
-            if (leftChild != null) {
-                leftChild.drawTree(level + 1);  // Draw at the next level for the left child
+            if (levels > 1 && labelIterator.hasNext()) {
+                connectNodes(pane, x, y + 20, leftChildX, leftChildY - 20, "YES");
+                generateTree(pane, labelIterator, leftChildX, leftChildY, xSpacing / 2, ySpacing, levels - 1);
             }
-            if (rightChild != null) {
-                rightChild.drawTree(level + 1);  // Draw at the next level for the right child
+
+            if (levels > 1 && labelIterator.hasNext()) {
+                connectNodes(pane, x, y + 20, rightChildX, rightChildY - 20, "NO");
+                generateTree(pane, labelIterator, rightChildX, rightChildY, xSpacing / 2, ySpacing, levels - 1);
             }
         }
 
-        private StackPane createTreeNode(String labelText, double radius) {
-            Circle circle = new Circle(radius, createGradient());
-            circle.setStroke(Color.BLACK);
+        private void createInteractiveNode(Pane pane, String text, double x, double y) {
+            LinearGradient gradient = createGradient();
+            Rectangle rect = new Rectangle(x - 35, y - 20, 70, 40);
+            rect.setArcWidth(20);
+            rect.setArcHeight(20);
+            rect.setFill(gradient);
+            rect.setStroke(Color.BLACK);
 
-            Text label = new Text(labelText);
-            label.setFont(Font.font(radius / 2.5)); // Adjust font size based on circle radius
-            label.setFill(Color.WHITE);
+            Text nodeText = new Text(text);
+            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            nodeText.setFill(Color.WHITE);
+            nodeText.setX(x - (nodeText.getLayoutBounds().getWidth() / 2));
+            nodeText.setY(y + 5);
 
-            StackPane stackPane = new StackPane();
-            stackPane.getChildren().addAll(circle, label);
-            return stackPane;
+            Tooltip tooltip = new Tooltip("Node: " + text);
+            Tooltip.install(rect, tooltip);
+
+            rect.setOnMouseEntered(event -> rect.setFill(Color.LIGHTCYAN));
+            rect.setOnMouseExited(event -> rect.setFill(gradient));  // Reset to gradient
+
+            pane.getChildren().addAll(rect, nodeText);
+        }
+
+        private void connectNodes(Pane pane, double startX, double startY, double endX, double endY, String label) {
+            Line line = new Line(startX, startY, endX, endY);
+            line.setStroke(Color.BLACK);
+            line.setStrokeWidth(1.5);
+
+            Text text = new Text(label);
+            text.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+            text.setFill(label.equals("YES") ? Color.GREEN : Color.RED);
+            text.setX((startX + endX) / 2 - 10);
+            text.setY((startY + endY) / 2 - 5);
+
+            pane.getChildren().addAll(line, text);
         }
 
         private LinearGradient createGradient() {
             return new LinearGradient(
-                    0, 0, 1, 1, // Start (0, 0) and End (1, 1) coordinates
+                    0, 0, 1, 1,
                     true, CycleMethod.NO_CYCLE,
-                    new Stop(0, Color.LIGHTBLUE),  // Start color
-                    new Stop(1, Color.DARKBLUE)   // End color
+                    new Stop(0, Color.web("#6082B6")),
+                    new Stop(1, Color.web("#ADD8E6"))
             );
         }
     }

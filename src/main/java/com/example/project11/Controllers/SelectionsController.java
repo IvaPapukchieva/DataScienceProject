@@ -2,11 +2,14 @@ package com.example.project11.Controllers;
 
 
 import com.example.project11.Controllers.Charts.ChartSelectionController;
+import com.example.project11.Controllers.Charts.PieChartController;
 import com.example.project11.Controllers.FilterControllers.*;
+import com.example.project11.Controllers.TreeVisualization.TreeVisualizationController;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -299,6 +302,13 @@ data.setFilteredData(filteredData);
 
     // TEMP CODE FOR TREE
     public void tempTreeMaker(ActionEvent actionEvent) throws IOException {
+
+        TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
+        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five");
+        treeController.passProperties(labels,4);
+
         super.changeScene(actionEvent, "Tree Visualizer");
+
+
     }
 }
