@@ -9,6 +9,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.control.Slider?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController"
             prefHeight="1000.0" prefWidth="1400.0"
@@ -36,6 +37,11 @@
         <Text fx:id="prediction" text="8.0"
               style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" />
     </HBox>
+<!--    <HBox spacing="10" alignment="CENTER" layoutX="100.0" layoutY="760.0">-->
+<!--        <Text text="Zoom:"-->
+<!--              style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" />-->
+<!--        <Slider fx:id="zoomSlider" min="0.1" max="2.0" value="1.0" blockIncrement="0.1" />-->
+<!--    </HBox>-->
 
     <Circle layoutX="-29.0" layoutY="14.0" radius="140.0" strokeMiterLimit="0.0" strokeType="INSIDE">
         <stroke>

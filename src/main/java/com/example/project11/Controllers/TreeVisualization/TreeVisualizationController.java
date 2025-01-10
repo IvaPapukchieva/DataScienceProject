@@ -4,7 +4,10 @@ import com.example.project11.Controllers.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
@@ -19,9 +22,13 @@ import java.util.ResourceBundle;
 
 public class TreeVisualizationController extends Controller implements Initializable {
     @FXML
-    private Pane rootPane;
-    // The Pane defined in your FXML for adding tree nodes.
+    private ScrollPane scrollPane;
 
+// In your initialize or constructor method
+@FXML
+private Slider zoomSlider;
+    @FXML
+    private Pane rootPane;
     @FXML
     private VBox bulletBox;
     private List<String> labels;
@@ -31,16 +38,18 @@ public class TreeVisualizationController extends Controller implements Initializ
     private double grade;
     @FXML
     private Text prediction;
+    private double scaleFactor = 0.5;
 
-    public void passProperties(List<String> labels, int levels,List<String> studentProperties,double grade) {
+    public void passProperties(List<String> labels, int levels, List<String> studentProperties, double grade) {
         this.labels = labels;
         this.levels = levels;
-        this.studentProperties=studentProperties;
-        this.grade=grade;
+        this.studentProperties = studentProperties;
+        this.grade = grade;
         if (rootPane != null) {
             drawTree();
             updateBulletPoints();
             updateGrade(grade);
+            rootPane.setOnScroll(this::handleScroll);
         }
     }
 
@@ -50,6 +59,7 @@ public class TreeVisualizationController extends Controller implements Initializ
             drawTree();
             updateBulletPoints();
             updateGrade(grade);
+            scrollPane.setContent(rootPane);
         }
     }
 
@@ -58,6 +68,28 @@ public class TreeVisualizationController extends Controller implements Initializ
         TreeNode tree = new TreeNode();
         Iterator<String> labelIterator = labels.iterator();
         tree.generateTree(rootPane, labelIterator, 700, 100, 600, 90, levels);
+    }
+
+
+
+    private void handleScroll(ScrollEvent event) {
+
+        if (event.getDeltaY() > 0) {
+            scaleFactor += 0.03;  // Zoom in
+        } else if (event.getDeltaY() < 0) {
+            scaleFactor -= 0.03;  // Zoom out
+        }
+
+        if (scaleFactor < 0.1) {
+            scaleFactor = 0.1;
+        } else if (scaleFactor > 2.0) {
+            scaleFactor = 2.0;
+        }
+
+        rootPane.setScaleX(scaleFactor);
+        rootPane.setScaleY(scaleFactor);
+
+        event.consume();
     }
     public void updateBulletPoints() {
         bulletBox.getChildren().remove(1, bulletBox.getChildren().size());
@@ -72,7 +104,6 @@ public class TreeVisualizationController extends Controller implements Initializ
     public void updateGrade(double grade) {
         prediction.setText(String.valueOf(grade));
     }
-
 
     public class TreeNode {
         public void generateTree(Pane pane, Iterator<String> labelIterator, double x, double y, double xSpacing, double ySpacing, int levels) {
@@ -99,6 +130,7 @@ public class TreeVisualizationController extends Controller implements Initializ
             }
         }
 
+
         private void createInteractiveNode(Pane pane, String text, double x, double y) {
             LinearGradient gradient = createGradient();
             Rectangle rect = new Rectangle(x - 35, y - 20, 70, 40);
@@ -124,7 +156,7 @@ public class TreeVisualizationController extends Controller implements Initializ
 
         private void connectNodes(Pane pane, double startX, double startY, double endX, double endY, String label) {
             Line line = new Line(startX, startY, endX, endY);
-            line.setStroke(Color. rgb(48, 74, 98) );
+            line.setStroke(Color.rgb(48, 74, 98));
             line.setStrokeWidth(1.5);
 
             Text text = new Text(label);
