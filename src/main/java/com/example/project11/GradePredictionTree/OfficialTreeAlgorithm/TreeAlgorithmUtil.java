@@ -28,142 +28,52 @@ public class TreeAlgorithmUtil {
         WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
         weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
 
+     //   double[] Grades = {3, 10, 2, 6, 9, 2, 6, 3, 2, 5, 6, 2, 8, 5, 4, 8, 3, 4, 5, 6, 5, 7, 4, 6, 8, 1, 10, 6, 10, 7, 6, 2, 4, 7, 4, 3, 4, 5, 3, 10, 8, 9, 1, 7, 8, 8, 4, 10, 4, 10, 4, 7, 10, 1, 3, 8, 10, 5, 3, 7, 3, 3, 8, 10, 4, 5, 9, 1, 5, 4, 2, 3, 4, 3, 1, 10, 8, 2, 5, 1, 8, 3, 6, 3, 10, 3, 10, 5, 10, 10, 6, 8, 2, 4, 9, 10, 7, 5, 2, 5};
+
+
+
+
+
         TreeTester treeTester = new TreeTester(100, course, studentInfoLoader.readInfoString(), weightedBootstrapping.readAllStudents());
 
         double[] Rad80Student = treeTester.getRandom80percent();
         double[] Rad20Student = treeTester.getRandom20percent();
 
+
+
         System.out.println("80% Grades:" + Arrays.toString(getGradesOf80percentStudents(Rad80Student)));
         System.out.println("20% Grades:" + Arrays.toString(getGradesOf20percentStudents(Rad20Student)));
 
-        System.out.println("80% Indices:" + Arrays.toString(Rad80Student));
-        System.out.println("20% Indices:" + Arrays.toString(Rad20Student));
+//        System.out.println("80% Indices:" + Arrays.toString(Rad80Student));
+//        System.out.println("20% Indices:" + Arrays.toString(Rad20Student));
 
+//        System.out.println(getGradesOf80percentStudents(Rad80Student).length);
+//        System.out.println(getGradesOf20percentStudents(Rad20Student).length);
 
-        // 4,6,
-        //5,
-        System.out.println(getGradesOf80percentStudents(Rad80Student).length);
-        System.out.println(getGradesOf20percentStudents(Rad20Student).length);
-
-        System.out.println("80% properties:" + Arrays.deepToString(getStudentProperty80percent(Rad80Student)));
-        System.out.println("20% properties:" + Arrays.deepToString(getStudentProperty20percent(Rad20Student)));
-
-        System.out.println(getStudentProperty80percent(Rad80Student).length);
-        System.out.println(getStudentProperty20percent(Rad20Student).length);
-
-
+//        System.out.println("80% properties:" + Arrays.deepToString(getStudentProperty80percent(Rad80Student)));
+//        System.out.println("20% properties:" + Arrays.deepToString(getStudentProperty20percent(Rad20Student)));
+//
+//        System.out.println(getStudentProperty80percent(Rad80Student).length);
+//        System.out.println(getStudentProperty20percent(Rad20Student).length);
 
         DecisionTreeRegressor regressor = new DecisionTreeRegressor(2,4);
         regressor.fit(getStudentProperty80percent(Rad80Student), getGradesOf80percentStudents(Rad80Student));
 
         // Print the decision tree
         regressor.printTree();
-        String[][] testX = {
-                {"high", "86", "3 tau", "A", "0.5 Hz "},
-                {"high", "71", "1 tau", "F", "0.1 Hz "},
-                {"full", "122", "3 tau", "E", "0.1 Hz "},
-                {"nothing", "2", "1 tau", "D", "1.0 Hz "},
-                {"full", "-34", "3 tau", "E", "0.5 Hz "},
-                {"low", "111", "3 tau", "E", "5.0 Hz "},
-                {"full", "-42", "1 tau", "D", "1.0 Hz "},
-                {"nothing", "-39", "2 tau", "D", "0.1 Hz "},
-                {"high", "122", "1 tau", "D", "1.0 Hz "},
-                {"high", "-38", "3 tau", "A", "0.1 Hz "},
-                {"full", "-14", "1 tau", "F", "5.0 Hz "},
-                {"low", "0", "2 tau", "D", "5.0 Hz "},
-                {"high", "122", "3 tau", "C", "5.0 Hz "},
-                {"nothing", "69", "1 tau", "A", "5.0 Hz "},
-                {"nothing", "74", "3 tau", "B", "0.1 Hz "},
-                {"medium", "-25", "1 tau", "B", "5.0 Hz "},
-                {"low", "-18", "2 tau", "B", "0.1 Hz "},
-                {"high", "70", "2 tau", "D", "5.0 Hz "},
-                {"full", "-33", "1 tau", "C", "0.1 Hz "},
-                {"full", "94", "2 tau", "E", "0.1 Hz "},
-                {"high", "-11", "1 tau", "F", "0.5 Hz "},
-                {"high", "58", "2 tau", "C", "5.0 Hz "},
-                {"medium", "-28", "2 tau", "A", "0.5 Hz "},
-                {"high", "27", "2 tau", "A", "5.0 Hz "},
-                {"full", "121", "3 tau", "F", "1.0 Hz "},
-                {"full", "-10", "1 tau", "D", "0.1 Hz "},
-                {"medium", "25", "1 tau", "A", "0.5 Hz "},
-                {"low", "11", "1 tau", "C", "0.5 Hz "},
-                {"nothing", "40", "1 tau", "A", "1.0 Hz "},
-                {"high", "76", "2 tau", "B", "0.5 Hz "},
-                {"high", "145", "1 tau", "C", "5.0 Hz "},
-                {"full", "122", "1 tau", "B", "0.1 Hz "},
-                {"nothing", "-17", "1 tau", "C", "0.1 Hz "},
-                {"medium", "-16", "2 tau", "E", "5.0 Hz "},
-                {"full", "34", "3 tau", "F", "0.1 Hz "},
-                {"nothing", "-4", "3 tau", "E", "0.5 Hz "},
-                {"full", "119", "1 tau", "F", "0.1 Hz "},
-                {"high", "68", "3 tau", "A", "1.0 Hz "},
-                {"nothing", "-42", "1 tau", "F", "5.0 Hz "},
-                {"high", "44", "3 tau", "E", "0.1 Hz "},
-                {"high", "-18", "3 tau", "D", "0.1 Hz "},
-                {"medium", "145", "3 tau", "B", "0.5 Hz "},
-                {"medium", "-25", "3 tau", "C", "0.5 Hz "},
-                {"full", "131", "3 tau", "A", "0.5 Hz "},
-                {"full", "1", "2 tau", "A", "0.1 Hz "},
-                {"nothing", "96", "3 tau", "B", "0.5 Hz "},
-                {"high", "74", "1 tau", "F", "0.5 Hz "},
-                {"nothing", "57", "3 tau", "B", "5.0 Hz "},
-                {"nothing", "-13", "2 tau", "F", "0.5 Hz "},
-                {"nothing", "128", "3 tau", "B", "0.5 Hz "},
-                {"low", "140", "3 tau", "A", "1.0 Hz "},
-                {"high", "34", "3 tau", "D", "5.0 Hz "},
-                {"medium", "-8", "1 tau", "C", "5.0 Hz "},
-                {"low", "41", "3 tau", "B", "0.1 Hz "},
-                {"high", "75", "3 tau", "E", "1.0 Hz "},
-                {"high", "80", "3 tau", "A", "0.1 Hz "},
-                {"nothing", "55", "1 tau", "D", "1.0 Hz "},
-                {"high", "92", "2 tau", "D", "1.0 Hz "},
-                {"medium", "60", "1 tau", "A", "0.5 Hz "},
-                {"medium", "4", "1 tau", "C", "0.1 Hz "},
-                {"medium", "70", "2 tau", "B", "0.5 Hz "},
-                {"low", "3", "1 tau", "D", "0.1 Hz "},
-                {"low", "-41", "3 tau", "E", "1.0 Hz "},
-                {"nothing", "37", "1 tau", "C", "0.1 Hz "},
-                {"full", "122", "1 tau", "E", "1.0 Hz "},
-                {"low", "36", "2 tau", "E", "5.0 Hz "},
-                {"nothing", "74", "2 tau", "C", "5.0 Hz "},
-                {"medium", "-8", "2 tau", "B", "0.1 Hz "},
-                {"high", "-13", "2 tau", "A", "0.5 Hz "},
-                {"medium", "-7", "2 tau", "A", "0.5 Hz "},
-                {"full", "-5", "2 tau", "F", "0.1 Hz "},
-                {"low", "142", "3 tau", "C", "5.0 Hz "},
-                {"high", "132", "2 tau", "F", "0.1 Hz "},
-                {"low", "-33", "1 tau", "D", "1.0 Hz "},
-                {"full", "146", "2 tau", "D", "5.0 Hz "},
-                {"nothing", "53", "2 tau", "A", "5.0 Hz "},
-                {"low", "14", "2 tau", "F", "5.0 Hz "},
-                {"full", "107", "2 tau", "A", "5.0 Hz "},
-                {"full", "21", "1 tau", "C", "0.5 Hz "},
-                {"high", "113", "1 tau", "D", "0.5 Hz "},
-                {"full", "-12", "2 tau", "D", "5.0 Hz "},
-                {"nothing", "-16", "3 tau", "F", "0.5 Hz "},
-                {"high", "79", "2 tau", "F", "5.0 Hz "},
-                {"medium", "134", "2 tau", "A", "0.5 Hz "},
-                {"medium", "60", "1 tau", "A", "0.1 Hz "},
-                {"high", "14", "2 tau", "A", "0.1 Hz "},
-                {"nothing", "46", "2 tau", "E", "1.0 Hz "},
-                {"high", "98", "2 tau", "C", "0.1 Hz "},
-                {"low", "-24", "1 tau", "B", "5.0 Hz "},
-                {"low", "71", "1 tau", "E", "1.0 Hz "},
-                {"high", "-40", "1 tau", "A", "1.0 Hz "},
-                {"high", "64", "3 tau", "C", "0.5 Hz "},
-                {"full", "63", "2 tau", "A", "0.1 Hz "},
-                {"medium", "-4", "2 tau", "D", "5.0 Hz "},
-                {"medium", "8", "1 tau", "F", "1.0 Hz "},
-                {"full", "128", "1 tau", "C", "0.1 Hz "},
-                {"high", "-16", "3 tau", "F", "0.5 Hz "},
-                {"medium", "-37", "1 tau", "F", "1.0 Hz "},
-                {"full", "104", "3 tau", "C", "0.1 Hz "},
-                {"high", "120", "1 tau", "B", "0.5 Hz "}
-        };
 
         double[] predictions = regressor.predict(getStudentProperty20percent(Rad20Student));
         System.out.println("Predictions: " + Arrays.toString(predictions));
+
+
+        TreeAnalyser treeAnalyser = new TreeAnalyser(predictions, weightedBootstrappingArray, course);
+        treeAnalyser.getMethodRunning();
     }
+
+
+
+
+
 
     // method that correlates the Indexes of 80 percent with the student properties .
     public static String[][] getStudentProperty80percent(double[] ArrayOf80percentIndexes){
