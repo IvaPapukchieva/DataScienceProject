@@ -4,6 +4,7 @@ package com.example.project11.Controllers;
 import com.example.project11.Controllers.Charts.ChartSelectionController;
 import com.example.project11.Controllers.Charts.PieChartController;
 import com.example.project11.Controllers.FilterControllers.*;
+import com.example.project11.Controllers.TreeVisualization.TreeLoadingScreenController;
 import com.example.project11.Controllers.TreeVisualization.TreeVisualizationController;
 import com.example.project11.FilterProcessing.Filter;
 import com.example.project11.FilterProcessing.FilterData;
@@ -29,6 +30,7 @@ import java.util.*;
 public class SelectionsController extends Controller implements Initializable {
 
     @FXML private Button submit;
+    @FXML private Button treeButton;
     @FXML private ComboBox<String> ngSelect;
     @FXML private ToggleGroup dataSets;
     @FXML private Label dataSetLabel;
@@ -60,9 +62,9 @@ public class SelectionsController extends Controller implements Initializable {
     }
 
     private void centerButtonInAnchorPane() {
-        AnchorPane anchorPane = (AnchorPane) submit.getParent();
-        AnchorPane.setLeftAnchor(submit,  (anchorPane.getPrefWidth() - submit.getWidth()) / 2);
-        AnchorPane.setTopAnchor(submit, (anchorPane.getPrefHeight() - submit.getHeight()) / 2);
+        AnchorPane anchorPane = (AnchorPane) treeButton.getParent();
+        AnchorPane.setLeftAnchor(treeButton,  (anchorPane.getPrefWidth() - submit.getWidth()) / 2);
+        AnchorPane.setTopAnchor(treeButton, (anchorPane.getPrefHeight() - submit.getHeight()) / 2);
     }
 
     public void submitButton() throws FileNotFoundException {
@@ -248,9 +250,13 @@ data.setFilteredData(filteredData);
 
 
                 VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
-                int currentIndex = parent.getChildren().indexOf(addFilter);
+                int addFilterIndex = parent.getChildren().indexOf(addFilter);
                 parent.getChildren().remove(addFilter);
-                parent.getChildren().add(currentIndex - 1, addFilter);
+                parent.getChildren().add(addFilterIndex - 1, addFilter);
+
+                int submitIndex = parent.getChildren().indexOf(submit);
+                parent.getChildren().remove(submit);
+                parent.getChildren().add(submitIndex - 1, submit);
 
             }
         });
@@ -264,7 +270,10 @@ data.setFilteredData(filteredData);
             VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
             int currentIndex = parent.getChildren().indexOf(addFilter);
             parent.getChildren().remove(addFilter);
-            parent.getChildren().add(currentIndex + 1, addFilter);
+            parent.getChildren().add(currentIndex + 2, addFilter);
+            parent.getChildren().remove(submit);
+            parent.getChildren().add(parent.getChildren().size(),submit);
+
         }
     }
 
@@ -300,18 +309,10 @@ data.setFilteredData(filteredData);
         super.mouseClickedComponent(mouseEvent);
     }
 
-    // TEMP CODE FOR TREE
-    public void tempTreeMaker(ActionEvent actionEvent) throws IOException {
+    public void loadTreeTool(ActionEvent actionEvent) throws IOException {
+        super.changeScene(actionEvent, "Tree Loading Screen");
+        TreeLoadingScreenController controller = (TreeLoadingScreenController) controllers.get("Tree Loading Screen");
 
-        TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-//        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five");
-        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One");
-        List<String> student=List.of("1 tau","A","17","1 tau","A","17");
-
-        treeController.passProperties(labels,5,student,7);
-
-        super.changeScene(actionEvent, "Tree Visualizer");
-
-
+        controller.temp(actionEvent);
     }
 }

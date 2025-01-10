@@ -85,6 +85,12 @@ public abstract class Controller {
             scenes.put("Tree Visualizer", new Scene(treeVisualizer, 1400, 1000));
             controllers.put("Tree Visualizer", treeVisualizerLoader.getController());
 
+            FXMLLoader treeLoadingScreenLoader = new FXMLLoader(GUI.class.getResource("TreeLoadingScreen.fxml"));
+            scenes.put("Tree Loading Screen", new Scene(treeLoadingScreenLoader.load(), 320, 480));
+            controllers.put("Tree Loading Screen", treeLoadingScreenLoader.getController());
+
+
+
             // LOAD THE CHARTS -------------------------------------
             FXMLLoader barChartLoader = new FXMLLoader(GUI.class.getResource("Charts/BarChart.fxml"));
             AnchorPane barChartRoot = barChartLoader.load();

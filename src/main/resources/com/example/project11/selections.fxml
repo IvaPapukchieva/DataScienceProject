@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="container" prefWidth="200.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SelectionsController">
+<AnchorPane fx:id="container" prefWidth="200.0" prefHeight="300" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SelectionsController">
 
     <padding>
         <Insets />
@@ -29,7 +29,7 @@
 
             <Label text="Filters:" textFill="#f2f2f2" />
             <ComboBox fx:id="addFilter" onAction="#handleAddFilter" prefWidth="150.0" promptText="+ Add Filter" />
-            <Button mnemonicParsing="false" text="TEMPORARY BUTTOn" fx:id="treeButton" onAction="#tempTreeMaker"/>
+            <Button fx:id="submit" onMouseClicked="#submitButton" text="Submit" />
 
          <ScrollPane fx:id="filtersScrollPane" prefHeight="67.0" prefWidth="200.0" visible="false">
             <content>
@@ -43,7 +43,7 @@
                     <Image url="@../../../images/back.png" />
                 </image>
             </ImageView>
-            <Button fx:id="submit" onMouseClicked="#submitButton" text="Submit" />
+            <Button fx:id="treeButton" layoutX="67.0" layoutY="8.0" mnemonicParsing="false" onAction="#loadTreeTool" text="Tree Tool" />
         </AnchorPane>
 
     </children>
