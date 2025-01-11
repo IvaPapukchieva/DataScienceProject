@@ -190,11 +190,20 @@ class DecisionTreeRegressor {
             printTreeRecursive(node.right, indent + "  ");
         }
     }
-    private void getTreeArrayList(){
-        ArrayList<String> TreeDiagramMap= new ArrayList<>();
-        TreeDiagramMap.add(root.);
 
+    private void getTreeArrayList(Node node, List<Node> treeList) {
+
+        if (node == null) {
+            return; // Base case: stop if the node is null
+        }
+        // Add the current node to the list
+        treeList.add(node);
+
+        // Recursively process the left and right children
+        getTreeArrayList(node.left, treeList);
+        getTreeArrayList(node.right, treeList);
     }
+
 
     static class Split {
         int featureIndex;
