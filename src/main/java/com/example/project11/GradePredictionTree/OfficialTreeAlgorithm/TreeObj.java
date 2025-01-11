@@ -44,8 +44,8 @@ public class TreeObj  {
         int testingAmount = 30 ;
         double[] PerformanceMeasureArray = new double[testingAmount];
 
-        for(int i =0 ; i<testingAmount ; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(2, i);
+        for(int i =mindepth ; i<testingAmount ; i++) {
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, i);
             regressor.fit(getStudentProperty80percent(Rad80percentStudentIndex), getGradesOf80percentStudents(Rad80percentStudentIndex));
 
             double[] predictions = regressor.predict(getStudentProperty20percent(Rad20percentStudentIndex));
@@ -60,6 +60,7 @@ public class TreeObj  {
                 OptimalDepth = i;
             }
         }
+        System.out.println("Optimal Depth : "+ OptimalDepth);
         return OptimalDepth;
     }
     public int getOptimalDepthVal(){

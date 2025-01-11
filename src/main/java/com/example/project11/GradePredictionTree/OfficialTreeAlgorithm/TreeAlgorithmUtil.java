@@ -23,8 +23,8 @@ public class TreeAlgorithmUtil {
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
         course  = 0 ;
-        int amountofTrees = 15;
-        String[][] student = {{"full","1","2 tau","B","0.1 Hz "}};
+        int amountofTrees = 25;
+        String[][] student = {{"nothing","59","3 tau","A","0.5 Hz "}};
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
         studentInfoArray = studentInfoLoader.readInfoString();
@@ -32,7 +32,7 @@ public class TreeAlgorithmUtil {
         WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
         weightedBootstrappingArray = weightedBootstrapping.readAllStudents()  ;
 
-       ForestCreator forest  = new ForestCreator(amountofTrees , 30, course , studentInfoArray, weightedBootstrappingArray);
+       ForestCreator forest  = new ForestCreator(amountofTrees , 40, course , studentInfoArray, weightedBootstrappingArray);
         //System.out.println(forest.getFilteredForest());
 
         ArrayList<TreeObj> FiltereForestList = new ArrayList<>(forest.getFilteredForest().values());

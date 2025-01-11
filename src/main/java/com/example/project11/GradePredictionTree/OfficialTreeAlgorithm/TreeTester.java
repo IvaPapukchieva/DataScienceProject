@@ -7,6 +7,7 @@ import com.example.project11.ProjectInfo.loaders.StudentInfoLoader;
 import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -100,7 +101,6 @@ public class TreeTester {
         while (uniqueIndices.size() < targetSize) {
             int val = random.nextInt(1328)+1; // Random value between 1 and poolSize
             uniqueIndices.add(val);
-            uniqueIndices.add(1);// Add to the set (ignores duplicates automatically)
         }
 
         // Convert the set to an array
@@ -112,27 +112,44 @@ public class TreeTester {
     }
 
     // gets the remaining 20 percent of grades for testing - ALWAYS DO RANDOM 80 PERCENT FIRST
-    public double[] getRandom20percent(){
+    public double[] getRandom20percent() {
+        // Initialize the array for the 20% indices
+        double[] arrayOf20Percent = new double[1328 - ArrayOf80PercentIndex.length];
 
-        double[] ArrayOf20percent = new double[1328-ArrayOf80PercentIndex.length];
-        int n = 0 ;
-        // 1,2,3,5,7,17,21
-        for(int i = 0; i <ArrayOf80PercentIndex.length-1; i++){
-            if(ArrayOf80PercentIndex[i+1]-ArrayOf80PercentIndex[i] != 1){
-                for(int j = (int)ArrayOf80PercentIndex[i]+1; j <ArrayOf80PercentIndex[i+1]; j++){
-                    ArrayOf20percent[n] = j;
-                    n+=1;
+        // Fill arrayOf20Percent based on gaps in ArrayOf80PercentIndex
+        int n = 0;
+        for (int i = 0; i < ArrayOf80PercentIndex.length - 1; i++) {
+            if (ArrayOf80PercentIndex[i + 1] - ArrayOf80PercentIndex[i] != 1) {
+                for (int j = (int) ArrayOf80PercentIndex[i] + 1; j < ArrayOf80PercentIndex[i + 1]; j++) {
+                    arrayOf20Percent[n++] = j;
                 }
             }
         }
-        for( int i = 0 ; i<1328-ArrayOf80PercentIndex.length ; i++){
-            if(ArrayOf20percent[i] == 0.0 ){
-                ArrayOf20percent[i]+=1328 ;
 
-            }
+        // Ensure all numbers from 1 to 1328 are present between the two arrays
+        Set<Integer> fullSet = new HashSet<>();
+        for (int i = 1; i <= 1328; i++) {
+            fullSet.add(i);
         }
 
-        return ArrayOf20percent;
+        // Add all numbers from ArrayOf80PercentIndex to the combined set
+        for (double val : ArrayOf80PercentIndex) {
+            fullSet.remove((int) val);
+        }
+
+        int currentSize = n;
+        for (Integer missing : fullSet) {
+            if (currentSize < arrayOf20Percent.length) {
+                arrayOf20Percent[currentSize++] = missing;
+            } else {
+                break; // Avoid out-of-bounds issues
+            }
+        }
+        System.out.println(Arrays.toString(ArrayOf80PercentIndex));
+        System.out.println(Arrays.toString(arrayOf20Percent));
+
+        // Return the updated array
+        return arrayOf20Percent;
     }
 
 

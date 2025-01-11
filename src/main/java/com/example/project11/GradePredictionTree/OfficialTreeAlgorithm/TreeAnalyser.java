@@ -43,7 +43,7 @@ public class TreeAnalyser {
         //System.out.println("DIstribution of prediction"+Arrays.toString(GradesPercentageDistribution));
 
         double val = getSumOfDifference(PercentageDisMain,GradesPercentageDistribution);
-        System.out.println(val);
+       //System.out.println(val);
 
         return val;
     }
