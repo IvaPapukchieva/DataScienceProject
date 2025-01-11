@@ -17,6 +17,9 @@ class Node {
         this.right = right;
         this.value = value;
     }
+    private int getFeatureIndex(){
+        return featureIndex;
+    }
 }
 
 class DecisionTreeRegressor {
@@ -186,6 +189,11 @@ class DecisionTreeRegressor {
             System.out.println(indent + "Right:");
             printTreeRecursive(node.right, indent + "  ");
         }
+    }
+    private void getTreeArrayList(){
+        ArrayList<String> TreeDiagramMap= new ArrayList<>();
+        TreeDiagramMap.add(root.);
+
     }
 
     static class Split {
