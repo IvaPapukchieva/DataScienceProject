@@ -211,7 +211,7 @@ public abstract class Controller {
         double width = Screen.getPrimary().getBounds().getWidth();
         double height = Screen.getPrimary().getBounds().getHeight();
         System.out.println("width " + width*0.8+ "Height "+ height*0.8);
-        return new Scene(root, width * 0.8, height * 0.8);
+        return new Scene(root, width * 0.9, height * 0.8);
     }
     public void setDataCallback(DataCallback dataCallback) {
         this.dataCallback = dataCallback;
