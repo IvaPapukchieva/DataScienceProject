@@ -5,6 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="500.0" maxWidth="700.0" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #28323D" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
 <!--    <HBox spacing="10" alignment="CENTER" layoutX="100.0" layoutY="760.0">-->
 <!--        <Text text="Zoom:"-->
@@ -47,7 +48,13 @@
         </fill>
     </Circle>
 
-
+    <VBox fx:id="buttonBox"
+          spacing="10"
+          style="-fx-padding: 10;"
+          alignment="CENTER"
+          AnchorPane.topAnchor="20.0"
+          AnchorPane.rightAnchor="20.0" />
+<!--    <Button text="Test Button" layoutX="50.0" layoutY="450.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-pref-width: 150px; -fx-pref-height: 50px;" />-->
 
     <StackPane layoutX="100.0" layoutY="60.0">
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="150.0" stroke="#5A7F9E" strokeType="INSIDE" strokeWidth="2" width="150.0" />
