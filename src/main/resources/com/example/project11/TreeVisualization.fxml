@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="640.0" maxWidth="1024.0" prefHeight="500.0" prefWidth="1024.0" style="-fx-background-color: #28323D" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
+<AnchorPane maxHeight="500.0" maxWidth="700.0" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #28323D" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
 <!--    <HBox spacing="10" alignment="CENTER" layoutX="100.0" layoutY="760.0">-->
 <!--        <Text text="Zoom:"-->
 <!--              style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" />-->
@@ -56,13 +56,12 @@
             <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial';-fx-fill:#ADD8E6; -fx-underline: true;" text="Student Features" />
         </VBox>
     </StackPane>
-    <Pane fx:id="rootPane" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-      <children>
-   <!--  grade prediction-->
-           <Text layoutX="99.0" layoutY="568.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" text="Grade Prediction: " />
-           <Text fx:id="prediction" layoutX="389.0" layoutY="566.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" text="8.0" />
-      </children></Pane>
-    <HBox alignment="CENTER_LEFT" layoutX="100.0" layoutY="700.0" spacing="5" />
+    <Pane fx:id="rootPane" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+    <HBox alignment="CENTER_LEFT" layoutX="100.0" layoutY="700.0" spacing="5">
+<!--  grade prediction-->
+        <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" text="Grade Prediction: " />
+        <Text fx:id="prediction" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" text="8.0" />
+    </HBox>
 
 
 </AnchorPane>
