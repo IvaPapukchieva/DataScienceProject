@@ -45,7 +45,7 @@ public class TreeObj  {
         int mindepth = 2;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
 
-        for(int i =mindepth ; i<testingAmount ; i++) {
+        for(int i = mindepth; i<testingAmount ; i++) {
             DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, i);
             regressor.fit(getStudentProperty80percent(Rad80percentStudentIndex), getGradesOf80percentStudents(Rad80percentStudentIndex));
 

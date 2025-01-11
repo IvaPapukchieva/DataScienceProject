@@ -78,6 +78,8 @@ class DecisionTreeRegressor {
         propertyMap.put("0.1 Hz ", 3);
     }
 
+
+
     private Node buildTree(double[][] dataset, int depth) {
         if (dataset.length < minSamplesSplit || depth >= maxDepth) {
             return new Node(-1, -1, null, null, calculateLeafValue(dataset));
@@ -191,18 +193,51 @@ class DecisionTreeRegressor {
         }
     }
 
-    private void getTreeArrayList(Node node, List<Node> treeList) {
-
+    public void getTreeArrayList(Node node, List<String> treeList) {
         if (node == null) {
             return; // Base case: stop if the node is null
         }
-        // Add the current node to the list
-        treeList.add(node);
+
+        // Add the current node's properties to the list
+
+        // Decision node: resolve the feature and threshold into human-readable format
+        String thresholdDescription = resolveThresholdDescription(node.featureIndex, node.threshold);
+        treeList.add(thresholdDescription);
+
 
         // Recursively process the left and right children
         getTreeArrayList(node.left, treeList);
         getTreeArrayList(node.right, treeList);
     }
+
+
+    private String resolveThresholdDescription(int featureIndex, double threshold) {
+        switch (featureIndex) {
+            case 0: // Category 1: "full", "medium", etc.
+                for (Map.Entry<String, Integer> entry : propertyMap.entrySet()) {
+                    if (entry.getValue() == (int) threshold) {
+                        return entry.getKey();
+                    }
+                }
+                break;
+            case 1: // Category 2: integers from -42 to 147
+                return Integer.toString((int) threshold);
+            case 2: // Category 3: "1 tau", "2 tau", etc.
+            case 3: // Category 4: "A", "B", etc.
+            case 4: // Category 5: "1.0 Hz", "5.0 Hz", etc.
+                for (Map.Entry<String, Integer> entry : propertyMap.entrySet()) {
+                    if (entry.getValue() == (int) threshold) {
+                        return entry.getKey();
+                    }
+                }
+                break;
+            default:
+                return Double.toString(threshold); // Default: return the numeric threshold
+        }
+        return "Unknown"; // Fallback if no match is found
+    }
+
+
 
 
     static class Split {

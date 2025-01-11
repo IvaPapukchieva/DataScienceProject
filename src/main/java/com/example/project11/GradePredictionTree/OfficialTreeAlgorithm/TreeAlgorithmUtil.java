@@ -32,8 +32,9 @@ public class TreeAlgorithmUtil {
         WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
         weightedBootstrappingArray = weightedBootstrapping.readAllStudents()  ;
 
+
        ForestCreator forest  = new ForestCreator(amountofTrees , 40, course , studentInfoArray, weightedBootstrappingArray);
-        //System.out.println(forest.getFilteredForest());
+       //System.out.println(forest.getFilteredForest());
 
         ArrayList<TreeObj> FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
         double[] gradeList = new double[amountofTrees];
@@ -53,6 +54,7 @@ public class TreeAlgorithmUtil {
         average = sum/(double)gradeList.length;
 
         System.out.println("GRADE FOR STUDENT : "+ Arrays.deepToString(student)+ " IS ... :"+ average);
+
 
     }
 
