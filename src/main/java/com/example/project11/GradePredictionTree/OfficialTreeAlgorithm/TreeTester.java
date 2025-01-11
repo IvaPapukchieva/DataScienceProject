@@ -145,8 +145,6 @@ public class TreeTester {
                 break; // Avoid out-of-bounds issues
             }
         }
-        System.out.println(Arrays.toString(ArrayOf80PercentIndex));
-        System.out.println(Arrays.toString(arrayOf20Percent));
 
         // Return the updated array
         return arrayOf20Percent;
