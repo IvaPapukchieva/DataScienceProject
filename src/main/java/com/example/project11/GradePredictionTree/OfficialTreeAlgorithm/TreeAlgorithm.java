@@ -151,6 +151,9 @@ class DecisionTreeRegressor {
         }
         root = buildTree(dataset, 0);
     }
+    public Node getRoot(){
+        return root;
+    }
 
     public double[] predict(String[][] X) {
         double[][] numericalX = new double[X.length][X[0].length];

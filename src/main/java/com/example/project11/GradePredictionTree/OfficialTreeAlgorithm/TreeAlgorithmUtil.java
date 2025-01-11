@@ -37,11 +37,15 @@ public class TreeAlgorithmUtil {
        //System.out.println(forest.getFilteredForest());
 
         ArrayList<TreeObj> FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
+        Map<Integer, ArrayList<String>> routMap = new HashMap<>(amountofTrees);
         double[] gradeList = new double[amountofTrees];
         for( int i  = 0  ; i<amountofTrees ; i++){
             DecisionTreeRegressor regressor = new DecisionTreeRegressor(2, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
+            ArrayList<String> temporaryList = new ArrayList<>();
+            regressor.getTreeArrayList(regressor.getRoot() ,temporaryList);
+            System.out.println(temporaryList);
         }
         System.out.println(Arrays.toString(gradeList));
 
