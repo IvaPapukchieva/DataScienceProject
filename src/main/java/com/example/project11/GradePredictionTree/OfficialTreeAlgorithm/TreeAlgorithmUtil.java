@@ -35,11 +35,11 @@ public class TreeAlgorithmUtil {
        ForestCreator forest  = new ForestCreator(amountofTrees , 40, course , studentInfoArray, weightedBootstrappingArray);
         //System.out.println(forest.getFilteredForest());
 
-        ArrayList<TreeObj> FiltereForestList = new ArrayList<>(forest.getFilteredForest().values());
+        ArrayList<TreeObj> FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
         double[] gradeList = new double[amountofTrees];
         for( int i  = 0  ; i<amountofTrees ; i++){
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(2, FiltereForestList.get(i).getOptimalDepth());
-            regressor.fit(FiltereForestList.get(i).getStudentProperty80percent(FiltereForestList.get(i).getRad80percentStudentIndex()), FiltereForestList.get(i).getGradesOf80percentStudents(FiltereForestList.get(i).getRad80percentStudentIndex()));
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(2, FilterForestList.get(i).getOptimalDepth());
+            regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
         }
         System.out.println(Arrays.toString(gradeList));
@@ -50,7 +50,7 @@ public class TreeAlgorithmUtil {
            sum+= gradeList[i];
 
         }
-        average = (double) sum/(double)gradeList.length;
+        average = sum/(double)gradeList.length;
 
         System.out.println("GRADE FOR STUDENT : "+ Arrays.deepToString(student)+ " IS ... :"+ average);
 
