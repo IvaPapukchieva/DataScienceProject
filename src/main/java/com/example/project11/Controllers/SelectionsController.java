@@ -310,9 +310,10 @@ data.setFilteredData(filteredData);
     }
 
     public void loadTreeTool(ActionEvent actionEvent) throws IOException {
-        super.changeScene(actionEvent, "Tree Loading Screen");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         TreeLoadingScreenController controller = (TreeLoadingScreenController) controllers.get("Tree Loading Screen");
-
-        controller.temp(actionEvent);
+        super.changeScene(actionEvent, "Tree Loading Screen");
+        controller.temp(stage);
     }
+
 }

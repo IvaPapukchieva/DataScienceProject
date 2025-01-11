@@ -22,30 +22,31 @@ public class TreeLoadingScreenController extends Controller implements Initializ
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-    public void temp(ActionEvent actionEvent) throws IOException {
-        // Delay logic using a ScheduledExecutorService
+
+    public void temp(Stage stage) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.schedule(() -> Platform.runLater(() -> {
             System.out.println("Delay of 5 seconds complete. Ready for scene switch.");
-            // Optional: Trigger scene change or enable a button for user interaction
+            try {
+                changeScene(stage); // Move the scene change here
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }), 5, TimeUnit.SECONDS);
         scheduler.shutdown();
-
-        changeScene(actionEvent);
     }
 
 
-    public void changeScene(ActionEvent actionEvent) throws IOException {
+
+    public void changeScene(Stage stage) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","Four", "Five","One");
-        List<String> student=List.of("1 tau","A","17","1 tau","A","17");
+        List<String> labels = List.of("One", "Two", "Three", "Four", "Five");
+        List<String> student = List.of("1 tau", "A", "17");
 
-        treeController.passProperties(labels,5,student,7);
+        treeController.passProperties(labels, 5, student, 7);
 
-        // get current stage
-        Stage stage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
-        // set the new scene on the stage
         stage.setScene(scenes.get("Tree Visualizer"));
         stage.centerOnScreen();
     }
+
 }

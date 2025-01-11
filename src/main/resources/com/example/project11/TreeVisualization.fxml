@@ -1,41 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.control.Slider?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController"
-            prefHeight="1000.0" prefWidth="1400.0"
-            style="-fx-background-color: #28323D">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<AnchorPane maxHeight="500.0" maxWidth="700.0" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #28323D" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
 
 
 
     <StackPane layoutX="100.0" layoutY="60.0">
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="150.0"   stroke="#5A7F9E" strokeWidth="2" strokeType="INSIDE" width="150.0" />
-        <VBox fx:id="bulletBox" spacing="5" alignment="TOP_LEFT" style="-fx-padding: 10;">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="150.0" stroke="#5A7F9E" strokeType="INSIDE" strokeWidth="2" width="150.0" />
+        <VBox fx:id="bulletBox" alignment="TOP_LEFT" spacing="5" style="-fx-padding: 10;">
             <!-- This Text is static and will not change -->
-            <Text text="Student Features"
-                  style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial';-fx-fill:#ADD8E6; -fx-underline: true;" />
+            <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Arial';-fx-fill:#ADD8E6; -fx-underline: true;" text="Student Features" />
         </VBox>
     </StackPane>
-    <Pane fx:id="rootPane" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0"
-          AnchorPane.rightAnchor="20.0" AnchorPane.bottomAnchor="20.0" />
-    <HBox spacing="5" alignment="CENTER_LEFT" layoutX="100.0" layoutY="700.0" >
+    <Pane fx:id="rootPane" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+    <HBox alignment="CENTER_LEFT" layoutX="100.0" layoutY="700.0" spacing="5">
 <!--  grade prediction-->
-        <Text text="Grade Prediction: "
-              style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" />
-        <Text fx:id="prediction" text="8.0"
-              style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" />
+        <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" text="Grade Prediction: " />
+        <Text fx:id="prediction" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" text="8.0" />
     </HBox>
 <!--    <HBox spacing="10" alignment="CENTER" layoutX="100.0" layoutY="760.0">-->
 <!--        <Text text="Zoom:"-->

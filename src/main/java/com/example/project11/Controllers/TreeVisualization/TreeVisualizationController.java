@@ -59,7 +59,15 @@ private Slider zoomSlider;
             drawTree();
             updateBulletPoints();
             updateGrade(grade);
+
+            scrollPane.setFitToWidth(true);  // Ensures the content width fits the ScrollPane
+            scrollPane.setFitToHeight(true); // Ensures the content height fits the ScrollPane
+
+            // Add the rootPane to the ScrollPane
             scrollPane.setContent(rootPane);
+
+            // Configure the ScrollPane to allow panning and smooth scrolling
+            scrollPane.setPannable(true); // Allow dragging to pan
         }
     }
 
@@ -75,16 +83,17 @@ private Slider zoomSlider;
     private void handleScroll(ScrollEvent event) {
 
         if (event.getDeltaY() > 0) {
-            scaleFactor += 0.03;  // Zoom in
+            scaleFactor += 0.01;  // Zoom in
         } else if (event.getDeltaY() < 0) {
-            scaleFactor -= 0.03;  // Zoom out
+            scaleFactor -= 0.01;  // Zoom out
         }
 
         if (scaleFactor < 0.1) {
             scaleFactor = 0.1;
-        } else if (scaleFactor > 2.0) {
-            scaleFactor = 2.0;
+        } else if (scaleFactor > 1.1) {
+            scaleFactor = 1.1;
         }
+
 
         rootPane.setScaleX(scaleFactor);
         rootPane.setScaleY(scaleFactor);
@@ -140,6 +149,7 @@ private Slider zoomSlider;
             rect.setStroke(Color.BLACK);
 
             Text nodeText = new Text(text);
+            nodeText.setDisable(true);
             nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
             nodeText.setFill(Color.WHITE);
             nodeText.setX(x - (nodeText.getLayoutBounds().getWidth() / 2));
