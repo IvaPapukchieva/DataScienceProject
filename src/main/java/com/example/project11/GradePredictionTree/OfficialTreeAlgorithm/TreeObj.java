@@ -41,8 +41,9 @@ public class TreeObj  {
     }
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 30 ;
-        double[] PerformanceMeasureArray = new double[testingAmount];
+        int testingAmount = 20;
+        int mindepth = 2;
+        double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
 
         for(int i =mindepth ; i<testingAmount ; i++) {
             DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, i);
@@ -50,11 +51,11 @@ public class TreeObj  {
 
             double[] predictions = regressor.predict(getStudentProperty20percent(Rad20percentStudentIndex));
             TreeAnalyser treeAnalyser = new TreeAnalyser(predictions, getGradesOf20percentStudents(Rad20percentStudentIndex), Course);
-            PerformanceMeasureArray[i] = treeAnalyser.getMethodRunning();
+            PerformanceMeasureArray[i-mindepth] = treeAnalyser.getMethodRunning();
 
         }
         double smallestPerformanceMeasure = 100;
-        for(int i = 0; i < testingAmount; i++){
+        for(int i = 0; i < PerformanceMeasureArray.length; i++){
             if(PerformanceMeasureArray[i] < smallestPerformanceMeasure){
                 smallestPerformanceMeasure = PerformanceMeasureArray[i];
                 OptimalDepth = i;
