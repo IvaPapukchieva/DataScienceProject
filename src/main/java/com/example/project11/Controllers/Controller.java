@@ -5,11 +5,13 @@ import com.example.project11.GUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -81,8 +83,9 @@ public abstract class Controller {
             controllers.put("Chart Window",  chartWindowFilterLoader.getController());
 
             FXMLLoader treeVisualizerLoader = new FXMLLoader(GUI.class.getResource("TreeVisualization.fxml"));
-            AnchorPane treeVisualizer =  treeVisualizerLoader.load();
-            scenes.put("Tree Visualizer", new Scene(treeVisualizer, 1400, 1000));
+            AnchorPane treeVisualizer = treeVisualizerLoader.load();
+            Scene treeVisualizerScene = createScene(treeVisualizer);
+            scenes.put("Tree Visualizer", treeVisualizerScene);
             controllers.put("Tree Visualizer", treeVisualizerLoader.getController());
 
             FXMLLoader treeLoadingScreenLoader = new FXMLLoader(GUI.class.getResource("TreeLoadingScreen.fxml"));
@@ -202,6 +205,12 @@ public abstract class Controller {
         // set the new scene on the stage
         stage.setScene(scene);
         stage.centerOnScreen();
+    }
+
+    private static Scene createScene(Parent root) {
+        double width = Screen.getPrimary().getBounds().getWidth();
+        double height = Screen.getPrimary().getBounds().getHeight();
+        return new Scene(root, width * 0.95, height * 0.95);
     }
     public void setDataCallback(DataCallback dataCallback) {
         this.dataCallback = dataCallback;
