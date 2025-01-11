@@ -41,7 +41,7 @@ public class TreeObj  {
     }
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 20;
+        int testingAmount = 10;
         int mindepth = 2;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
 
