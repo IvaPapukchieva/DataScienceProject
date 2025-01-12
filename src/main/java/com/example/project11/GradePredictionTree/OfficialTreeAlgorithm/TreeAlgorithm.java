@@ -9,13 +9,15 @@ class Node {
     Node left;
     Node right;
     Double value;
+    boolean isLeaf;
 
-    public Node(int featureIndex, double threshold, Node left, Node right, Double value) {
+    public Node(int featureIndex, double threshold, Node left, Node right, Double value, boolean isLeaf) {
         this.featureIndex = featureIndex;
         this.threshold = threshold;
         this.left = left;
         this.right = right;
         this.value = value;
+        this.isLeaf = isLeaf;
     }
     private int getFeatureIndex(){
         return featureIndex;
@@ -80,20 +82,58 @@ class DecisionTreeRegressor {
 
 
 
-    private Node buildTree(double[][] dataset, int depth) {
+    private Node buildTree(double[][] dataset, int depth, List<Integer> branchHistory) {
+        // Base case: Stop building if conditions are met
         if (dataset.length < minSamplesSplit || depth >= maxDepth) {
-            return new Node(-1, -1, null, null, calculateLeafValue(dataset));
+            return new Node(-1, -1, null, null, calculateLeafValue(dataset), true);
         }
 
+        // Get the best split
         Split bestSplit = getBestSplit(dataset);
         if (bestSplit == null) {
-            return new Node(-1, -1, null, null, calculateLeafValue(dataset));
+            return new Node(-1, -1, null, null, calculateLeafValue(dataset), true);
         }
+ // Add the current feature index to the branch history
+//        System.out.println(resolveThresholdDescription(bestSplit.featureIndex, bestSplit.threshold));
+//        System.out.println("Left Students:");
+//
+//        String[][] leftDataSet = new String[bestSplit.leftDataset.length][bestSplit.leftDataset[0].length] ;
+//        for (int i = 0; i < bestSplit.leftDataset.length; i++) {
+//            for (int j = 0; j < bestSplit.leftDataset[i].length; j++) {
+//                leftDataSet[i][j] = resolveThresholdDescription(j, bestSplit.leftDataset[i][j]);
+//            }
+//
+//        }
+//        System.out.println(Arrays.deepToString(leftDataSet));
+//
+//        System.out.println("Right Students:");
+//
+//        String[][] rightDataSet = new String[bestSplit.rightDataset.length][bestSplit.rightDataset[0].length] ;
+//        for (int i = 0; i < bestSplit.rightDataset.length; i++) {
+//            for (int j = 0; j < bestSplit.rightDataset[i].length; j++) {
+//                rightDataSet[i][j] = resolveThresholdDescription(j, bestSplit.rightDataset[i][j]);
+//            }
+//
+//        }
+//        System.out.println(Arrays.deepToString(rightDataSet));
+//
 
-        Node left = buildTree(bestSplit.leftDataset, depth + 1);
-        Node right = buildTree(bestSplit.rightDataset, depth + 1);
-        return new Node(bestSplit.featureIndex, bestSplit.threshold, left, right, null);
+//
+        // Recursively build the left and right subtrees
+        Node left = buildTree(bestSplit.leftDataset, depth + 1, new ArrayList<>(branchHistory)); // Copy history for left branch
+        Node right = buildTree(bestSplit.rightDataset, depth + 1, branchHistory); // Right branch shares history
+
+
+        //System.out.println("Branching History : "+ branchHistory);
+        // Otionally, log or process the branch history
+
+        // Return the current node
+
+        return new Node(bestSplit.featureIndex, bestSplit.threshold, left, right, null, false);
     }
+
+
+
 
     private Split getBestSplit(double[][] dataset) {
         int numFeatures = dataset[0].length - 1;
@@ -108,17 +148,28 @@ class DecisionTreeRegressor {
 
             for (double threshold : thresholds) {
                 int finalFeatureIndex1 = featureIndex;
-                double[][] left = Arrays.stream(dataset).filter(row -> row[finalFeatureIndex1] <= threshold).toArray(double[][]::new);
-                int finalFeatureIndex2 = featureIndex;
-                double[][] right = Arrays.stream(dataset).filter(row -> row[finalFeatureIndex2] > threshold).toArray(double[][]::new);
+                double[][] left;
+                double[][] right;
+                if(featureIndex == 1) {
+                    left = Arrays.stream(dataset).filter(row -> row[finalFeatureIndex1] <= threshold).toArray(double[][]::new);
+                    right = Arrays.stream(dataset).filter(row -> row[finalFeatureIndex1] > threshold).toArray(double[][]::new);
+
+                } else {
+                     left = Arrays.stream(dataset).filter(row -> row[finalFeatureIndex1] == threshold).toArray(double[][]::new);
+                     right = Arrays.stream(dataset).filter(row -> row[finalFeatureIndex1] != threshold).toArray(double[][]::new);
+
+                }
 
                 if (left.length == 0 || right.length == 0) continue;
 
                 double varRed = varianceReduction(dataset, left, right);
                 if (varRed > maxVarRed) {
                     bestSplit = new Split(featureIndex, threshold, left, right);
+
                     maxVarRed = varRed;
+
                 }
+
             }
         }
         return bestSplit;
@@ -149,7 +200,7 @@ class DecisionTreeRegressor {
             }
             dataset[i][X[i].length] = Y[i];
         }
-        root = buildTree(dataset, 0);
+        root = buildTree(dataset, 0 ,new ArrayList<>() );
     }
     public Node getRoot(){
         return root;
@@ -197,13 +248,14 @@ class DecisionTreeRegressor {
     }
 
     public void getTreeArrayList(Node node, List<String> treeList) {
-        if (node == null || node.featureIndex== -1) {
+        if (node == null) {
             return; // Base case: stop if the node is null
         }
 
 
+
         // Decision node: resolve the feature and threshold into human-readable format
-        String thresholdDescription = resolveThresholdDescription(node.featureIndex, node.threshold);
+        String thresholdDescription = resolveThresholdDescription(node);
         treeList.add(thresholdDescription);
 
 
@@ -213,7 +265,9 @@ class DecisionTreeRegressor {
     }
 
 
-    private String resolveThresholdDescription(int featureIndex, double threshold) {
+    private String resolveThresholdDescription(Node node) {
+        double threshold = node.threshold;
+        int featureIndex = node.featureIndex;
         switch (featureIndex) {
             case 0: // Category 1: "full", "medium", etc.
                 switch((int) threshold)  {
@@ -271,13 +325,11 @@ class DecisionTreeRegressor {
                         return "0.1 Hz ";
                 }
                 break;
+            case -1:
+                return node.value + "leaf";
         }
         return "Unknown"; // Fallback if no match is found
     }
-
-
-
-
 
     static class Split {
         int featureIndex;
@@ -293,3 +345,5 @@ class DecisionTreeRegressor {
         }
     }
 }
+
+

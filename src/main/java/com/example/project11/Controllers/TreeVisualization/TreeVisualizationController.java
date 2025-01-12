@@ -72,12 +72,11 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             scrollPane.setFitToHeight(true);
             scrollPane.setContent(rootPane);
             scrollPane.setPannable(true);
-
 //
         }
     }
     public class TreeProperties {
-        private Integer index;
+        private int index;
         private List<String> labels;
         private int levels;
         private List<String> studentProperties;
@@ -92,11 +91,11 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         }
 
         // Getters and setters
-        public Integer getIndex() {
+        public int getIndex() {
             return index;
         }
 
-        public void setIndex(Integer index) {
+        public void setIndex(int index) {
             this.index = index;
         }
 
@@ -246,10 +245,10 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
 
         public void generateTree(Pane pane, Iterator<String> labelIterator, double x, double y, double xSpacing, double ySpacing, int levels) {
-            if (levels == 0 || !labelIterator.hasNext()) {
+            if (labelIterator.hasNext() && labelIterator.next().contains("leaf")){
+                generateLeaf(pane, x, y, "Leaf");
                 return;
             }
-
             String currentLabel = labelIterator.next();
             createInteractiveNode(pane, currentLabel, x, y);
 
@@ -267,6 +266,19 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
                 connectNodes(pane, x, y + 20, rightChildX, rightChildY - 20, "NO");
                 generateTree(pane, labelIterator, rightChildX, rightChildY, xSpacing / 2, ySpacing, levels - 1);
             }
+        }
+
+        public void generateLeaf(Pane pane, double x, double y, String leafValue) {
+            Rectangle leafNode = new Rectangle(x - 30, y - 10, 60, 30);
+            leafNode.setFill(Color.BLUE);
+            leafNode.setArcWidth(10);
+            leafNode.setArcHeight(10);
+
+            Label leafLabel = new Label(leafValue);
+            leafLabel.setLayoutX(x - 20);
+            leafLabel.setLayoutY(y - 5);
+            pane.getChildren().addAll(leafNode, leafLabel);
+
         }
 
 

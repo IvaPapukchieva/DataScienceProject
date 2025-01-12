@@ -39,14 +39,16 @@ public class TreeObj  {
     public double[] getRad20percentStudentIndex(){
         return Rad20percentStudentIndex;
     }
+    protected int minSampleDepth = 5 ;
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 15;
-        int mindepth = 2;
+        int testingAmount = 25;
+
+        int mindepth = 1;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
 
         for(int i = mindepth; i<testingAmount ; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(100, i);
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(minSampleDepth, i);
             regressor.fit(getStudentProperty80percent(Rad80percentStudentIndex), getGradesOf80percentStudents(Rad80percentStudentIndex));
 
             double[] predictions = regressor.predict(getStudentProperty20percent(Rad20percentStudentIndex));
@@ -61,7 +63,7 @@ public class TreeObj  {
                 OptimalDepth = i;
             }
         }
-        System.out.println("Optimal Depth : "+ OptimalDepth);
+        System.out.println("Optimal Depth : "+ (OptimalDepth-1));
         return OptimalDepth;
     }
     public int getOptimalDepthVal(){
@@ -71,7 +73,7 @@ public class TreeObj  {
 
     // method that gets the Smallest Performance Measure
     public double getOptimalPerformanceMeasure(){
-        DecisionTreeRegressor regressor = new DecisionTreeRegressor(2, getOptimalDepth());
+        DecisionTreeRegressor regressor = new DecisionTreeRegressor(minSampleDepth, getOptimalDepth());
         regressor.fit(getStudentProperty80percent(Rad80percentStudentIndex), getGradesOf80percentStudents(Rad80percentStudentIndex));
         double[] predictions = regressor.predict(getStudentProperty20percent(Rad20percentStudentIndex));
         TreeAnalyser treeAnalyser = new TreeAnalyser(predictions, getGradesOf20percentStudents(Rad20percentStudentIndex), Course);

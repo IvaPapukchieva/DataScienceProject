@@ -37,9 +37,9 @@ public class TreeAlgorithmUtil {
 
     public static Map<Integer , List<String>> getTrees(String[][] students) throws FileNotFoundException {
         course  = 0 ;
-        int amountofTrees = 40;
+        int amountofTrees = 10;
 
-        ForestCreator forest  = new ForestCreator(amountofTrees , 100, course , studentInfoArray, weightedBootstrappingArray);
+        ForestCreator forest  = new ForestCreator(amountofTrees , 40, course , studentInfoArray, weightedBootstrappingArray);
         List<TreeObj> FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
         Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
 
@@ -47,11 +47,14 @@ public class TreeAlgorithmUtil {
         gradeList = new double[amountofTrees];
 
         for( int i  = 0  ; i<amountofTrees ; i++){
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(2, FilterForestList.get(i).getOptimalDepth());
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(students)[0];
             List<String> temporaryList = new ArrayList<>();
             regressor.getTreeArrayList(regressor.getRoot() ,temporaryList);
+
+            routMap.put(i,temporaryList ) ;
+            System.out.println(temporaryList);
         }
 
 
@@ -59,13 +62,13 @@ public class TreeAlgorithmUtil {
         return routMap;
 
     }
-    public static int[] getGradeList(){
+    public static double[] getGradeList(){
         // NEEDS TO RUN GET TREE BEFORE GETGRADELIST
-        int[] gradeListInteger = new int[gradeList.length];
-        for( int i = 0 ; i< gradeListInteger.length ; i++){
-            gradeListInteger[i] = (int)gradeList[i];
-        }
-        return gradeListInteger;
+//        int[] gradeListInteger = new int[gradeList.length];
+//        for( int i = 0 ; i< gradeListInteger.length ; i++){
+//            gradeListInteger[i] = (int)gradeList[i];
+//        }
+        return gradeList;
     }
 
     public static double getGradeForStudent(){
@@ -73,7 +76,7 @@ public class TreeAlgorithmUtil {
         double sum = 0 ;
         double average = 0 ;
         for( int i = 0 ; i < gradeList.length ; i++){
-            sum+= (int)gradeList[i];
+            sum+= gradeList[i];
         }
         average = sum/(double)gradeList.length;
         return average;
