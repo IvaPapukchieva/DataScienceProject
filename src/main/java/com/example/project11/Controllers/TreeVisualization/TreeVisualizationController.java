@@ -43,22 +43,24 @@ private Slider zoomSlider;
     private double scaleFactor = 0.5;
 //here we will store all the trees;
 //    first element is the index and the second saves the tree;
-    private static Map<String,TreeNode> treeMap;
+private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
-    public void passProperties(Integer index,List<String> labels, int levels, List<String> studentProperties, double grade) {
+
+    public void passProperties(Integer index, List<String> labels, int levels, List<String> studentProperties, double grade) {
         this.labels = labels;
         this.levels = levels;
-        this.index=index;
-
+        this.index = index;
         this.studentProperties = studentProperties;
         this.grade = grade;
-        if (rootPane != null) {
+        TreeProperties treeProps = new TreeProperties(index, labels, levels, studentProperties, grade);
+        treeMap.put(String.valueOf(index), treeProps);
+      addTreeButtons(String.valueOf(index));
+        if (rootPane != null && labels != null && levels > 0) {
             drawTree();
             updateBulletPoints();
             updateGrade(grade);
             rootPane.setOnScroll(this::handleScroll);
             System.out.println(treeMap);
-
         }
     }
 
@@ -69,45 +71,82 @@ private Slider zoomSlider;
         }
 
         if (labels != null && levels > 0) {
-            drawTree();
-            updateBulletPoints();
-            updateGrade(grade);
-
             scrollPane.setFitToWidth(true);
             scrollPane.setFitToHeight(true);
             scrollPane.setContent(rootPane);
             scrollPane.setPannable(true);
+
 //
         }
     }
+    public class TreeProperties {
+        private Integer index;
+        private List<String> labels;
+        private int levels;
+        private List<String> studentProperties;
+        private double grade;
 
-//    public void openTree(String treeName) {
-//        TreeNode selectedTree = treeMap.get(treeName);
-//
-//        if (selectedTree != null) {
-//            // Clear the current rootPane and draw the new tree
-//            rootPane.getChildren().clear();
-//            selectedTree.generateTree(rootPane, currentLabels.iterator(), 700, 100, 600, 90, levels);
-//            updateBulletPoints();  // Update bullet points
-//            updateGrade(grade);    // Update grade
-//        } else {
-//            System.out.println("Tree not found: " + treeName);
-//        }
-//    }
+        public TreeProperties(Integer index, List<String> labels, int levels, List<String> studentProperties, double grade) {
+            this.index = index;
+            this.labels = labels;
+            this.levels = levels;
+            this.studentProperties = studentProperties;
+            this.grade = grade;
+        }
+
+        // Getters and setters
+        public Integer getIndex() {
+            return index;
+        }
+
+        public void setIndex(Integer index) {
+            this.index = index;
+        }
+
+        public List<String> getLabels() {
+            return labels;
+        }
+
+        public void setLabels(List<String> labels) {
+            this.labels = labels;
+        }
+
+        public int getLevels() {
+            return levels;
+        }
+
+        public void setLevels(int levels) {
+            this.levels = levels;
+        }
+
+        public List<String> getStudentProperties() {
+            return studentProperties;
+        }
+
+        public void setStudentProperties(List<String> studentProperties) {
+            this.studentProperties = studentProperties;
+        }
+
+        public double getGrade() {
+            return grade;
+        }
+
+        public void setGrade(double grade) {
+            this.grade = grade;
+        }
+    }
 
     private void drawTree() {
-        rootPane.getChildren().clear();
+        rootPane.getChildren().clear();  // Clear any existing tree
         TreeNode tree = new TreeNode();
-        Iterator<String> labelIterator = labels.iterator();
-        tree.generateTree(rootPane, labelIterator, 700, 100, 600, 90, levels);
-        System.out.println("Adding tree with index: " + index);
-        addTreeButtons(String.valueOf(index));
-        treeMap.put(String.valueOf(index),tree);
-//        this works
+        tree.generateTree(rootPane, labels.iterator(), 700, 100, 600, 90, levels);
 
+        System.out.println("Drawing tree with index: " + index);
+        updateBulletPoints();
+        updateGrade(grade);
     }
     public void addTreeButtons(String name) {
-            Button treeButton = new Button(name);
+        Button treeButton = new Button(name);
         treeButton.setStyle(
                 "-fx-background-color: transparent; " +
                         "-fx-background-radius: 10; " +
@@ -117,12 +156,58 @@ private Slider zoomSlider;
                         "-fx-border-radius: 10; " +
                         "-fx-border-width: 2px; " +
                         "-fx-border-color: #ADD8E6;"
-
         );
-            buttonBox.getChildren().add(treeButton);
 
+        treeButton.setOnMousePressed(event -> {
+            treeButton.setStyle(
+                    "-fx-background-color: #ADD8E6; " +
+                            "-fx-background-radius: 10; " +
+                            "-fx-text-fill: white; " +
+                            "-fx-pref-width: 50px; " +
+                            "-fx-pref-height: 30px; " +
+                            "-fx-border-radius: 10; " +
+                            "-fx-border-width: 2px; " +
+                            "-fx-border-color: #ADD8E6;"
+            );
+        });
+
+        treeButton.setOnMouseReleased(event -> {
+            treeButton.setStyle(
+                    "-fx-background-color: transparent; " +
+                            "-fx-background-radius: 10; " +
+                            "-fx-text-fill: #ADD8E6; " +
+                            "-fx-pref-width: 50px; " +
+                            "-fx-pref-height: 30px; " +
+                            "-fx-border-radius: 10; " +
+                            "-fx-border-width: 2px; " +
+                            "-fx-border-color: #ADD8E6;"
+            );
+        });
+
+
+        treeButton.setOnAction(event -> {
+            openTree(name);
+        });
+
+        buttonBox.getChildren().add(treeButton);
     }
 
+    public void openTree(String treeIndex) {
+        System.out.println("Opening tree with index: " + treeIndex);
+
+        if (treeMap.containsKey(treeIndex)) {
+
+            TreeProperties treeProps = treeMap.get(treeIndex);
+
+            labels = treeProps.getLabels();
+            levels = treeProps.getLevels();
+            studentProperties = treeProps.getStudentProperties();
+            grade = treeProps.getGrade();
+            drawTree();
+        } else {
+            System.out.println("Tree not found: " + treeIndex);
+        }
+    }
 
 
     private void handleScroll(ScrollEvent event) {

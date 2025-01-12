@@ -48,12 +48,7 @@
         </fill>
     </Circle>
 
-    <VBox fx:id="buttonBox"
-          spacing="10"
-          style="-fx-padding: 10;"
-          alignment="CENTER"
-          AnchorPane.topAnchor="20.0"
-          AnchorPane.rightAnchor="20.0" />
+
 <!--    <Button text="Test Button" layoutX="50.0" layoutY="450.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-pref-width: 150px; -fx-pref-height: 50px;" />-->
 
     <StackPane layoutX="100.0" layoutY="60.0">
@@ -69,5 +64,13 @@
      <Text layoutX="50.0" layoutY="623.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" text="Grade Prediction: " />
      <Text fx:id="prediction" layoutX="328.0" layoutY="623.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" text="8.0" />
 
-
+    <VBox fx:id="buttonBox"
+          spacing="10"
+          style="-fx-padding: 10;"
+          alignment="CENTER"
+          AnchorPane.topAnchor="20.0"
+          AnchorPane.rightAnchor="20.0"
+          maxWidth="200"
+          maxHeight="200">
+    </VBox>
 </AnchorPane>
