@@ -42,7 +42,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = List.of("One", "Two", "Three", "Four", "Five");
+        List<String> labels = List.of("One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five","One", "Two", "Three", "Four", "Five");
         List<String> student = new ArrayList<>();
 
         for(ChoiceBox<String> categorySelector : selectedStudent) {
@@ -51,6 +51,10 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         System.out.println(student);
 
         treeController.passProperties(1,labels, 5, student, 7);
+        treeController.passProperties(2,labels, 1, student, 2);
+        treeController.passProperties(3,labels, 2, student, 4);
+        treeController.passProperties(4,labels, 3, student, 5);
+        treeController.passProperties(5,labels, 5, student, 4);
 
         stage.setScene(scenes.get("Tree Visualizer"));
         stage.centerOnScreen();
