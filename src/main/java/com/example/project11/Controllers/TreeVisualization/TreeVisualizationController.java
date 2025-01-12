@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
@@ -72,11 +73,12 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             scrollPane.setFitToHeight(true);
             scrollPane.setContent(rootPane);
             scrollPane.setPannable(true);
+
 //
         }
     }
     public class TreeProperties {
-        private int index;
+        private Integer index;
         private List<String> labels;
         private int levels;
         private List<String> studentProperties;
@@ -91,11 +93,11 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         }
 
         // Getters and setters
-        public int getIndex() {
+        public Integer getIndex() {
             return index;
         }
 
-        public void setIndex(int index) {
+        public void setIndex(Integer index) {
             this.index = index;
         }
 
@@ -207,22 +209,28 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
 
     private void handleScroll(ScrollEvent event) {
-
-        if (event.getDeltaY() > 0) {
-            scaleFactor += 0.01;  // Zoom in
-        } else if (event.getDeltaY() < 0) {
-            scaleFactor -= 0.01;  // Zoom out
+        double zoomFactor = 1.1;
+        if (event.getDeltaY() < 0) {
+            zoomFactor = 1 / zoomFactor;
         }
 
-        if (scaleFactor < 0.1) {
-            scaleFactor = 0.1;
-        } else if (scaleFactor > 1.1) {
-            scaleFactor = 1.1;
-        }
+        double oldScale = rootPane.getScaleX();
+        double newScale = oldScale * zoomFactor;
 
 
-        rootPane.setScaleX(scaleFactor);
-        rootPane.setScaleY(scaleFactor);
+        if (newScale < 0.1) newScale = 0.1;
+        if (newScale > 2.0) newScale = 2.0;
+
+        double pivotX = event.getSceneX() - rootPane.getBoundsInParent().getMinX();
+        double pivotY = event.getSceneY() - rootPane.getBoundsInParent().getMinY();
+
+        // Apply scaling transformation with the pivot point
+        rootPane.setScaleX(newScale);
+        rootPane.setScaleY(newScale);
+
+        // Adjust the translation to keep the zoom focused around the mouse pointer
+        rootPane.setTranslateX(rootPane.getTranslateX() - (pivotX * (newScale - oldScale)));
+        rootPane.setTranslateY(rootPane.getTranslateY() - (pivotY * (newScale - oldScale)));
 
         event.consume();
     }
@@ -245,11 +253,17 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
 
         public void generateTree(Pane pane, Iterator<String> labelIterator, double x, double y, double xSpacing, double ySpacing, int levels) {
-            if (labelIterator.hasNext() && labelIterator.next().contains("leaf")){
-                generateLeaf(pane, x, y, "Leaf");
+            if (levels == 0 || !labelIterator.hasNext()) {
                 return;
             }
+
             String currentLabel = labelIterator.next();
+
+            if (currentLabel.contains("leaf")) {
+                createInteractiveLeaf(pane, labelIterator, x, y);
+                return;
+            }
+
             createInteractiveNode(pane, currentLabel, x, y);
 
             double leftChildX = x - xSpacing / 2;
@@ -268,18 +282,49 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             }
         }
 
-        public void generateLeaf(Pane pane, double x, double y, String leafValue) {
-            Rectangle leafNode = new Rectangle(x - 30, y - 10, 60, 30);
-            leafNode.setFill(Color.BLUE);
-            leafNode.setArcWidth(10);
-            leafNode.setArcHeight(10);
+        public void createInteractiveLeaf(Pane pane, Iterator<String> labelIterator, double x, double y) {
+            // Create a rectangle for the leaf with rounded corners
+            Rectangle leaf = new Rectangle(x - 30, y - 15, 60, 30);  // Rectangular shape for the leaf
+            leaf.setArcWidth(15);  // Rounded corners
+            leaf.setArcHeight(15);  // Rounded corners
 
-            Label leafLabel = new Label(leafValue);
-            leafLabel.setLayoutX(x - 20);
-            leafLabel.setLayoutY(y - 5);
-            pane.getChildren().addAll(leafNode, leafLabel);
+            // Set the blue gradient fill
+            LinearGradient blueGradient = new LinearGradient(
+                    0, 0, 1, 1,
+                    true, CycleMethod.NO_CYCLE,
+                    new Stop(0, Color.web("#2C3E50")),  // Darker blue
+                    new Stop(1, Color.web("#34495E"))   // Even darker blue
+            );
+            leaf.setFill(blueGradient);  // Apply the gradient to the leaf
 
+            // Add text for the leaf
+            String text = labelIterator.next();
+            Text nodeText = new Text(text);
+            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            nodeText.setFill(Color.WHITE);
+            nodeText.setX(x - (nodeText.getLayoutBounds().getWidth() / 2));  // Centering text
+            nodeText.setY(y + 5);  // Position text inside the leaf
+
+            // Tooltip for the leaf
+            Tooltip tooltip = new Tooltip("Node: " + text);
+            Tooltip.install(leaf, tooltip);
+
+            // Hover effect - Change color and add a subtle shadow
+            leaf.setOnMouseEntered(event -> {
+                leaf.setFill(Color.DODGERBLUE);  // Change color to a brighter blue on hover
+                leaf.setEffect(new DropShadow(5, Color.GRAY));  // Add a shadow effect on hover
+            });
+
+            leaf.setOnMouseExited(event -> {
+                leaf.setFill(blueGradient);  // Reset the gradient color
+                leaf.setEffect(null);  // Remove the shadow when mouse leaves
+            });
+
+            // Add the leaf and text to the pane
+            pane.getChildren().addAll(leaf, nodeText);
         }
+
+
 
 
         private void createInteractiveNode(Pane pane, String text, double x, double y) {

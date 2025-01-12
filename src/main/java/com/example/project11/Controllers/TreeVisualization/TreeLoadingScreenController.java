@@ -43,11 +43,11 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = Arrays.asList("A", "-34", "-39", "1 tau", "1.0 Hz", "low", "25", "30", "76", "52", "-29", "-8", "112",
-                "0.1 Hz", "2 tau", "37", "10", "nothing", "18", "7", "90", "41", "40", "10", "115",
-                "108", "medium", "nothing", "2 tau", "D", "-1", "58", "125", "69", "-16", "E", "-39",
+        List<String> labels = Arrays.asList("A", "-34", "-39", "leaf", "10", "leaf", "6", "76", "52", "-29", "-8", "112",
+                "0.1 Hz", "2 tau", "37", "10", "nothing", "", "7", "leaf", "8", "40", "10", "115",
+                "108", "medium", "nothing", "2 tau", "leaf", "-1", "58", "125", "69", "-16", "E", "-39",
                 "-24", "-26", "-32", "133", "5.0 Hz", "-40", "full", "D", "3 tau", "medium", "0.5 Hz",
-                "-37", "0.1 Hz", "D", "high", "-33", "B", "F", "-30", "0.5 Hz", "130", "test", "test", "test", "test", "test");
+                "-37", "0.1 Hz", "D", "leaf", "-33", "B", "F", "-30", "0.5 Hz", "130", "test", "test", "test", "test", "test");
 
         List<String> student = new ArrayList<>();
 
