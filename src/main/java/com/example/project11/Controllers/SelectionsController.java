@@ -14,6 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,15 +26,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class SelectionsController extends Controller implements Initializable {
 
     @FXML private Button submit;
     @FXML private Button treeButton;
+    @FXML private Label treeToolLabel;
     @FXML private ComboBox<String> ngSelect;
     @FXML private ToggleGroup dataSets;
     @FXML private Label dataSetLabel;
@@ -38,13 +45,28 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
-    @FXML private ImageView backButtonImage;
+    @FXML private ChoiceBox<String> Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector;
+    private ChoiceBox<String>[] categorySelectors;
     private ArrayList<Filter> filters;
     private String selectedSubType;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Category1Selector.getItems().addAll("full", "medium", "high", "low", "nothing");
+        for (int i = -42; i <= 147; i++) {
+            Category2Selector.getItems().add(i + "");
+
+        }
+        Category3Selector.getItems().addAll("1 tau", "2 tau", "3 tau");
+        Category4Selector.getItems().addAll("A", "B", "C", "D", "E", "F");
+        Category5Selector.getItems().addAll("1.0 Hz ", "5.0 Hz ", "0.5 Hz ", "0.1 Hz ");
+
+        categorySelectors = new ChoiceBox[]{Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector};
+        for(ChoiceBox<String> categorySelector : categorySelectors) {
+            categorySelector.getSelectionModel().selectFirst();
+        }
+
         filters = new ArrayList<>();
 
         if (ngSelect != null) {
@@ -250,13 +272,11 @@ data.setFilteredData(filteredData);
 
 
                 VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
-                int addFilterIndex = parent.getChildren().indexOf(addFilter);
                 parent.getChildren().remove(addFilter);
-                parent.getChildren().add(addFilterIndex - 1, addFilter);
+                parent.getChildren().add(5, addFilter);
 
-                int submitIndex = parent.getChildren().indexOf(submit);
                 parent.getChildren().remove(submit);
-                parent.getChildren().add(submitIndex - 1, submit);
+                parent.getChildren().add(6, submit);
 
             }
         });
@@ -266,14 +286,19 @@ data.setFilteredData(filteredData);
 
     private void checkForFirstFilter() {
         if (filtersContainer.getChildren().isEmpty()) {
-            filtersScrollPane.setVisible(true);
             VBox parent = (VBox) container.getChildren().getFirst(); // Assuming first child is the parent VBox
-            int currentIndex = parent.getChildren().indexOf(addFilter);
-            parent.getChildren().remove(addFilter);
-            parent.getChildren().add(currentIndex + 2, addFilter);
-            parent.getChildren().remove(submit);
-            parent.getChildren().add(parent.getChildren().size(),submit);
 
+
+
+            parent.getChildren().remove(addFilter);
+            parent.getChildren().add( 6, addFilter);
+
+            parent.getChildren().remove(filtersScrollPane);
+            parent.getChildren().add(6,filtersScrollPane);
+
+            filtersScrollPane.setVisible(true);
+            parent.getChildren().remove(submit);
+            parent.getChildren().add(7,submit);
         }
     }
 
@@ -310,10 +335,16 @@ data.setFilteredData(filteredData);
     }
 
     public void loadTreeTool(ActionEvent actionEvent) throws IOException {
+        for(ChoiceBox<String> categorySelector : categorySelectors) {
+            if(categorySelector.getSelectionModel().getSelectedItem() == null) {
+                return;
+            }
+        }
+
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         TreeLoadingScreenController controller = (TreeLoadingScreenController) controllers.get("Tree Loading Screen");
         super.changeScene(actionEvent, "Tree Loading Screen");
-        controller.temp(stage);
+        controller.temp(stage, categorySelectors);
     }
 
 }
