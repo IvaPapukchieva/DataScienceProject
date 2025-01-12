@@ -55,6 +55,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         treeController.passProperties(3,labels, 2, student, 4);
         treeController.passProperties(4,labels, 3, student, 5);
         treeController.passProperties(5,labels, 5, student, 4);
+        treeController.openTree("1");
 
         stage.setScene(scenes.get("Tree Visualizer"));
         stage.centerOnScreen();

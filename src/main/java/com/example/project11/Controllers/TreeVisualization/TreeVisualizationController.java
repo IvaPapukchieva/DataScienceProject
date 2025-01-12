@@ -55,19 +55,16 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         TreeProperties treeProps = new TreeProperties(index, labels, levels, studentProperties, grade);
         treeMap.put(String.valueOf(index), treeProps);
       addTreeButtons(String.valueOf(index));
-        if (rootPane != null && labels != null && levels > 0) {
-            drawTree();
-            updateBulletPoints();
-            updateGrade(grade);
             rootPane.setOnScroll(this::handleScroll);
             System.out.println(treeMap);
-        }
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (treeMap == null) {
             treeMap = new HashMap<>();
+
         }
 
         if (labels != null && levels > 0) {
