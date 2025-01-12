@@ -5,11 +5,13 @@ import com.example.project11.GradePredictionTree.OfficialTreeAlgorithm.TreeAlgor
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
@@ -23,12 +25,12 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     }
 
-    public void temp(Stage stage) {
+    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.schedule(() -> Platform.runLater(() -> {
             System.out.println("Delay of 5 seconds complete. Ready for scene switch.");
             try {
-                changeScene(stage); // Move the scene change here
+                changeScene(stage, selectedStudent); // Move the scene change here
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -38,12 +40,17 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
 
 
-    public void changeScene(Stage stage) throws IOException {
+    public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
         List<String> labels = List.of("One", "Two", "Three", "Four", "Five");
-        List<String> student = List.of("1 tau", "A", "17");
+        List<String> student = new ArrayList<>();
 
-        treeController.passProperties(labels, 5, student, 7);
+        for(ChoiceBox<String> categorySelector : selectedStudent) {
+            student.add(categorySelector.getValue());
+        }
+        System.out.println(student);
+
+        treeController.passProperties(1,labels, 5, student, 7);
 
         stage.setScene(scenes.get("Tree Visualizer"));
         stage.centerOnScreen();
