@@ -41,12 +41,12 @@ public class TreeObj  {
     }
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 10;
+        int testingAmount = 15;
         int mindepth = 2;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
 
         for(int i = mindepth; i<testingAmount ; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, i);
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(100, i);
             regressor.fit(getStudentProperty80percent(Rad80percentStudentIndex), getGradesOf80percentStudents(Rad80percentStudentIndex));
 
             double[] predictions = regressor.predict(getStudentProperty20percent(Rad20percentStudentIndex));

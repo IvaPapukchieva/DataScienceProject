@@ -21,7 +21,7 @@ public class TreeAlgorithmUtil {
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
 
-        String[][] student = {{"nothing","59","3 tau","A","0.5 Hz "}};
+        String[][] student = {{"low","94","3 tau","E","0.1 Hz "}};
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
         studentInfoArray = studentInfoLoader.readInfoString();
@@ -37,9 +37,9 @@ public class TreeAlgorithmUtil {
 
     public static Map<Integer , List<String>> getTrees(String[][] students) throws FileNotFoundException {
         course  = 0 ;
-        int amountofTrees = 30;
+        int amountofTrees = 40;
 
-        ForestCreator forest  = new ForestCreator(amountofTrees , 80, course , studentInfoArray, weightedBootstrappingArray);
+        ForestCreator forest  = new ForestCreator(amountofTrees , 100, course , studentInfoArray, weightedBootstrappingArray);
         List<TreeObj> FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
         Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
 
@@ -59,9 +59,13 @@ public class TreeAlgorithmUtil {
         return routMap;
 
     }
-    public static double[] getGradeList(){
+    public static int[] getGradeList(){
         // NEEDS TO RUN GET TREE BEFORE GETGRADELIST
-        return gradeList;
+        int[] gradeListInteger = new int[gradeList.length];
+        for( int i = 0 ; i< gradeListInteger.length ; i++){
+            gradeListInteger[i] = (int)gradeList[i];
+        }
+        return gradeListInteger;
     }
 
     public static double getGradeForStudent(){
@@ -69,7 +73,7 @@ public class TreeAlgorithmUtil {
         double sum = 0 ;
         double average = 0 ;
         for( int i = 0 ; i < gradeList.length ; i++){
-            sum+= gradeList[i];
+            sum+= (int)gradeList[i];
         }
         average = sum/(double)gradeList.length;
         return average;
