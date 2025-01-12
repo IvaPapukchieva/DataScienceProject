@@ -43,11 +43,27 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = Arrays.asList("A", "-34", "-39", "leaf", "10", "leaf", "6", "76", "52", "-29", "-8", "112",
-                "0.1 Hz", "2 tau", "37", "10", "nothing", "", "7", "leaf", "8", "40", "10", "115",
-                "108", "medium", "nothing", "2 tau", "leaf", "-1", "58", "125", "69", "-16", "E", "-39",
-                "-24", "-26", "-32", "133", "5.0 Hz", "-40", "full", "D", "3 tau", "medium", "0.5 Hz",
-                "-37", "0.1 Hz", "D", "leaf", "-33", "B", "F", "-30", "0.5 Hz", "130", "test", "test", "test", "test", "test");
+        List<String> labels = Arrays.asList("medium","105", "B", "3 tau", "-5", "-37", "7.0leaf", "5.75leaf", "70",
+                "7.666666666666667leaf", "6.0leaf", "1.0 Hz", "6.333333333333333leaf",
+                "-30", "8.5leaf", "-18", "6.5leaf", "7.6leaf", "3 tau", "A", "44", "18",
+                "6.833333333333333leaf", "6.0leaf", "7.5leaf", "E", "17", "6.875leaf",
+                "6.333333333333333leaf", "-4", "6.625leaf", "6.290322580645161leaf",
+                "5.0 Hz", "2", "5.0leaf", "A", "5.0leaf", "6.083333333333333leaf",
+                "0.1 Hz", "-25", "5.25leaf", "6.294117647058823leaf", "C", "6.090909090909091leaf",
+                "6.606060606060606leaf", "115", "1.0 Hz", "6.0leaf", "A", "8.666666666666666leaf",
+                "5.0 Hz", "6.666666666666667leaf", "110", "8.0leaf", "8.0leaf", "127", "B",
+                "5.333333333333333leaf", "A", "1.0 Hz", "6.0leaf", "7.0leaf", "6.25leaf",
+                "3 tau", "130", "6.0leaf", "7.333333333333333leaf", "8.0leaf", "133", "C",
+                "-33", "-38", "6.5leaf", "low", "6.0leaf", "8.25leaf", "0.5 Hz", "-12",
+                "9.0leaf", "nothing", "7.375leaf", "6.5leaf", "8", "2 tau", "5.666666666666667leaf",
+                "6.230769230769231leaf", "13", "8.0leaf", "6.476923076923077leaf", "14", "3",
+                "3 tau", "low", "6.0leaf", "6.622222222222222leaf", "1", "6.803571428571429leaf",
+                "7.4leaf", "1.0 Hz", "1 tau", "5.0leaf", "5.833333333333333leaf", "E",
+                "7.5leaf", "6.523809523809524leaf", "66", "59", "high", "6.589743589743589leaf",
+                "6.885350318471337leaf", "nothing", "7.7272727272727275leaf", "6.95leaf",
+                "full", "122", "6.3076923076923075leaf", "7.444444444444445leaf", "123",
+                "6.81025641025641leaf", "6.333333333333333leaf", "1 tau", "4.5leaf",
+                "high", "4.0leaf", "nothing", "7.5leaf", "6.666666666666667leaf");
 
         List<String> student = new ArrayList<>();
 
@@ -56,7 +72,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         }
         System.out.println(student);
 
-        treeController.passProperties(1,labels, 6, student, 7);
+        treeController.passProperties(1,labels, 7, student, 7);
         treeController.passProperties(2,labels, 1, student, 2);
         treeController.passProperties(3,labels, 2, student, 4);
         treeController.passProperties(4,labels, 3, student, 5);

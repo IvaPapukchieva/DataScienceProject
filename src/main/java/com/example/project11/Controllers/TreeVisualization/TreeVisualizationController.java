@@ -209,28 +209,29 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
 
     private void handleScroll(ScrollEvent event) {
-        double zoomFactor = 1.1;
+        double zoomFactor = 1.1; // Define zoom increment
         if (event.getDeltaY() < 0) {
-            zoomFactor = 1 / zoomFactor;
+            zoomFactor = 1 / zoomFactor; // Zoom out
         }
 
-        double oldScale = rootPane.getScaleX();
+        double oldScale = rootPane.getScaleX(); // Assume uniform scaling
         double newScale = oldScale * zoomFactor;
 
-
+        // Clamp the scale to prevent extreme zoom
         if (newScale < 0.1) newScale = 0.1;
         if (newScale > 2.0) newScale = 2.0;
 
-        double pivotX = event.getSceneX() - rootPane.getBoundsInParent().getMinX();
-        double pivotY = event.getSceneY() - rootPane.getBoundsInParent().getMinY();
+        // Calculate zoom pivot point
+        double f = (newScale / oldScale) - 1;
+        double dx = event.getSceneX() - (rootPane.getBoundsInParent().getMinX() + rootPane.getBoundsInParent().getWidth() / 2);
+        double dy = event.getSceneY() - (rootPane.getBoundsInParent().getMinY() + rootPane.getBoundsInParent().getHeight() / 2);
 
-        // Apply scaling transformation with the pivot point
         rootPane.setScaleX(newScale);
         rootPane.setScaleY(newScale);
 
-        // Adjust the translation to keep the zoom focused around the mouse pointer
-        rootPane.setTranslateX(rootPane.getTranslateX() - (pivotX * (newScale - oldScale)));
-        rootPane.setTranslateY(rootPane.getTranslateY() - (pivotY * (newScale - oldScale)));
+        // Adjust translation to zoom at cursor location
+        rootPane.setTranslateX(rootPane.getTranslateX() - f * dx);
+        rootPane.setTranslateY(rootPane.getTranslateY() - f * dy);
 
         event.consume();
     }
@@ -260,93 +261,92 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             String currentLabel = labelIterator.next();
 
             if (currentLabel.contains("leaf")) {
-                createInteractiveLeaf(pane, labelIterator, x, y);
+                createInteractiveLeaf(pane, currentLabel, x, y);
                 return;
             }
 
             createInteractiveNode(pane, currentLabel, x, y);
 
-            double leftChildX = x - xSpacing / 2;
-            double leftChildY = y + ySpacing;
-            double rightChildX = x + xSpacing / 2;
-            double rightChildY = y + ySpacing;
+            double leftChildX = x - xSpacing / 1.25;
+            double leftChildY = y + ySpacing/1.25;
+            double rightChildX = x + xSpacing / 1.25;
+            double rightChildY = y + ySpacing/1.25;
 
             if (levels > 1 && labelIterator.hasNext()) {
-                connectNodes(pane, x, y + 20, leftChildX, leftChildY - 20, "YES");
+                connectNodes(pane, x, y + 20, leftChildX, leftChildY - 10, "YES");
                 generateTree(pane, labelIterator, leftChildX, leftChildY, xSpacing / 2, ySpacing, levels - 1);
             }
 
             if (levels > 1 && labelIterator.hasNext()) {
-                connectNodes(pane, x, y + 20, rightChildX, rightChildY - 20, "NO");
+                connectNodes(pane, x, y + 20, rightChildX, rightChildY - 10, "NO");
                 generateTree(pane, labelIterator, rightChildX, rightChildY, xSpacing / 2, ySpacing, levels - 1);
             }
         }
 
-        public void createInteractiveLeaf(Pane pane, Iterator<String> labelIterator, double x, double y) {
-            // Create a rectangle for the leaf with rounded corners
-            Rectangle leaf = new Rectangle(x - 30, y - 15, 60, 30);  // Rectangular shape for the leaf
-            leaf.setArcWidth(15);  // Rounded corners
-            leaf.setArcHeight(15);  // Rounded corners
+        public void createInteractiveLeaf(Pane pane, String currentLabel, double x, double y) {
+            double width = 35;
+            double height = 15;
+            String leafLabel=currentLabel.replace("leaf","");
 
-            // Set the blue gradient fill
-            LinearGradient blueGradient = new LinearGradient(
-                    0, 0, 1, 1,
-                    true, CycleMethod.NO_CYCLE,
-                    new Stop(0, Color.web("#2C3E50")),  // Darker blue
-                    new Stop(1, Color.web("#34495E"))   // Even darker blue
+            Rectangle leaf = new Rectangle(x - width / 2, y - height / 2, width, height);
+            leaf.setArcWidth(8);  // Reduced arc width
+            leaf.setArcHeight(8);  // Reduced arc height
+
+            LinearGradient blueGradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                    new Stop(0, Color.web("#2C3E50")),
+                    new Stop(1, Color.web("#34495E"))
             );
-            leaf.setFill(blueGradient);  // Apply the gradient to the leaf
+            leaf.setFill(blueGradient);
 
-            // Add text for the leaf
-            String text = labelIterator.next();
-            Text nodeText = new Text(text);
-            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+
+            Text nodeText = new Text(leafLabel);
+            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 8));
             nodeText.setFill(Color.WHITE);
-            nodeText.setX(x - (nodeText.getLayoutBounds().getWidth() / 2));  // Centering text
-            nodeText.setY(y + 5);  // Position text inside the leaf
+            nodeText.setX(x - nodeText.getLayoutBounds().getWidth() / 2);
+            nodeText.setY(y + 4);
 
-            // Tooltip for the leaf
-            Tooltip tooltip = new Tooltip("Node: " + text);
+            Tooltip tooltip = new Tooltip("Leaf: " + leafLabel);
             Tooltip.install(leaf, tooltip);
 
-            // Hover effect - Change color and add a subtle shadow
             leaf.setOnMouseEntered(event -> {
-                leaf.setFill(Color.DODGERBLUE);  // Change color to a brighter blue on hover
-                leaf.setEffect(new DropShadow(5, Color.GRAY));  // Add a shadow effect on hover
+                leaf.setFill(Color.DODGERBLUE);
+                leaf.setEffect(new DropShadow(5, Color.GRAY));
             });
 
             leaf.setOnMouseExited(event -> {
-                leaf.setFill(blueGradient);  // Reset the gradient color
-                leaf.setEffect(null);  // Remove the shadow when mouse leaves
+                leaf.setFill(blueGradient);
+                leaf.setEffect(null);
             });
 
-            // Add the leaf and text to the pane
             pane.getChildren().addAll(leaf, nodeText);
         }
 
 
+        public void createInteractiveNode(Pane pane, String text, double x, double y) {
+            double width = 40;
+            double height = 20;
 
-
-        private void createInteractiveNode(Pane pane, String text, double x, double y) {
-            LinearGradient gradient = createGradient();
-            Rectangle rect = new Rectangle(x - 35, y - 20, 70, 40);
-            rect.setArcWidth(20);
-            rect.setArcHeight(20);
+            LinearGradient gradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                    new Stop(0, Color.web("#3F5A7D")),
+                    new Stop(1, Color.web("#8BB8D6"))
+            );
+            Rectangle rect = new Rectangle(x - width / 2, y - height / 2, width, height);
+            rect.setArcWidth(10);  // Reduced arc width
+            rect.setArcHeight(10);  // Reduced arc height
             rect.setFill(gradient);
             rect.setStroke(Color.BLACK);
 
             Text nodeText = new Text(text);
-            nodeText.setDisable(true);
-            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 10));
             nodeText.setFill(Color.WHITE);
-            nodeText.setX(x - (nodeText.getLayoutBounds().getWidth() / 2));
+            nodeText.setX(x - nodeText.getLayoutBounds().getWidth() / 2);
             nodeText.setY(y + 5);
 
             Tooltip tooltip = new Tooltip("Node: " + text);
             Tooltip.install(rect, tooltip);
 
             rect.setOnMouseEntered(event -> rect.setFill(Color.LIGHTCYAN));
-            rect.setOnMouseExited(event -> rect.setFill(gradient));  // Reset to gradient
+            rect.setOnMouseExited(event -> rect.setFill(gradient));
 
             pane.getChildren().addAll(rect, nodeText);
         }
@@ -354,24 +354,13 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         private void connectNodes(Pane pane, double startX, double startY, double endX, double endY, String label) {
             Line line = new Line(startX, startY, endX, endY);
             line.setStroke(Color.rgb(48, 74, 98));
-            line.setStrokeWidth(1.5);
+            line.setStrokeWidth(1.0);  // Thinner line for smaller tree
 
             Text text = new Text(label);
-            text.setFont(Font.font("Arial", FontWeight.BOLD, 12));
+            text.setFont(Font.font("Arial", FontWeight.BOLD, 8));  // Smaller font size for labels
             text.setFill(label.equals("YES") ? Color.GREEN : Color.RED);
-            text.setX((startX + endX) / 2 - 10);
-            text.setY((startY + endY) / 2 - 5);
+            text.setX((startX + endX) / 2 - 5);  // Adjusted to match smaller size
+            text.setY((startY + endY) / 2 - 2);  // Adjusted for alignment
 
             pane.getChildren().addAll(line, text);
-        }
-
-        private LinearGradient createGradient() {
-            return new LinearGradient(
-                    0, 0, 1, 1,
-                    true, CycleMethod.NO_CYCLE,
-                    new Stop(0, Color.web("#3F5A7D")),  // Darker version of #6082B6
-                    new Stop(1, Color.web("#8BB8D6"))   // Darker version of #ADD8E6
-            );
-        }
-    }
-}
+        }}}
