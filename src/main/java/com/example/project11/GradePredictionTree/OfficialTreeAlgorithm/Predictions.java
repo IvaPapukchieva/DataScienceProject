@@ -5,10 +5,7 @@ import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 
 import javax.swing.plaf.IconUIResource;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Predictions {
 
@@ -54,7 +51,7 @@ public class Predictions {
         Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
 
         for (int i = 0; i < amountofTrees; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(15, FilterForestList.get(i).getOptimalDepth());
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(20, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
             depthList[i] = FilterForestList.get(i).getOptimalDepth() ;
@@ -78,6 +75,7 @@ public class Predictions {
         for( int i = 0 ; i< gradeListInteger.length ; i++){
             gradeListInteger[i] = (gradeList[i]);
         }
+        System.out.println(Arrays.toString(gradeListInteger));
         return gradeListInteger;
     }
 

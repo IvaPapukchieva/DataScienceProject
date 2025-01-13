@@ -220,7 +220,7 @@ class DecisionTreeRegressor {
 
     private double predictSingle(double[] row) {
         Node current = root;
-        while (current.isLeaf == false ) {
+        while (!current.isLeaf || current.value == null ) {
             if(current.featureIndex == 1) {
                 if (row[current.featureIndex] <= current.threshold) {
                     current = current.left;

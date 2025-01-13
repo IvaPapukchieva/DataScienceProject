@@ -30,7 +30,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
     }
 
     public void temp(Stage stage, ChoiceBox<String>[] selectedStudent, int course) throws IOException {
-        changeScene(stage,selectedStudent,course);
+         changeScene(stage,selectedStudent,course);
     }
 
 
@@ -52,12 +52,14 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         Predictions predictions = new Predictions(students,course, weightedBootstrappingArray);
         predictions.getCreateForest();
         Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
-        predictions.getGradeList() ;
-        System.out.println("Grade for student "+predictions.getGradeForStudent());
+        double[]gradeList = predictions.getGradeList() ;
+        System.out.println("Grade for student "+Arrays.toString(gradeList));
 
         double[] depthlist = predictions.getDepthList();
         for( int i = 0; i<TreeMap.size() ; i++){
-            treeController.passProperties(i,TreeMap.get(i), (int)(depthlist[i]), student, predictions.getGradeList()[i]);
+            treeController.passProperties(i+1,TreeMap.get(i), (int)(depthlist[i]+1), student, gradeList[i]);
+            System.out.println((i+1));
+
         }
 
         treeController.openTree("1");
