@@ -19,12 +19,32 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class TreeLoadingScreenController extends Controller implements Initializable {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+import javafx.fxml.FXML;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
+import java.io.File;
+
+public class TreeLoadingScreenController extends Controller{
+
+    @FXML
+    private MediaView mediaView;
+
+    @FXML
+    public void initialize() {
+        // Replace "downloads/tree.mov" with the actual path to your video
+        String videoPath = "src/main/resources/images/Tree.mp4";
+        File videoFile = new File(videoPath);
+        Media media = new Media(videoFile.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setCycleCount(5);
+
+        mediaPlayer.setAutoPlay(true);
     }
+
 
     public void temp(Stage stage, ChoiceBox<String>[] selectedStudent) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -35,7 +55,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }), 5, TimeUnit.SECONDS);
+        }), 30, TimeUnit.SECONDS);
         scheduler.shutdown();
     }
 
@@ -82,6 +102,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         for(ChoiceBox<String> categorySelector : selectedStudent) {
             student.add(categorySelector.getValue());
         }
+        System.out.println(student);
 
         treeController.passProperties(1,labels, 11, student, 7);
         treeController.passProperties(2,labels, 1, student, 2);
