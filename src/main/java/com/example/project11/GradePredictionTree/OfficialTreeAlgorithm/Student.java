@@ -27,7 +27,7 @@ public class Student {
             uniqueProperty2.add(studentInfoArray[i][2]); // Add to the set (ignores duplicates automatically)
         }
         List<String> listFor2 = new ArrayList<>(uniqueProperty2);
-
+        // for the experiments you can use this to change the randomness
         CategoryListInStringlist.add(List.of("full", "nothing", "medium", "low", "high"));
         CategoryListInStringlist.add(listFor2); // Empty row
         CategoryListInStringlist.add(List.of("1 tau", "2 tau", "3 tau"));

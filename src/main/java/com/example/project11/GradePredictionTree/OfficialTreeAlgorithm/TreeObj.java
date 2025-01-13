@@ -42,9 +42,9 @@ public class TreeObj  {
     protected int minSampleDepth = 5 ;
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 25;
+        int testingAmount = 15;
 
-        int mindepth = 1;
+        int mindepth = 2;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
 
         for(int i = mindepth; i<testingAmount ; i++) {
@@ -63,7 +63,7 @@ public class TreeObj  {
                 OptimalDepth = i;
             }
         }
-        System.out.println("Optimal Depth : "+ (OptimalDepth-1));
+       System.out.println("Optimal Depth : "+ (OptimalDepth-1));
         return OptimalDepth;
     }
     public int getOptimalDepthVal(){

@@ -10,80 +10,63 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class TreeAlgorithmUtil {
-    public static String[][] studentInfoArray;
-    public static double[][] weightedBootstrappingArray;
 
     public static int course ;
-
-    public static double[] gradeList ;
-
+    public static ArrayList<Double> gradePredictionArray ;
+    public static double[][] weightedBootstrappingArray ;
 
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
+        course = 0 ;
+        String[][] student  = {{"full", "3", "1 tau", "B", "0.1 Hz "}};
 
-        String[][] student = {{"low","94","3 tau","E","0.1 Hz "}};
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
-        studentInfoArray = studentInfoLoader.readInfoString();
+        String[][] studentinfoArray = studentInfoLoader.readInfoString();
+        String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
 
         WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
-        weightedBootstrappingArray = weightedBootstrapping.readAllStudents()  ;
+        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
 
-        Map<Integer, List<String> > Thing = getTrees(student);
-        System.out.println("Grade List  : "+Arrays.toString(getGradeList()));
-        System.out.println("Grade for student : "+ Arrays.deepToString(student)+ " is  : "+ getGradeForStudent());
-
-    }
-
-    public static Map<Integer , List<String>> getTrees(String[][] students) throws FileNotFoundException {
-        course  = 0 ;
-        int amountofTrees = 10;
-
-        ForestCreator forest  = new ForestCreator(amountofTrees , 40, course , studentInfoArray, weightedBootstrappingArray);
-        List<TreeObj> FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
-        Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
-
-
-        gradeList = new double[amountofTrees];
-
-        for( int i  = 0  ; i<amountofTrees ; i++){
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, FilterForestList.get(i).getOptimalDepth());
-            regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
-            gradeList[i] = regressor.predict(students)[0];
-            List<String> temporaryList = new ArrayList<>();
-            regressor.getTreeArrayList(regressor.getRoot() ,temporaryList);
-
-            routMap.put(i,temporaryList ) ;
-            System.out.println(temporaryList);
+        for (int i = 1 ; i<studentinfoArray.length ; i++){
+            for ( int j = 0 ; j<5 ; j++){
+                studentInfoFormatted[i-1][j] = studentinfoArray[i][j+1];
+            }
         }
+        Predictions predictions = new Predictions(student, course, weightedBootstrappingArray) ;
+        predictions.getCreateForest();
+        gradePredictionArray = new ArrayList<>() ;
+        for(int i = 0 ; i<15 ; i++){
+            for (int j = 0 ; j<studentInfoFormatted[0].length ; j++){
+                student[0][j] = studentInfoFormatted[i][j];
+            }
+                predictions.getTrees(student);
+                predictions.getGradeList();
+                double prediction = predictions.getGradeForStudent() ;
+                System.out.println("Prediction Grade  : "+ prediction);
+                gradePredictionArray.add(prediction);
+                System.out.println("Margin of Error : "+ getMarginOfError());
 
 
-
-        return routMap;
-
-    }
-    public static double[] getGradeList(){
-        // NEEDS TO RUN GET TREE BEFORE GETGRADELIST
-//        int[] gradeListInteger = new int[gradeList.length];
-//        for( int i = 0 ; i< gradeListInteger.length ; i++){
-//            gradeListInteger[i] = (int)gradeList[i];
-//        }
-        return gradeList;
-    }
-
-    public static double getGradeForStudent(){
-    // NEEDS TO RUN GETGRADELIST BEFORE GETGRADEFORSTUDENT !!
-        double sum = 0 ;
-        double average = 0 ;
-        for( int i = 0 ; i < gradeList.length ; i++){
-            sum+= gradeList[i];
         }
-        average = sum/(double)gradeList.length;
-        return average;
+        System.out.println("Margin of Error : "+ getMarginOfError());
+        System.out.println("Grade Prediction Array : "+ gradePredictionArray);
+
 
     }
 
+    public static double getMarginOfError(){
+        double marginOfError = 0 ;  ;
+        double sum = 0  ;
 
+        for(int i= 1 ; i< gradePredictionArray.size() ; i++){
+            sum+= (double)Math.abs(weightedBootstrappingArray[i][course] - gradePredictionArray.get(i-1));
+
+        }
+        marginOfError = sum/ gradePredictionArray.size();
+
+        return marginOfError ;
+    }
 
 
 
