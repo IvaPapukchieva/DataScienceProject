@@ -26,12 +26,12 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     }
 
-    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent) {
+    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent, int course) {
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.schedule(() -> Platform.runLater(() -> {
             System.out.println("Delay of 5 seconds complete. Ready for scene switch.");
             try {
-                changeScene(stage, selectedStudent); // Move the scene change here
+                changeScene(stage, selectedStudent, course); // Move the scene change here
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -41,7 +41,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
 
 
-    public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent) throws IOException {
+    public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent, int course) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
         List<String> labels = Arrays.asList(
                 "1.0 Hz", "-42", "4.0leaf", "133", "C", "3 tau", "-10", "6.5leaf", "40", "36", "nothing", "5.0leaf", "5.75leaf",
