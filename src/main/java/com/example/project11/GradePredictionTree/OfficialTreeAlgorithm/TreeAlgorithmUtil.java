@@ -1,5 +1,6 @@
 package com.example.project11.GradePredictionTree.OfficialTreeAlgorithm;
 
+import com.example.project11.ProjectInfo.loaders.AverageWeightedBootstrapping;
 import com.example.project11.ProjectInfo.loaders.Loader;
 import com.example.project11.ProjectInfo.loaders.StudentInfoLoader;
 import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
@@ -25,8 +26,9 @@ public class TreeAlgorithmUtil {
         String[][] studentinfoArray = studentInfoLoader.readInfoString();
         String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
 
-        WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
-        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
+        AverageWeightedBootstrapping avweightedBootstrapping = new AverageWeightedBootstrapping();
+        weightedBootstrappingArray = avweightedBootstrapping.getWeightedBootstrappingAverage(20);
+
 
         for (int i = 1 ; i<studentinfoArray.length ; i++){
             for ( int j = 0 ; j<5 ; j++){
@@ -36,7 +38,7 @@ public class TreeAlgorithmUtil {
         Predictions predictions = new Predictions(student, course, weightedBootstrappingArray) ;
         predictions.getCreateForest();
         gradePredictionArray = new ArrayList<>() ;
-        for(int i = 0 ; i<15 ; i++){
+        for(int i = 0 ; i<20 ; i++){
             for (int j = 0 ; j<studentInfoFormatted[0].length ; j++){
                 student[0][j] = studentInfoFormatted[i][j];
             }
@@ -44,8 +46,11 @@ public class TreeAlgorithmUtil {
                 predictions.getGradeList();
                 double prediction = predictions.getGradeForStudent() ;
                 System.out.println("Prediction Grade  : "+ prediction);
+                System.out.println("Actual Grade" + weightedBootstrappingArray[i][course]);
                 gradePredictionArray.add(prediction);
                 System.out.println("Margin of Error : "+ getMarginOfError());
+
+
 
 
         }
@@ -63,6 +68,7 @@ public class TreeAlgorithmUtil {
             sum+= (double)Math.abs(weightedBootstrappingArray[i][course] - gradePredictionArray.get(i-1));
 
         }
+
         marginOfError = sum/ gradePredictionArray.size();
 
         return marginOfError ;

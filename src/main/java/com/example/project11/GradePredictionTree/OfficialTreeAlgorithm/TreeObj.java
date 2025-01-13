@@ -60,10 +60,10 @@ public class TreeObj  {
         for(int i = 0; i < PerformanceMeasureArray.length; i++){
             if(PerformanceMeasureArray[i] < smallestPerformanceMeasure){
                 smallestPerformanceMeasure = PerformanceMeasureArray[i];
-                OptimalDepth = i;
+                OptimalDepth = i+1;
             }
         }
-       System.out.println("Optimal Depth : "+ (OptimalDepth-1));
+       System.out.println("Optimal Depth : "+ (OptimalDepth+1));
         return OptimalDepth;
     }
     public int getOptimalDepthVal(){

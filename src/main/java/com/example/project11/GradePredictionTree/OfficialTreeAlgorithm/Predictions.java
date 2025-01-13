@@ -5,10 +5,7 @@ import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 
 import javax.swing.plaf.IconUIResource;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Predictions {
 
@@ -20,7 +17,7 @@ public class Predictions {
 
     private String[][] StudentPropertyArray;
     private double[][] WeightedBootsrappingArray;
-
+    private double[] depthList ;
 
     private List<TreeObj> FilterForestList;
     private  int amountofTrees = 20;
@@ -40,22 +37,24 @@ public class Predictions {
     }
 
     public void getCreateForest() throws FileNotFoundException {
-        course = 0;
 
-        ForestCreator forest = new ForestCreator(amountofTrees, 60, course, StudentPropertyArray, WeightedBootsrappingArray);
+
+        ForestCreator forest = new ForestCreator(amountofTrees, 80, course, StudentPropertyArray, WeightedBootsrappingArray);
          FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
 
 
         gradeList = new double[amountofTrees];
+        depthList = new double[amountofTrees];
 
     }
     public Map<Integer, List<String>> getTrees(String[][]student)  {
         Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
 
         for (int i = 0; i < amountofTrees; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, FilterForestList.get(i).getOptimalDepth());
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(15, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
+            depthList[i] = FilterForestList.get(i).getOptimalDepth() ;
             List<String> temporaryList = new ArrayList<>();
             regressor.getTreeArrayList(regressor.getRoot(), temporaryList);
 
@@ -66,13 +65,17 @@ public class Predictions {
 
         return routMap;
     }
+    public double[] getDepthList(){
+        return depthList;
+    }
 
     public  double[] getGradeList(){
         // NEEDS TO RUN GET TREE BEFORE GETGRADELIST
         gradeListInteger = new double[gradeList.length] ;
         for( int i = 0 ; i< gradeListInteger.length ; i++){
-            gradeListInteger[i] = Math.round(gradeList[i]*100)/100;
+            gradeListInteger[i] = Math.round(gradeList[i]*1000)/1000;
         }
+        System.out.println(Arrays.toString(gradeListInteger));
         return gradeListInteger;
     }
 
@@ -97,4 +100,6 @@ public class Predictions {
 
 
     //method that gets the margin of error.
+
+    //
 }

@@ -64,10 +64,10 @@ public class SelectionsController extends Controller implements Initializable {
 
         for (int i = 1; i <= 33; i++) {
             CourseSelector.getItems().add(i + "");
-
         }
+        CourseSelector.getSelectionModel().selectFirst();
 
-        categorySelectors = new ChoiceBox[]{Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector, CourseSelector};
+        categorySelectors = new ChoiceBox[]{Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector};
         for(ChoiceBox<String> categorySelector : categorySelectors) {
             categorySelector.getSelectionModel().selectFirst();
         }
@@ -350,7 +350,7 @@ data.setFilteredData(filteredData);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         TreeLoadingScreenController controller = (TreeLoadingScreenController) controllers.get("Tree Loading Screen");
         super.changeScene(actionEvent, "Tree Loading Screen");
-        controller.temp(stage, categorySelectors);
+        controller.temp(stage, categorySelectors, Integer.parseInt(CourseSelector.getSelectionModel().getSelectedItem()));
     }
 
 }
