@@ -49,7 +49,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
             students[0][i] = student.get(i);
         }
 
-        Predictions predictions = new Predictions(students,course, weightedBootstrappingArray);
+        Predictions predictions = new Predictions(students,course-1, weightedBootstrappingArray);
         predictions.getCreateForest();
         Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
         double[]gradeList = predictions.getGradeList() ;
@@ -58,7 +58,6 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         double[] depthlist = predictions.getDepthList();
         for( int i = 0; i<TreeMap.size() ; i++){
             treeController.passProperties(i+1,TreeMap.get(i), (int)(depthlist[i]+1), student, gradeList[i]);
-            System.out.println((i+1));
 
         }
 

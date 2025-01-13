@@ -140,7 +140,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         TreeNode tree = new TreeNode();
         tree.generateTree(rootPane, labels.iterator(), 700, 100, 600, 90, levels);
 
-        System.out.println("Drawing tree with index: " + index);
+      //  System.out.println("Drawing tree with index: " + treeIndex);
         updateBulletPoints();
         updateGrade(grade);
     }
