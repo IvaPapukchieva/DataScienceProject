@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
@@ -287,7 +288,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             double width = 45;
             double height = 20;
             String leafLabel=currentLabel.replace("leaf","");
-            leafLabel = leafLabel.substring(0,4);
+            leafLabel = leafLabel.substring(0,3);
 
             Rectangle leaf = new Rectangle(x - width / 2, y - height / 2, width, height);
             leaf.setArcWidth(8);  // Reduced arc width
@@ -339,6 +340,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             rect.setStroke(Color.BLACK);
 
             Text nodeText = new Text(text);
+            nodeText.setDisable(true);
             nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
             nodeText.setFill(Color.WHITE);
             nodeText.setX(x - nodeText.getLayoutBounds().getWidth() / 2);

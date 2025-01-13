@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="500.0" maxWidth="700.0" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #28323D" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.TreeVisualization.TreeVisualizationController">
 <!--    <HBox spacing="10" alignment="CENTER" layoutX="100.0" layoutY="760.0">-->
 <!--        <Text text="Zoom:"-->
@@ -64,13 +64,11 @@
      <Text layoutX="50.0" layoutY="623.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill:#ADD8E6;" text="Grade Prediction: " />
      <Text fx:id="prediction" layoutX="328.0" layoutY="623.0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: #ADD8E6;" text="8.0" />
 
-    <VBox fx:id="buttonBox"
-          spacing="10"
-          style="-fx-padding: 10;"
-          alignment="CENTER"
-          AnchorPane.topAnchor="20.0"
-          AnchorPane.rightAnchor="20.0"
-          maxWidth="200"
-          maxHeight="200">
+    <VBox fx:id="buttonBox" alignment="CENTER" maxHeight="200" maxWidth="200" spacing="10" style="-fx-padding: 10;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
     </VBox>
+    <ImageView id="backButtonImage" fx:id="backButtonImage2" fitHeight="32.0" fitWidth="205.0" onMouseClicked="#mouseClickedComponent" onMouseEntered="#mouseEnterComponent" onMouseExited="#mouseExitComponent" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+        <image>
+            <Image url="@../../../images/back.png" />
+        </image>
+    </ImageView>
 </AnchorPane>
