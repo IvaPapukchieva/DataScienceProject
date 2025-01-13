@@ -284,8 +284,8 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         }
 
         public void createInteractiveLeaf(Pane pane, String currentLabel, double x, double y) {
-            double width = 35;
-            double height = 15;
+            double width = 45;
+            double height = 20;
             String leafLabel=currentLabel.replace("leaf","");
 
             Rectangle leaf = new Rectangle(x - width / 2, y - height / 2, width, height);
@@ -323,8 +323,8 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
 
         public void createInteractiveNode(Pane pane, String text, double x, double y) {
-            double width = 40;
-            double height = 20;
+            double width = 50;
+            double height = 25;
 
             LinearGradient gradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
                     new Stop(0, Color.web("#3F5A7D")),
@@ -337,7 +337,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             rect.setStroke(Color.BLACK);
 
             Text nodeText = new Text(text);
-            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 10));
+            nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 12));
             nodeText.setFill(Color.WHITE);
             nodeText.setX(x - nodeText.getLayoutBounds().getWidth() / 2);
             nodeText.setY(y + 5);
