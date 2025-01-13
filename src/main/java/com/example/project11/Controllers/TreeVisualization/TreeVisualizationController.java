@@ -219,7 +219,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
         double newScale = oldScale * zoomFactor;
 
         // Clamp the scale to prevent extreme zoom
-        if (newScale < 0.1) newScale = 0.1;
+        if (newScale < 0.4) newScale = 0.4;
         if (newScale > 2.0) newScale = 2.0;
 
         // Calculate zoom pivot point
