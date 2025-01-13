@@ -82,7 +82,6 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         for(ChoiceBox<String> categorySelector : selectedStudent) {
             student.add(categorySelector.getValue());
         }
-        System.out.println(student);
 
         treeController.passProperties(1,labels, 11, student, 7);
         treeController.passProperties(2,labels, 1, student, 2);

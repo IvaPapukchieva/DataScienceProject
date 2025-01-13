@@ -50,6 +50,12 @@
                <ChoiceBox fx:id="Category5Selector" prefWidth="150.0" />
             </children>
          </HBox>
+         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="146.0">
+            <children>
+               <Label prefHeight="33.0" prefWidth="49.0" text="Course - " textFill="WHITE" />
+               <ChoiceBox fx:id="CourseSelector" prefHeight="25.0" prefWidth="57.0" />
+            </children>
+         </HBox>
 
          <ScrollPane fx:id="filtersScrollPane" prefHeight="67.0" prefWidth="200.0" visible="false">
             <content>

@@ -45,7 +45,7 @@ public class SelectionsController extends Controller implements Initializable {
     @FXML private ComboBox<String> addFilter;
     @FXML private VBox filtersContainer;
     @FXML private ScrollPane filtersScrollPane;
-    @FXML private ChoiceBox<String> Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector;
+    @FXML private ChoiceBox<String> Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector, CourseSelector;
     private ChoiceBox<String>[] categorySelectors;
     private ArrayList<Filter> filters;
     private String selectedSubType;
@@ -62,10 +62,16 @@ public class SelectionsController extends Controller implements Initializable {
         Category4Selector.getItems().addAll("A", "B", "C", "D", "E", "F");
         Category5Selector.getItems().addAll("1.0 Hz ", "5.0 Hz ", "0.5 Hz ", "0.1 Hz ");
 
-        categorySelectors = new ChoiceBox[]{Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector};
+        for (int i = 1; i <= 33; i++) {
+            CourseSelector.getItems().add(i + "");
+
+        }
+
+        categorySelectors = new ChoiceBox[]{Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector, CourseSelector};
         for(ChoiceBox<String> categorySelector : categorySelectors) {
             categorySelector.getSelectionModel().selectFirst();
         }
+
 
         filters = new ArrayList<>();
 
