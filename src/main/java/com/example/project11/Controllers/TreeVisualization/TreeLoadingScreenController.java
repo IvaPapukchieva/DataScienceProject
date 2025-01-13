@@ -94,13 +94,13 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
         Predictions predictions = new Predictions(students,course, weightedBootstrappingArray);
         predictions.getCreateForest();
+        Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
         predictions.getGradeList() ;
         System.out.println("Grade for student "+predictions.getGradeForStudent());
 
-        Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
         double[] depthlist = predictions.getDepthList();
-        for( int i = 1; i<TreeMap.size() ; i++){
-            treeController.passProperties(i,TreeMap.get(i-1), (int)(depthlist[i-1]), student, predictions.getGradeList()[i]);
+        for( int i = 0; i<TreeMap.size() ; i++){
+            treeController.passProperties(i,TreeMap.get(i), (int)(depthlist[i]), student, predictions.getGradeList()[i]);
         }
 
         treeController.openTree("1");

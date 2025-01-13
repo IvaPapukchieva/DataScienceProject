@@ -54,7 +54,7 @@ public class Predictions {
         Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
 
         for (int i = 0; i < amountofTrees; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, FilterForestList.get(i).getOptimalDepth());
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(15, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
             depthList[i] = FilterForestList.get(i).getOptimalDepth() ;
@@ -76,7 +76,7 @@ public class Predictions {
         // NEEDS TO RUN GET TREE BEFORE GETGRADELIST
         gradeListInteger = new double[gradeList.length] ;
         for( int i = 0 ; i< gradeListInteger.length ; i++){
-            gradeListInteger[i] = Math.round(gradeList[i]*100)/100;
+            gradeListInteger[i] = (gradeList[i]);
         }
         return gradeListInteger;
     }
