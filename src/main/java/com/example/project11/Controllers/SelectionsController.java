@@ -64,8 +64,8 @@ public class SelectionsController extends Controller implements Initializable {
 
         for (int i = 1; i <= 33; i++) {
             CourseSelector.getItems().add(i + "");
-
         }
+        CourseSelector.getSelectionModel().selectFirst();
 
         categorySelectors = new ChoiceBox[]{Category1Selector, Category2Selector, Category3Selector, Category4Selector, Category5Selector};
         for(ChoiceBox<String> categorySelector : categorySelectors) {
