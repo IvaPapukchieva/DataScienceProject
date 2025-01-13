@@ -39,10 +39,10 @@ public class TreeObj  {
     public double[] getRad20percentStudentIndex(){
         return Rad20percentStudentIndex;
     }
-    protected int minSampleDepth = 30 ;
+    protected int minSampleDepth = 5 ;
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 20;
+        int testingAmount = 15;
 
         int mindepth = 2;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];

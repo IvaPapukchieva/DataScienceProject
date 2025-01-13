@@ -42,6 +42,9 @@ public class WeightedBootstrapping implements Loader {
                     sum += ranges[c];
 
                 }
+                if(allStudents[i][j]!=-1){
+                    continue;
+                }
 
                 int random = (int) (Math.random() * sum);
                 if (allStudents[i][j] == -1.0) {

@@ -20,7 +20,7 @@ public class Predictions {
     private double[] depthList ;
 
     private List<TreeObj> FilterForestList;
-    private  int amountofTrees = 10;
+    private  int amountofTrees = 20;
 
 
     //constructor that needs as input the Student
@@ -39,7 +39,7 @@ public class Predictions {
     public void getCreateForest() throws FileNotFoundException {
 
 
-        ForestCreator forest = new ForestCreator(amountofTrees, 20, course, StudentPropertyArray, WeightedBootsrappingArray);
+        ForestCreator forest = new ForestCreator(amountofTrees, 80, course, StudentPropertyArray, WeightedBootsrappingArray);
          FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
 
 
@@ -51,7 +51,7 @@ public class Predictions {
         Map<Integer, List<String>> routMap = new HashMap<>(amountofTrees);
 
         for (int i = 0; i < amountofTrees; i++) {
-            DecisionTreeRegressor regressor = new DecisionTreeRegressor(30, FilterForestList.get(i).getOptimalDepth());
+            DecisionTreeRegressor regressor = new DecisionTreeRegressor(15, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
             depthList[i] = FilterForestList.get(i).getOptimalDepth() ;
@@ -73,7 +73,7 @@ public class Predictions {
         // NEEDS TO RUN GET TREE BEFORE GETGRADELIST
         gradeListInteger = new double[gradeList.length] ;
         for( int i = 0 ; i< gradeListInteger.length ; i++){
-            gradeListInteger[i] = (gradeList[i]);
+            gradeListInteger[i] = Math.round(gradeList[i]*1000)/1000;
         }
         System.out.println(Arrays.toString(gradeListInteger));
         return gradeListInteger;
