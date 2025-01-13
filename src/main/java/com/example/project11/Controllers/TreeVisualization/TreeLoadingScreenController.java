@@ -5,6 +5,7 @@ import com.example.project11.GradePredictionTree.OfficialTreeAlgorithm.Predictio
 import com.example.project11.GradePredictionTree.OfficialTreeAlgorithm.TreeAlgorithmUtil;
 import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -29,8 +30,31 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
     }
 
-    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent, int course) throws IOException {
-         changeScene(stage,selectedStudent,course);
+    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent, int course) {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                // Perform the heavy computations here
+                changeScene(stage, selectedStudent, course);
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                System.out.println("Task completed successfully!");
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                System.err.println("Task failed: " + getException().getMessage());
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true); // Ensures the thread will close when the application exits
+        thread.start();
     }
 
 
@@ -63,8 +87,11 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
         treeController.openTree("1");
 
-        stage.setScene(scenes.get("Tree Visualizer"));
-        stage.centerOnScreen();
+        Platform.runLater(() -> {
+            // Update the UI, e.g., setting the scene
+            stage.setScene(scenes.get("Tree Visualizer"));
+            stage.centerOnScreen();
+        });
     }
 
 }
