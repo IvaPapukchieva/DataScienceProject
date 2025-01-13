@@ -287,6 +287,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
             double width = 45;
             double height = 20;
             String leafLabel=currentLabel.replace("leaf","");
+            leafLabel = leafLabel.substring(0,4);
 
             Rectangle leaf = new Rectangle(x - width / 2, y - height / 2, width, height);
             leaf.setArcWidth(8);  // Reduced arc width
@@ -300,6 +301,7 @@ private static Map<String, TreeProperties> treeMap = new HashMap<>();
 
 
             Text nodeText = new Text(leafLabel);
+            nodeText.setDisable(true);
             nodeText.setFont(Font.font("Arial", FontWeight.BOLD, 8));
             nodeText.setFill(Color.WHITE);
             nodeText.setX(x - nodeText.getLayoutBounds().getWidth() / 2);
