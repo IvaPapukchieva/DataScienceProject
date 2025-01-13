@@ -20,10 +20,10 @@ public class Predictions {
 
     private String[][] StudentPropertyArray;
     private double[][] WeightedBootsrappingArray;
-
+    private double[] depthList ;
 
     private List<TreeObj> FilterForestList;
-    private  int amountofTrees = 20;
+    private  int amountofTrees = 10;
 
 
     //constructor that needs as input the Student
@@ -40,13 +40,14 @@ public class Predictions {
     }
 
     public void getCreateForest() throws FileNotFoundException {
-        course = 0;
 
-        ForestCreator forest = new ForestCreator(amountofTrees, 60, course, StudentPropertyArray, WeightedBootsrappingArray);
+
+        ForestCreator forest = new ForestCreator(amountofTrees, 20, course, StudentPropertyArray, WeightedBootsrappingArray);
          FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
 
 
         gradeList = new double[amountofTrees];
+        depthList = new double[amountofTrees];
 
     }
     public Map<Integer, List<String>> getTrees(String[][]student)  {
@@ -56,6 +57,7 @@ public class Predictions {
             DecisionTreeRegressor regressor = new DecisionTreeRegressor(5, FilterForestList.get(i).getOptimalDepth());
             regressor.fit(FilterForestList.get(i).getStudentProperty80percent(FilterForestList.get(i).getRad80percentStudentIndex()), FilterForestList.get(i).getGradesOf80percentStudents(FilterForestList.get(i).getRad80percentStudentIndex()));
             gradeList[i] = regressor.predict(student)[0];
+            depthList[i] = FilterForestList.get(i).getOptimalDepth() ;
             List<String> temporaryList = new ArrayList<>();
             regressor.getTreeArrayList(regressor.getRoot(), temporaryList);
 
@@ -65,6 +67,9 @@ public class Predictions {
 
 
         return routMap;
+    }
+    public double[] getDepthList(){
+        return depthList;
     }
 
     public  double[] getGradeList(){
@@ -97,4 +102,6 @@ public class Predictions {
 
 
     //method that gets the margin of error.
+
+    //
 }

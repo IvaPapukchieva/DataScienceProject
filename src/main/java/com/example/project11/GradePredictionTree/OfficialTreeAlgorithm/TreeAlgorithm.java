@@ -191,7 +191,9 @@ class DecisionTreeRegressor {
     private double calculateLeafValue(double[][] dataset) {
         return Arrays.stream(dataset).mapToDouble(row -> row[row.length - 1]).average().orElse(0);
     }
-
+    public int getMaxDepth(){
+        return maxDepth;
+    }
     public void fit(String[][] X, double[] Y) {
         double[][] dataset = new double[X.length][X[0].length + 1];
         for (int i = 0; i < X.length; i++) {
