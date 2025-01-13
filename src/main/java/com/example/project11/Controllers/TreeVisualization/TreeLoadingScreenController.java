@@ -43,28 +43,40 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> labels = Arrays.asList("medium","105", "B", "3 tau", "-5", "-37", "7.0leaf", "5.75leaf", "70",
-                "7.666666666666667leaf", "6.0leaf", "1.0 Hz", "6.333333333333333leaf",
-                "-30", "8.5leaf", "-18", "6.5leaf", "7.6leaf", "3 tau", "A", "44", "18",
-                "6.833333333333333leaf", "6.0leaf", "7.5leaf", "E", "17", "6.875leaf",
-                "6.333333333333333leaf", "-4", "6.625leaf", "6.290322580645161leaf",
-                "5.0 Hz", "2", "5.0leaf", "A", "5.0leaf", "6.083333333333333leaf",
-                "0.1 Hz", "-25", "5.25leaf", "6.294117647058823leaf", "C", "6.090909090909091leaf",
-                "6.606060606060606leaf", "115", "1.0 Hz", "6.0leaf", "A", "8.666666666666666leaf",
-                "5.0 Hz", "6.666666666666667leaf", "110", "8.0leaf", "8.0leaf", "127", "B",
-                "5.333333333333333leaf", "A", "1.0 Hz", "6.0leaf", "7.0leaf", "6.25leaf",
-                "3 tau", "130", "6.0leaf", "7.333333333333333leaf", "8.0leaf", "133", "C",
-                "-33", "-38", "6.5leaf", "low", "6.0leaf", "8.25leaf", "0.5 Hz", "-12",
-                "9.0leaf", "nothing", "7.375leaf", "6.5leaf", "8", "2 tau", "5.666666666666667leaf",
-                "6.230769230769231leaf", "13", "8.0leaf", "6.476923076923077leaf", "14", "3",
-                "3 tau", "low", "6.0leaf", "6.622222222222222leaf", "1", "6.803571428571429leaf",
-                "7.4leaf", "1.0 Hz", "1 tau", "5.0leaf", "5.833333333333333leaf", "E",
-                "7.5leaf", "6.523809523809524leaf", "66", "59", "high", "6.589743589743589leaf",
-                "6.885350318471337leaf", "nothing", "7.7272727272727275leaf", "6.95leaf",
-                "full", "122", "6.3076923076923075leaf", "7.444444444444445leaf", "123",
-                "6.81025641025641leaf", "6.333333333333333leaf", "1 tau", "4.5leaf",
-                "high", "4.0leaf", "nothing", "7.5leaf", "6.666666666666667leaf");
-
+        List<String> labels = Arrays.asList(
+                "1.0 Hz", "-42", "4.0leaf", "133", "C", "3 tau", "-10", "6.5leaf", "40", "36", "nothing", "5.0leaf", "5.75leaf",
+                "4.0leaf", "medium", "9.0leaf", "5.75leaf", "17", "low", "8.5leaf", "3", "-1", "high", "7.0leaf", "6.25leaf",
+                "5.0leaf", "7.666666666666667leaf", "1 tau", "medium", "8.0leaf", "69", "41", "6.0leaf", "7.0leaf", "5.5leaf",
+                "full", "6.0leaf", "high", "6.0leaf", "nothing", "6.0leaf", "6.0leaf", "72", "57", "3 tau", "B", "low", "7.0leaf",
+                "8.25leaf", "high", "17", "6.25leaf", "5.0leaf", "-10", "-20", "E", "8.0leaf", "6.5leaf", "8.333333333333334leaf",
+                "-9", "5.0leaf", "-4", "8.0leaf", "6.6923076923076925leaf", "53", "-23", "D", "7.0leaf", "low", "5.5leaf", "A",
+                "7.0leaf", "6.222222222222222leaf", "-21", "9.0leaf", "-16", "7.333333333333333leaf", "-1", "6.0leaf",
+                "6.63265306122449leaf", "medium", "5.5leaf", "6.0leaf", "58", "8.5leaf", "60", "6.0leaf", "B", "6.5leaf", "A",
+                "7.0leaf", "full", "7.0leaf", "66", "7.6leaf", "8.333333333333334leaf", "A", "83", "6.25leaf", "medium", "6.0leaf",
+                "88", "7.0leaf", "low", "7.5leaf", "8.0leaf", "78", "5.5leaf", "80", "7.5leaf", "109", "high", "7.0leaf", "85",
+                "84", "6.2leaf", "8.0leaf", "88", "5.0leaf", "6.15leaf", "medium", "3 tau", "8.0leaf", "6.75leaf", "3 tau", "126",
+                "6.166666666666667leaf", "7.0leaf", "low", "7.333333333333333leaf", "6.6leaf", "4.0leaf", "130", "125", "-36",
+                "-42", "7.5leaf", "1 tau", "0.1 Hz", "5.25leaf", "6.25leaf", "-40", "5.5leaf", "-39", "0.5 Hz",
+                "6.333333333333333leaf", "7.25leaf", "medium", "7.0leaf", "0.1 Hz", "7.0leaf", "6.0leaf", "-26", "2 tau", "A",
+                "4.0leaf", "D", "7.5leaf", "high", "8.0leaf", "5.75leaf", "F", "6.0leaf", "low", "-34", "6.0leaf", "5.0 Hz",
+                "6.5leaf", "7.25leaf", "A", "6.75leaf", "full", "-33", "8.0leaf", "6.75leaf", "3 tau", "-35", "6.0leaf",
+                "7.444444444444445leaf", "-30", "8.666666666666666leaf", "8.0leaf", "-25", "1 tau", "4.666666666666667leaf",
+                "7.0leaf", "-7", "-12", "B", "3 tau", "-21", "6.0leaf", "low", "6.0leaf", "4.5leaf", "-18", "6.0leaf", "1 tau",
+                "6.75leaf", "8.5leaf", "medium", "F", "6.0leaf", "7.0leaf", "-13", "-14", "7.083333333333333leaf", "5.0leaf",
+                "7.75leaf", "C", "high", "7.666666666666667leaf", "7.0leaf", "-10", "high", "6.5leaf", "low", "5.5leaf",
+                "4.333333333333333leaf", "full", "7.0leaf", "5.0 Hz", "6.4leaf", "5.875leaf", "nothing", "1 tau", "48", "24",
+                "0.1 Hz", "6.333333333333333leaf", "7.2leaf", "0.1 Hz", "4.5leaf", "5.666666666666667leaf", "73", "D", "5.5leaf",
+                "7.714285714285714leaf", "113", "6.230769230769231leaf", "7.2leaf", "10", "2", "A", "6.0leaf", "7.2leaf",
+                "6.0leaf", "26", "25", "7.5leaf", "8.666666666666666leaf", "105", "6.925925925925926leaf", "7.363636363636363leaf",
+                "D", "41", "34", "2 tau", "6.2727272727272725leaf", "7.0625leaf", "7.75leaf", "122", "44", "5.666666666666667leaf",
+                "6.333333333333333leaf", "7.5leaf", "high", "E", "-5", "4.0leaf", "7.409090909090909leaf", "F",
+                "6.388888888888889leaf", "6.838235294117647leaf", "A", "45", "6.612903225806452leaf", "7.235294117647059leaf",
+                "3", "7.038461538461538leaf", "6.576923076923077leaf", "C", "medium", "8.0leaf", "6.666666666666667leaf", "1 tau",
+                "5.0leaf", "126", "7.333333333333333leaf", "2 tau", "medium", "6.0leaf", "5.0leaf", "low", "7.0leaf", "E", "7.0leaf",
+                "medium", "6.0leaf", "nothing", "6.0leaf", "6.0leaf", "low", "C", "6.0leaf", "6.666666666666667leaf", "high",
+                "6.5leaf", "full", "D", "6.0leaf", "2 tau", "7.333333333333333leaf", "8.0leaf", "0.1 Hz", "8.5leaf", "1 tau",
+                "8.0leaf", "7.333333333333333leaf"
+        );
         List<String> student = new ArrayList<>();
 
         for(ChoiceBox<String> categorySelector : selectedStudent) {
@@ -72,7 +84,7 @@ public class TreeLoadingScreenController extends Controller implements Initializ
         }
         System.out.println(student);
 
-        treeController.passProperties(1,labels, 7, student, 7);
+        treeController.passProperties(1,labels, 11, student, 7);
         treeController.passProperties(2,labels, 1, student, 2);
         treeController.passProperties(3,labels, 2, student, 4);
         treeController.passProperties(4,labels, 3, student, 5);
