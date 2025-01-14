@@ -20,9 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 
 public class TreeLoadingScreenController extends Controller implements Initializable {
     private double[][] weightedBootstrappingArray;
@@ -30,12 +28,12 @@ public class TreeLoadingScreenController extends Controller implements Initializ
     @FXML
     private MediaView mediaView;
     public void initialize(URL location, ResourceBundle resources) {
-        String videoPath = "src/main/resources/images/Tree.mp4";
+       String videoPath = "src/main/resources/images/Tree.mp4";
         File videoFile = new File(videoPath);
         Media media = new Media(videoFile.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.setCycleCount(5);
+       MediaPlayer mediaPlayer = new MediaPlayer(media);
+       mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.setAutoPlay(true);
 
     }
@@ -75,37 +73,57 @@ public class TreeLoadingScreenController extends Controller implements Initializ
 
     public void changeScene(Stage stage, ChoiceBox<String>[] selectedStudent, int course) throws IOException {
         TreeVisualizationController treeController = (TreeVisualizationController) controllers.get("Tree Visualizer");
-        List<String> student = new ArrayList<>();
+        initialize(null, null);
 
-        for(ChoiceBox<String> categorySelector : selectedStudent) {
-            student.add(categorySelector.getValue());
-        }
 
-        // need to transform the stend into a 2D array for it to function with the TreeAlgorithm
-        String [][] students = new String[1][5] ;
-        for( int i = 0 ; i<5 ; i++){
-            students[0][i] = student.get(i);
-        }
+        // Prepare a task for the long-running process
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                try {
+                    List<String> student = new ArrayList<>();
+                    for (ChoiceBox<String> categorySelector : selectedStudent) {
+                        student.add(categorySelector.getValue());
+                    }
 
-        Predictions predictions = new Predictions(students,course-1, weightedBootstrappingArray);
-        predictions.getCreateForest();
-        Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
-        double[]gradeList = predictions.getGradeList() ;
-        System.out.println("Grade for student "+Arrays.toString(gradeList));
+                    // Transform student data into a 2D array
+                    String[][] students = new String[1][5];
+                    for (int i = 0; i < 5; i++) {
+                        students[0][i] = student.get(i);
+                    }
 
-        double[] depthlist = predictions.getDepthList();
-        for( int i = 0; i<TreeMap.size() ; i++){
-            treeController.passProperties(i+1,TreeMap.get(i), (int)(depthlist[i]+1), student, gradeList[i]);
+                    Predictions predictions = new Predictions(students, course - 1, weightedBootstrappingArray);
+                    predictions.getCreateForest();
+                    Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
+                    double[] gradeList = predictions.getGradeList();
+                    System.out.println("Grade for student " + Arrays.toString(gradeList));
 
-        }
+                    double[] depthList = predictions.getDepthList();
+                    for (int i = 0; i < TreeMap.size(); i++) {
+                        treeController.passProperties(i + 1, TreeMap.get(i), (int) (depthList[i] + 1), student, gradeList[i]);
+                    }
 
-        treeController.openTree("1");
+                    // Simulate opening the tree
+                    treeController.openTree("1");
 
-        Platform.runLater(() -> {
-            // Update the UI, e.g., setting the scene
-            stage.setScene(scenes.get("Tree Visualizer"));
-            stage.centerOnScreen();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        };
+
+
+        task.setOnSucceeded(event -> {
+            Platform.runLater(() -> {
+                stage.setScene(scenes.get("Tree Visualizer"));
+                stage.centerOnScreen();
+            });
         });
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
 }
