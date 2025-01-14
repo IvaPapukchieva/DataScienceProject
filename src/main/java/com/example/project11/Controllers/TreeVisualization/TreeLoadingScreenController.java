@@ -1,8 +1,11 @@
 package com.example.project11.Controllers.TreeVisualization;
 
 import com.example.project11.Controllers.Controller;
+import com.example.project11.GradePredictionTree.OfficialTreeAlgorithm.Predictions;
 import com.example.project11.GradePredictionTree.OfficialTreeAlgorithm.TreeAlgorithmUtil;
+import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,32 +19,57 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class TreeLoadingScreenController extends Controller implements Initializable {
+    private double[][] weightedBootstrappingArray;
 
     @FXML
     private MediaView mediaView;
+    public void initialize(URL location, ResourceBundle resources) {
+        String videoPath = "src/main/resources/images/Tree.mp4";
+        File videoFile = new File(videoPath);
+        Media media = new Media(videoFile.toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setCycleCount(5);
+        mediaPlayer.setAutoPlay(true);
 
-    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent) {
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.schedule(() -> Platform.runLater(() -> {
-            System.out.println("Delay of 5 seconds complete. Ready for scene switch.");
-            try {
-                changeScene(stage, selectedStudent); // Move the scene change here
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }), 5, TimeUnit.SECONDS);
-        scheduler.shutdown();
+    }
+    public TreeLoadingScreenController() throws FileNotFoundException {
+        WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
+        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
     }
 
+    public void temp(Stage stage, ChoiceBox<String>[] selectedStudent, int course) {
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                // Perform the heavy computations here
+                changeScene(stage, selectedStudent, course);
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                System.out.println("Task completed successfully!");
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                System.err.println("Task failed: " + getException().getMessage());
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true); // Ensures the thread will close when the application exits
+        thread.start();
+    }
 
 
 
@@ -53,27 +81,31 @@ public class TreeLoadingScreenController extends Controller implements Initializ
             student.add(categorySelector.getValue());
         }
 
-        treeController.passProperties(1,labels, 11, student, 7);
-        treeController.passProperties(2,labels, 1, student, 2);
-        treeController.passProperties(3,labels, 2, student, 4);
-        treeController.passProperties(4,labels, 3, student, 5);
-        treeController.passProperties(5,labels, 5, student, 4);
+        // need to transform the stend into a 2D array for it to function with the TreeAlgorithm
+        String [][] students = new String[1][5] ;
+        for( int i = 0 ; i<5 ; i++){
+            students[0][i] = student.get(i);
+        }
+
+        Predictions predictions = new Predictions(students,course-1, weightedBootstrappingArray);
+        predictions.getCreateForest();
+        Map<Integer, List<String>> TreeMap = predictions.getTrees(students);
+        double[]gradeList = predictions.getGradeList() ;
+        System.out.println("Grade for student "+Arrays.toString(gradeList));
+
+        double[] depthlist = predictions.getDepthList();
+        for( int i = 0; i<TreeMap.size() ; i++){
+            treeController.passProperties(i+1,TreeMap.get(i), (int)(depthlist[i]+1), student, gradeList[i]);
+
+        }
+
         treeController.openTree("1");
 
-        stage.setScene(scenes.get("Tree Visualizer"));
-        stage.centerOnScreen();
+        Platform.runLater(() -> {
+            // Update the UI, e.g., setting the scene
+            stage.setScene(scenes.get("Tree Visualizer"));
+            stage.centerOnScreen();
+        });
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Replace "downloads/tree.mov" with the actual path to your video
-        String videoPath = "src/main/resources/images/Tree.mp4";
-        File videoFile = new File(videoPath);
-        Media media = new Media(videoFile.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaView.setMediaPlayer(mediaPlayer);
-        mediaPlayer.setCycleCount(5);
-
-        mediaPlayer.setAutoPlay(true);
-    }
-    }
+}
