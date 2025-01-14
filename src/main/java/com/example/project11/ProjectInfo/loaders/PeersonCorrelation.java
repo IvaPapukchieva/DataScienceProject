@@ -40,10 +40,10 @@ public class PeersonCorrelation{
             for(int  j = 0 ; j<CorrelationMap.get(i).size()-1; j++){
                 if(CorrelationMap.get(i).get(j).getR()>=0.5){
                     bestpearsonMeasureList.add(CorrelationMap.get(i).get(j));
-                    System.out.println("course "+ i + " complementary course "+ CorrelationMap.get(i).get(j).getComplementingCourse()+ " for R value of "+CorrelationMap.get(i).get(j).getR());
+                    //System.out.println("course "+ i + " complementary course "+ CorrelationMap.get(i).get(j).getComplementingCourse()+ " for R value of "+CorrelationMap.get(i).get(j).getR());
                 }
             }
-            bestCorrelationMap.put(i,bestpearsonMeasureList);
+            bestCorrelationMap.put(i,order(bestpearsonMeasureList));
 
         }
         return  bestCorrelationMap;
@@ -88,10 +88,7 @@ public class PeersonCorrelation{
         return currentGradeLoaderArray;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        PeersonCorrelation peersonCorrelation = new PeersonCorrelation();
-        System.out.println(Arrays.deepToString(peersonCorrelation.getFilledStudentArray()));
-    }
+
 
 
 }

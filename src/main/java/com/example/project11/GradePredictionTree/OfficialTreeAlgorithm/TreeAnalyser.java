@@ -72,7 +72,7 @@ public class TreeAnalyser {
             sum+= gradeCount[i];
         }
         for (int i = 0 ; i<gradeCount.length ;i++){
-            percentageDistribution[i] =(double)Math.round(((gradeCount[i]/(double)sum)*100)*1000)/1000;
+            percentageDistribution[i] =(double)Math.round(((gradeCount[i]/(double)sum)*100));
         }
         return percentageDistribution;
     }

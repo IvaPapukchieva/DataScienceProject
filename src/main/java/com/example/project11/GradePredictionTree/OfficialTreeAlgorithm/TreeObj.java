@@ -65,7 +65,7 @@ public class TreeObj  {
                 OptimalDepth = i+1;
             }
         }
-       //System.out.println("Optimal Depth : "+ (OptimalDepth+1));
+       System.out.println("Optimal Depth : "+ (OptimalDepth+1));
         return OptimalDepth;
     }
     public int getOptimalDepthVal(){

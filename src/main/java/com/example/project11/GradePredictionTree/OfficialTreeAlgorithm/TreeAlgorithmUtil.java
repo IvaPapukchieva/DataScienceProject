@@ -1,9 +1,6 @@
 package com.example.project11.GradePredictionTree.OfficialTreeAlgorithm;
 
-import com.example.project11.ProjectInfo.loaders.AverageWeightedBootstrapping;
-import com.example.project11.ProjectInfo.loaders.Loader;
-import com.example.project11.ProjectInfo.loaders.StudentInfoLoader;
-import com.example.project11.ProjectInfo.loaders.WeightedBootstrapping;
+import com.example.project11.ProjectInfo.loaders.*;
 import com.sun.source.tree.Tree;
 
 import java.io.FileNotFoundException;
@@ -26,9 +23,11 @@ public class TreeAlgorithmUtil {
         String[][] studentinfoArray = studentInfoLoader.readInfoString();
         String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
 
-        AverageWeightedBootstrapping avweightedBootstrapping = new AverageWeightedBootstrapping();
-        weightedBootstrappingArray = avweightedBootstrapping.getWeightedBootstrappingAverage(40);
+//        AverageWeightedBootstrapping avweightedBootstrapping = new AverageWeightedBootstrapping();
+//        weightedBootstrappingArray = avweightedBootstrapping.getWeightedBootstrappingAverage(40);
 
+        PeersonCorrelation peersonCorrelation = new PeersonCorrelation();
+        weightedBootstrappingArray = peersonCorrelation.getFilledStudentArray();
         for (int i = 1 ; i<studentinfoArray.length ; i++){
             for ( int j = 0 ; j<5 ; j++){
                 studentInfoFormatted[i-1][j] = studentinfoArray[i][j+1];
@@ -63,8 +62,8 @@ public class TreeAlgorithmUtil {
         double marginOfError = 0 ;  ;
         double sum = 0  ;
 
-        for(int i= 0 ; i< gradePredictionArray.size() ; i++){
-            sum+= Math.abs((double)weightedBootstrappingArray[i+1][course] - (double)gradePredictionArray.get(i));
+        for(int i= 1 ; i< gradePredictionArray.size() ; i++){
+            sum+= Math.abs((double)weightedBootstrappingArray[i][course] - (double)gradePredictionArray.get(i));
 
         }
 
