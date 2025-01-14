@@ -13,6 +13,7 @@ module com.example.project11 {
     requires java.desktop;
     requires annotations;
     requires jdk.compiler;
+    requires javafx.media;
 
     opens com.example.project11 to javafx.fxml;
     exports com.example.project11;
