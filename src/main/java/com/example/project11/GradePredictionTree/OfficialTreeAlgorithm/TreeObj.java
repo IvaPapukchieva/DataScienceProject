@@ -39,10 +39,11 @@ public class TreeObj  {
     public double[] getRad20percentStudentIndex(){
         return Rad20percentStudentIndex;
     }
-    protected int minSampleDepth = 5 ;
+    protected           int minSampleDepth = 25 ;
+
     // method that gets optimal depth
     public int getOptimalDepth(){
-        int testingAmount = 15;
+        int testingAmount = 8;
 
         int mindepth = 2;
         double[] PerformanceMeasureArray = new double[testingAmount-mindepth];
@@ -56,14 +57,15 @@ public class TreeObj  {
             PerformanceMeasureArray[i-mindepth] = treeAnalyser.getMethodRunning();
 
         }
-        double smallestPerformanceMeasure = 100;
+
+        double smallestPerformanceMeasure = 100000;
         for(int i = 0; i < PerformanceMeasureArray.length; i++){
             if(PerformanceMeasureArray[i] < smallestPerformanceMeasure){
                 smallestPerformanceMeasure = PerformanceMeasureArray[i];
                 OptimalDepth = i+1;
             }
         }
-       System.out.println("Optimal Depth : "+ (OptimalDepth+1));
+       //System.out.println("Optimal Depth : "+ (OptimalDepth+1));
         return OptimalDepth;
     }
     public int getOptimalDepthVal(){

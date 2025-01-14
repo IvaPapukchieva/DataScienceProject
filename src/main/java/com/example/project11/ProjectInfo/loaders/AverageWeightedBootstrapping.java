@@ -26,7 +26,7 @@ public class AverageWeightedBootstrapping {
         }
         for( int j = 0 ;j<WeighedtBootstrappingArray.length;j++){
             for( int c = 0 ; c<WeighedtBootstrappingArray[0].length ; c++){
-                weightedbootstrappingAverage[j][c] = Math.round(weightedbootstrappingAverage[j][c]/Itterations);
+                weightedbootstrappingAverage[j][c] = ((double)weightedbootstrappingAverage[j][c]/(double)Itterations);
 
             }
         }

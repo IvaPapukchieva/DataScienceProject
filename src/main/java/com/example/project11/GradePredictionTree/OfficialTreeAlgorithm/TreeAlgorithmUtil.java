@@ -27,8 +27,7 @@ public class TreeAlgorithmUtil {
         String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
 
         AverageWeightedBootstrapping avweightedBootstrapping = new AverageWeightedBootstrapping();
-        weightedBootstrappingArray = avweightedBootstrapping.getWeightedBootstrappingAverage(20);
-
+        weightedBootstrappingArray = avweightedBootstrapping.getWeightedBootstrappingAverage(40);
 
         for (int i = 1 ; i<studentinfoArray.length ; i++){
             for ( int j = 0 ; j<5 ; j++){
@@ -38,7 +37,7 @@ public class TreeAlgorithmUtil {
         Predictions predictions = new Predictions(student, course, weightedBootstrappingArray) ;
         predictions.getCreateForest();
         gradePredictionArray = new ArrayList<>() ;
-        for(int i = 0 ; i<20 ; i++){
+        for(int i = 0 ; i<1200 ; i++){
             for (int j = 0 ; j<studentInfoFormatted[0].length ; j++){
                 student[0][j] = studentInfoFormatted[i][j];
             }
@@ -64,12 +63,12 @@ public class TreeAlgorithmUtil {
         double marginOfError = 0 ;  ;
         double sum = 0  ;
 
-        for(int i= 1 ; i< gradePredictionArray.size() ; i++){
-            sum+= (double)Math.abs(weightedBootstrappingArray[i][course] - gradePredictionArray.get(i-1));
+        for(int i= 0 ; i< gradePredictionArray.size() ; i++){
+            sum+= Math.abs((double)weightedBootstrappingArray[i+1][course] - (double)gradePredictionArray.get(i));
 
         }
 
-        marginOfError = sum/ gradePredictionArray.size();
+        marginOfError = sum/ (double)gradePredictionArray.size();
 
         return marginOfError ;
     }
