@@ -16,44 +16,34 @@ public class TreeAlgorithmUtil {
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
         course = 0 ;
-        String[][] student  = {{"full", "3", "1 tau", "B", "0.1 Hz "}};
+        String[][] student  = {{"medium", "124", "2 tau", "A", "0.5 Hz "}};
 
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
         String[][] studentinfoArray = studentInfoLoader.readInfoString();
         String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
 
-//        AverageWeightedBootstrapping avweightedBootstrapping = new AverageWeightedBootstrapping();
-//        weightedBootstrappingArray = avweightedBootstrapping.getWeightedBootstrappingAverage(40);
 
-        PeersonCorrelation peersonCorrelation = new PeersonCorrelation();
-        weightedBootstrappingArray = peersonCorrelation.getFilledStudentArray();
-        for (int i = 1 ; i<studentinfoArray.length ; i++){
-            for ( int j = 0 ; j<5 ; j++){
-                studentInfoFormatted[i-1][j] = studentinfoArray[i][j+1];
-            }
-        }
+//        PeersonCorrelation peersonCorrelation = new PeersonCorrelation();
+//        weightedBootstrappingArray = peersonCorrelation.getFilledStudentArray();
+        WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
+        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
+
+    for(int i = 0 ; i<33 ;i++){
         Predictions predictions = new Predictions(student, course, weightedBootstrappingArray) ;
         predictions.getCreateForest();
         gradePredictionArray = new ArrayList<>() ;
-        for(int i = 0 ; i<1200 ; i++){
-            for (int j = 0 ; j<studentInfoFormatted[0].length ; j++){
-                student[0][j] = studentInfoFormatted[i][j];
-            }
-                predictions.getTrees(student);
-                predictions.getGradeList();
-                double prediction = predictions.getGradeForStudent() ;
-                System.out.println("Prediction Grade  : "+ prediction);
-                System.out.println("Actual Grade" + weightedBootstrappingArray[i][course]);
-                gradePredictionArray.add(prediction);
-                System.out.println("Margin of Error : "+ getMarginOfError());
+        predictions.getTrees(student);
+        predictions.getGradeList();
+        double prediction = predictions.getGradeForStudent() ;
+
+        System.out.println("FInal Prediction Grade  : "+ prediction+ " for course "+ course);
+        course++ ;
 
 
+    }
 
 
-        }
-        System.out.println("Margin of Error : "+ getMarginOfError());
-        System.out.println("Grade Prediction Array : "+ gradePredictionArray);
 
 
     }
