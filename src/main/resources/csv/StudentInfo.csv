@@ -15,7 +15,7 @@ StudentID,Neuro-Synaptic Interface Level,Plasma Conductivity Quotient,Chrono-Ada
 211830,nothing,65,3 tau,E,1.0 Hz 
 211826,nothing,57,1 tau,D,0.5 Hz 
 211820,nothing,45,3 tau,B,0.1 Hz 
-    211133,low,85,1 tau,F,0.1 Hz
+211133,low,85,1 tau,F,0.1 Hz 
 210465,high,112,1 tau,E,5.0 Hz 
 210962,full,32,1 tau,C,5.0 Hz 
 212506,low,68,2 tau,C,0.5 Hz 
