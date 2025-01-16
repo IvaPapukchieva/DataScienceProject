@@ -16,7 +16,7 @@ public class TreeAlgorithmUtil {
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
         course = 0 ;
-        String[][] student  = {{"high", "70", "1 tau", "A", "0.5 Hz "}};
+        String[][] student  = {{"nothing", "34", "1 tau", "A", "1.0 Hz "}};
 
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
