@@ -16,18 +16,19 @@ public class TreeAlgorithmUtil {
     public static void main(String[] args) throws FileNotFoundException {
         // Example data encoded numerically
         course = 0 ;
-        String[][] student  = {{"medium", "124", "2 tau", "A", "0.5 Hz "}};
+        String[][] student  = {{"high", "70", "1 tau", "A", "0.5 Hz "}};
 
 
         StudentInfoLoader studentInfoLoader = new StudentInfoLoader();
-        String[][] studentinfoArray = studentInfoLoader.readInfoString();
-        String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
+//        String[][] studentinfoArray = studentInfoLoader.readInfoString();
+//        String[][] studentInfoFormatted = new String[studentinfoArray.length-1][5];
 
 
-//        PeersonCorrelation peersonCorrelation = new PeersonCorrelation();
-//        weightedBootstrappingArray = peersonCorrelation.getFilledStudentArray();
-        WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
-        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
+        PeersonCorrelation peersonCorrelation = new PeersonCorrelation();
+        weightedBootstrappingArray = peersonCorrelation.getFilledStudentArray();
+        System.out.println(Arrays.deepToString(weightedBootstrappingArray));
+//        WeightedBootstrapping weightedBootstrapping = new WeightedBootstrapping();
+//        weightedBootstrappingArray = weightedBootstrapping.readAllStudents();
 
     for(int i = 0 ; i<33 ;i++){
         Predictions predictions = new Predictions(student, course, weightedBootstrappingArray) ;

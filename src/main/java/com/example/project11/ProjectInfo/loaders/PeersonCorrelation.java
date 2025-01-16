@@ -75,12 +75,17 @@ public class PeersonCorrelation{
         for( int i = 0 ; i<currentGradeLoaderArray.length;i++){
             for (int j = 0 ; j<currentGradeLoaderArray[0].length;j++){
                 if(currentGradeLoaderArray[i][j] == -1){
-                        for (int c = 0; c < bestCorrelationMap.get(j).size(); c++) {
-                            if (currentGradeLoaderArray[i][bestCorrelationMap.get(j).get(c).getComplementingCourse()] != -1) {
-                                currentGradeLoaderArray[i][j] = currentGradeLoaderArray[i][bestCorrelationMap.get(j).get(c).getComplementingCourse()];
-                            }
+                    int c = 0 ;
+                            do {
 
-                        }
+                                if (currentGradeLoaderArray[i][bestCorrelationMap.get(j).get(c).getComplementingCourse()] != -1 && currentGradeLoaderArray[i][bestCorrelationMap.get(j).get(c).getComplementingCourse()] != -1) {
+                                    currentGradeLoaderArray[i][j] = currentGradeLoaderArray[i][bestCorrelationMap.get(j).get(c).getComplementingCourse()];
+                                    break ;
+                                } else {
+                                        c++;
+                                }
+                            }while (currentGradeLoaderArray[i][bestCorrelationMap.get(j).get(c).getComplementingCourse()] != -1);
+
 
                 }
             }
