@@ -20,7 +20,7 @@ public class Predictions {
     private double[] depthList ;
 
     private List<TreeObj> FilterForestList;
-    private  int amountofTrees = 100;
+    private  int amountofTrees = 2;
 
 
     //constructor that needs as input the Student
@@ -39,7 +39,7 @@ public class Predictions {
     public void getCreateForest() throws FileNotFoundException {
 
 
-        ForestCreator forest = new ForestCreator(amountofTrees, 100, course, StudentPropertyArray, WeightedBootsrappingArray);
+        ForestCreator forest = new ForestCreator(amountofTrees, 2, course, StudentPropertyArray, WeightedBootsrappingArray);
          FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
 
 
