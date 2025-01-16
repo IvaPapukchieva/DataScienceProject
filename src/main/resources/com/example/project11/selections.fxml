@@ -5,6 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="container" prefHeight="300" prefWidth="200.0" style="-fx-background-color: #28323D;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project11.Controllers.SelectionsController">
 
@@ -52,7 +53,10 @@
          </HBox>
          <HBox alignment="CENTER" prefHeight="26.0" prefWidth="146.0">
             <children>
-               <Label prefHeight="33.0" prefWidth="49.0" text="Course - " textFill="WHITE" />
+               <Label prefHeight="33.0" prefWidth="49.0" text="Course - " textFill="WHITE">
+                  <font>
+                     <Font size="12.0" />
+                  </font></Label>
                <ChoiceBox fx:id="CourseSelector" prefHeight="25.0" prefWidth="57.0" />
             </children>
          </HBox>

@@ -39,7 +39,7 @@ public class Predictions {
     public void getCreateForest() throws FileNotFoundException {
 
 
-        ForestCreator forest = new ForestCreator(amountofTrees, 2, course, StudentPropertyArray, WeightedBootsrappingArray);
+        ForestCreator forest = new ForestCreator(amountofTrees, 5, course, StudentPropertyArray, WeightedBootsrappingArray);
          FilterForestList = new ArrayList<>(forest.getFilteredForest().values());
 
 
